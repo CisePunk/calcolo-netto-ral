@@ -37,6 +37,8 @@ questo progetto contiene un documento fiscale reale.**
 | 10 | Dipendenze di terze parti | ✅ zero vulnerabilità note |
 | 11 | Consumo di risorse per richiesta | ✅ misurato, accettabile |
 | 12 | Dati personali nel repository | ✅ esclusi per costruzione |
+| 13 | Chiavi API nella storia di Git (180 oggetti, 11 modelli) | ✅ nessuna — vedi l'aggiornamento in coda |
+| 14 | Esposizione dei segreti CI (CVE-2026-54316 / 12537) | ✅ non applicabile: 0 workflow, 0 segreti, issue chiuse |
 
 **Tre difetti reali, due omissioni, una debolezza minore.** Nessuno era visibile
 leggendo il codice con l'occhio di chi l'ha scritto: sono venuti fuori tutti
@@ -313,3 +315,93 @@ lo conferma; per contraddirlo bisogna eseguirlo in un modo che non era previsto.
 
 Le correzioni hanno toccato la validazione dell'ingresso, che è coperta da test.
 Nessuna regressione.
+
+---
+
+## Aggiornamento del 7 agosto 2026 — le vulnerabilità sulle chiavi API
+
+Sono uscite in pochi giorni quattro segnalazioni che riguardano l'esposizione di
+chiavi API: LiteLLM (CVE-2026-42208, iniezione SQL pre-autenticazione), Ruflo
+(CVE-2026-59726, CVSS 10.0, accesso senza password), n8n (CVE-2026-21858,
+CVSS 10.0) e una coppia che tocca **Claude Code e Gemini CLI nei sistemi di
+integrazione continua** — CVE-2026-54316 e CVE-2026-12537.
+
+Quest'ultima è l'unica che poteva riguardarci, ed è stata verificata invece che
+esclusa a occhio, perché parte di questo lavoro è stata svolta con assistenza AI
+e il repository è pubblico.
+
+### Il meccanismo, e perché non ci tocca
+
+Lo sfruttamento richiede **tre condizioni insieme**:
+
+| Condizione | Da noi |
+|---|---|
+| Un workflow di integrazione continua che esegua quegli strumenti | **0 workflow.** Non esiste nemmeno la cartella `.github/` |
+| Un innesco raggiungibile da utenti non fidati (tipicamente le issue) | **issue disattivate** al momento della creazione del repository |
+| Segreti disponibili al runner | **0 segreti** configurati |
+
+Nessuna delle tre. La catena non si chiude in nessun punto.
+
+Vale la pena aggiungere che il progetto **non usa nessuna chiave API**: il
+motore non ha dipendenze, l'interfaccia non contatta domini esterni — è la
+stessa proprietà che permette una politica dei contenuti strettissima (punto 3)
+— e nel codice non c'è una sola lettura di variabile d'ambiente.
+
+### Verifica eseguita sulla storia, non solo sui file di adesso
+
+Un segreto cancellato resta negli oggetti di Git. Sono stati quindi esaminati
+**tutti i 180 oggetti** mai esistiti nel repository, non l'albero corrente, con
+undici modelli: chiavi OpenAI, Anthropic, GitHub (classiche e fine-grained),
+AWS, Google, Slack, Stripe, token JWT, chiavi private e URL con credenziali
+incorporate.
+
+Un solo riscontro, ed è stato **guardato invece che archiviato**: era una
+sequenza di byte casuali dentro `09-esperto-risultato-e-fonti.png`. Un file
+binario, non del testo con dentro una password. È il tipo di riscontro che si
+liquida come falso positivo senza controllare, ed è così che ogni tanto ne passa
+uno vero.
+
+### Le altre tre segnalazioni
+
+LiteLLM, n8n e Ruflo non sono fra le dipendenze — verificato su
+`requirements.txt` e `package.json`, che contengono in tutto due pacchetti
+Python e le dipendenze di Vite. Non è un merito: è la conseguenza della scelta
+di non avere dipendenze, che qui mostra il terzo motivo per cui è stata fatta.
+
+### Cosa è stato irrigidito lo stesso
+
+Nessuna delle tre condizioni era soddisfatta, ma due potevano diventarlo domani
+— basta che qualcuno aggiunga un workflow, o riapra le issue.
+
+| Impostazione | Prima | Ora |
+|---|---|---|
+| GitHub Actions | abilitate (predefinito) | **disattivate** |
+| Permessi predefiniti dei workflow | scrittura (predefinito) | **sola lettura** |
+| Issue, wiki, projects, discussions | issue e wiki già chiuse | **tutte chiuse** |
+
+Actions è disattivato perché **a questo progetto non serve**: i test si lanciano
+con un comando e senza dipendenze, e chi vuole verificarli lo fa in locale in
+quindici secondi. Una funzione accesa senza che nessuno la usi è solo superficie
+d'attacco che nessuno guarda.
+
+I permessi in sola lettura restano impostati anche con Actions spento: se un
+giorno qualcuno lo riaccende, riparte dal comportamento prudente invece che da
+quello predefinito.
+
+### Sulla macchina di sviluppo
+
+Claude Code installato: **2.1.183**, oltre la 2.1.163 che corregge
+CVE-2026-54316. Gemini CLI non installato.
+
+### Il rischio che resta
+
+Una vulnerabilità di questa classe **non si chiude una volta**: la porta era
+chiusa perché non l'avevamo ancora aperta, non perché fosse stata rinforzata. Il
+giorno in cui questo prototipo avesse una pipeline di rilascio — cioè il primo
+giorno di vita vera — le tre condizioni tornerebbero tutte disponibili insieme.
+
+La regola da portarsi dietro è quella indicata dagli stessi avvisi:
+**qualunque workflow attivabile da un utente esterno va trattato come codice
+ostile**, e non deve mai vedere i segreti nello stesso passaggio in cui tocca
+input non fidato.
+
