@@ -1,0 +1,6 @@
+# Tutto quello che sta in questa cartella resta fuori dal repository.
+# Unica eccezione: questo file e il modello vuoto.
+*
+!.gitignore
+!cu_modello.json
+!LEGGIMI.md

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1560" height="1080" viewBox="0 0 1560 1080" font-family="system-ui,-apple-system,Segoe UI,Helvetica,sans-serif">
+<rect width="1560" height="1080" fill="#fbfcfa"/>
+<text x="56" y="46" font-size="24" fill="#11150a" font-weight="700" text-anchor="start">Schermata all'apertura — modalità «alle prime armi»</text>
+<text x="56" y="72" font-size="13.5" fill="#4e5549" font-weight="400" text-anchor="start">Un solo campo obbligatorio. Tutto il resto ha un default dichiarato, e ogni voce spiega sé stessa prima che venga chiesto.</text>
+<rect x="460" y="120" width="640" height="850" rx="18" fill="#f4f7ee" stroke="#dce0da" stroke-width="1.5"/>
+<text x="780.0" y="994" font-size="12" fill="#8b9184" font-weight="500" text-anchor="middle">stato iniziale · nessun dato inserito</text>
+<text x="494" y="174" font-size="22" fill="#11150a" font-weight="700" text-anchor="start">Dalla RAL al netto</text>
+<text x="494" y="198" font-size="12.5" fill="#4e5549" font-weight="400" text-anchor="start">Quanto resta davvero in tasca, e perché.</text>
+<rect x="858" y="152" width="208" height="34" rx="8" fill="#ffffff" stroke="#dce0da" stroke-width="1"/>
+<rect x="862" y="156" width="116" height="26" rx="6" fill="#11150a" stroke="#11150a" stroke-width="1"/>
+<text x="920" y="173" font-size="11" fill="#fff" font-weight="600" text-anchor="middle">Alle prime armi</text>
+<text x="1030" y="173" font-size="11" fill="#4e5549" font-weight="400" text-anchor="middle">Esperto</text>
+<path d="M920,156 L980,110 L1260,110" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="920" cy="156" r="10" fill="#0a9184"/>
+<text x="920" y="160" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">1</text>
+<circle cx="1260" cy="110" r="3" fill="#0a9184"/>
+<text x="1274" y="107" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="start">DUE LIVELLI</text>
+<text x="1274" y="124" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="start">commutabili senza perdere nulla</text>
+<rect x="494" y="216" width="572" height="40" rx="8" fill="#ffffff" stroke="#dce0da" stroke-width="1"/>
+<rect x="494" y="216" width="5" height="40" fill="#dfeb57"/>
+<text x="512" y="234" font-size="11.5" fill="#11150a" font-weight="700" text-anchor="start">Prototipo indipendente.</text>
+<text x="512" y="249" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="start">Non è uno strumento ufficiale.</text>
+<path d="M478,236 L418,228 L300,228" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="478" cy="236" r="10" fill="#0a9184"/>
+<text x="478" y="240" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">2</text>
+<circle cx="300" cy="228" r="3" fill="#0a9184"/>
+<text x="286" y="225" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="end">ONESTÀ</text>
+<text x="286" y="242" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="end">chiarisce cosa non è</text>
+<rect x="494" y="270" width="572" height="36" rx="8" fill="#ffffff" stroke="#dce0da" stroke-width="1"/>
+<text x="512" y="293" font-size="12.5" fill="#11150a" font-weight="600" text-anchor="start">◐  Leggibilità</text>
+<text x="1048" y="293" font-size="12.5" fill="#4e5549" font-weight="400" text-anchor="end">▸</text>
+<path d="M478,288 L418,296 L300,296" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="478" cy="288" r="10" fill="#0a9184"/>
+<text x="478" y="292" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">3</text>
+<circle cx="300" cy="296" r="3" fill="#0a9184"/>
+<text x="286" y="293" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="end">IN ALTO</text>
+<text x="286" y="310" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="end">serve prima di leggere</text>
+<rect x="494" y="324" width="290" height="40" rx="8" fill="#ffffff" stroke="#dce0da" stroke-width="1"/>
+<text x="510" y="349" font-size="12" fill="#11150a" font-weight="600" text-anchor="start">Ho il LORDO, voglio il netto</text>
+<rect x="792" y="324" width="274" height="40" rx="8" fill="#f4f7ee" stroke="#dce0da" stroke-width="1"/>
+<text x="808" y="349" font-size="12" fill="#4e5549" font-weight="400" text-anchor="start">Voglio garantire un NETTO</text>
+<path d="M1080,344 L1140,322 L1260,322" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="1080" cy="344" r="10" fill="#0a9184"/>
+<text x="1080" y="348" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">4</text>
+<circle cx="1260" cy="322" r="3" fill="#0a9184"/>
+<text x="1274" y="319" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="start">DUE DOMANDE</text>
+<text x="1274" y="336" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="start">l'HR le fa entrambe</text>
+<text x="494" y="404" font-size="13" fill="#11150a" font-weight="700" text-anchor="start">RAL — Retribuzione Annua</text>
+<rect x="698" y="391" width="62" height="19" fill="#f6f9cf" stroke="#c3d13a" stroke-width="2"/>
+<text x="702" y="405" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="start">LORDA</text>
+<rect x="494" y="418" width="200" height="46" rx="8" fill="#ffffff" stroke="#8b9184" stroke-width="1"/>
+<text x="510" y="448" font-size="19" fill="#8b9184" font-weight="400" text-anchor="start">35.000</text>
+<text x="708" y="448" font-size="12" fill="#4e5549" font-weight="400" text-anchor="start">€ all'anno</text>
+<path d="M776,401 L836,367 L1260,367" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="776" cy="401" r="10" fill="#0a9184"/>
+<text x="776" y="405" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">5</text>
+<circle cx="1260" cy="367" r="3" fill="#0a9184"/>
+<text x="1274" y="364" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="start">DISAMBIGUA</text>
+<text x="1274" y="381" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="start">è l'errore più costoso</text>
+<text x="494" y="486" font-size="12" fill="#4e5549" font-weight="400" text-anchor="start">Ho letto  35.000 € lordi all'anno</text>
+<rect x="540" y="475" width="146" height="16" fill="#f6f9cf" opacity="0.65"/>
+<text x="544" y="487" font-size="12" fill="#11150a" font-weight="700" text-anchor="start">35.000 € lordi all'anno</text>
+<path d="M704,483 L764,495 L1260,495" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="704" cy="483" r="10" fill="#0a9184"/>
+<text x="704" y="487" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">6</text>
+<circle cx="1260" cy="495" r="3" fill="#0a9184"/>
+<text x="1274" y="492" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="start">ECO VIVA</text>
+<text x="1274" y="509" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="start">mostra cosa ha capito</text>
+<rect x="494" y="502" width="572" height="84" rx="8" fill="#f6f9cf" stroke="#c3d13a" stroke-width="1"/>
+<text x="510" y="524" font-size="12" fill="#11150a" font-weight="700" text-anchor="start">Che cos'è la RAL.</text>
+<text x="635" y="524" font-size="12" fill="#4e5549" font-weight="400" text-anchor="start">È lo stipendio ANNUO e LORDO</text>
+<text x="510" y="542" font-size="12" fill="#4e5549" font-weight="400" text-anchor="start">scritto nel contratto, prima di tasse e contributi.</text>
+<text x="510" y="566" font-size="12" fill="#11150a" font-weight="600" text-anchor="start">Se pensi a 1.800 € o 2.500 €, quello è un mensile.</text>
+<path d="M478,544 L418,544 L300,544" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="478" cy="544" r="10" fill="#0a9184"/>
+<text x="478" y="548" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">7</text>
+<circle cx="300" cy="544" r="3" fill="#0a9184"/>
+<text x="286" y="541" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="end">GIÀ APERTA</text>
+<text x="286" y="558" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="end">chi non sa, non chiede</text>
+<text x="494" y="620" font-size="13" fill="#11150a" font-weight="600" text-anchor="start">Comune di residenza</text>
+<rect x="494" y="632" width="572" height="42" rx="8" fill="#ffffff" stroke="#8b9184" stroke-width="1"/>
+<text x="512" y="658" font-size="12.5" fill="#11150a" font-weight="400" text-anchor="start">Milano (Lombardia) — predefinito</text>
+<text x="1046" y="658" font-size="12" fill="#4e5549" font-weight="400" text-anchor="end">▾</text>
+<path d="M1080,653 L1140,653 L1260,653" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="1080" cy="653" r="10" fill="#0a9184"/>
+<text x="1080" y="657" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">8</text>
+<circle cx="1260" cy="653" r="3" fill="#0a9184"/>
+<text x="1274" y="650" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="start">MAI IMPLICITO</text>
+<text x="1274" y="667" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="start">vale oltre 600 € l'anno</text>
+<rect x="494" y="684" width="572" height="62" rx="8" fill="#f6f9cf" stroke="#c3d13a" stroke-width="1"/>
+<text x="510" y="706" font-size="12" fill="#11150a" font-weight="700" text-anchor="start">Perché serve il comune.</text>
+<text x="510" y="726" font-size="12" fill="#4e5549" font-weight="400" text-anchor="start">Le addizionali cambiano da un territorio all'altro.</text>
+<rect x="494" y="776" width="182" height="48" rx="8" fill="#dfeb57" stroke="#11150a" stroke-width="1.5"/>
+<text x="585" y="806" font-size="15" fill="#11150a" font-weight="700" text-anchor="middle">Calcola</text>
+<path d="M692,800 L410,834 L300,834" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="692" cy="800" r="10" fill="#0a9184"/>
+<text x="692" y="804" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">9</text>
+<circle cx="300" cy="834" r="3" fill="#0a9184"/>
+<text x="286" y="831" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="end">UN'AZIONE</text>
+<text x="286" y="848" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="end">nessuna scelta da fare</text>
+<rect x="494" y="856" width="420" height="7" rx="3.5" fill="#e6e9e2"/>
+<rect x="494" y="872" width="320" height="7" rx="3.5" fill="#e6e9e2"/>
+<text x="494" y="912" font-size="11" fill="#8b9184" font-weight="400" text-anchor="start">Versione del 2026-08-07 · prototipo indipendente</text>
+<path d="M470,908 L410,930 L300,930" fill="none" stroke="#0a9184" stroke-width="1.4" opacity="0.75"/>
+<circle cx="470" cy="908" r="10" fill="#0a9184"/>
+<text x="470" y="912" font-size="11.5" fill="#fff" font-weight="700" text-anchor="middle">10</text>
+<circle cx="300" cy="930" r="3" fill="#0a9184"/>
+<text x="286" y="927" font-size="12.5" fill="#11150a" font-weight="700" text-anchor="end">VERSIONE</text>
+<text x="286" y="944" font-size="11.5" fill="#4e5549" font-weight="400" text-anchor="end">quale build stai guardando</text>
+</svg>

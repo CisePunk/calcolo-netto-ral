@@ -1,0 +1,19 @@
+# Ambienti e dipendenze: si ricostruiscono da requirements.txt e package.json.
+.venv/
+__pycache__/
+*.pyc
+node_modules/
+
+# Il compilato dell'interfaccia si rigenera con `npm run build`.
+web/dist/
+
+# Roba di sistema.
+.DS_Store
+__MACOSX/
+*.log
+
+# I dati privati hanno un .gitignore proprio dentro la cartella, che esclude
+# tutto tranne il modello vuoto e le istruzioni. Questa riga non lo sostituisce:
+# lo raddoppia, perche' una sola difesa su dati di questo tipo e' poca.
+dati_privati/cu.json
+dati_privati/*.pdf

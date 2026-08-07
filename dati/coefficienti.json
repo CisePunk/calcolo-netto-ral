@@ -1,0 +1,396 @@
+{
+  "_meta": {
+    "descrizione": "Registro dei coefficienti fiscali e previdenziali. Unica fonte di verita: da qui leggono il motore di calcolo e il seed del database. Nessun numero fiscale va scritto altrove nel codice.",
+    "convenzioni": {
+      "aliquote": "espresse in forma decimale: 0.0919 = 9,19%",
+      "scaglioni": "lista di [limite_superiore, aliquota]; limite_superiore null significa 'oltre, senza limite'. Ogni aliquota si applica solo alla quota di reddito che ricade nello scaglione.",
+      "soglia_esenzione": "null significa che il territorio NON prevede esenzione. Dove presente e' una SOGLIA, non una franchigia: superata, si paga sull'intero imponibile.",
+      "stato": "primaria = letto su fonte ufficiale | secondaria = concorde su piu' fonti specialistiche | da_verificare = non ancora confermato",
+      "importi": "in euro"
+    },
+    "data_ultima_verifica": "2026-08-06",
+    "nota_anni": "Il 2026 e' l'anno del prodotto. Il 2025 serve per il confronto con una Certificazione Unica reale (vedi PIANO.md sezione 6) e NON va usato per proiezioni correnti.",
+    "nota_addizionali_comunali": "Le tabelle ufficiali dell'Agenzia delle Entrate sono indicizzate per MODULISTICA, non per anno d'imposta: la tabella 'modulistica 2026' contiene le aliquote dell'anno d'imposta 2025. Per questo le comunali 2025 sono su fonte primaria mentre le 2026 no: la tabella che le confermera' (modulistica 2027) non e' ancora pubblicata."
+  },
+  "nazionale": {
+    "2025": {
+      "inps": {
+        "aliquota_dipendente": 0.0919,
+        "aliquota_aggiuntiva": 0.01,
+        "soglia_prima_fascia": 55448.0,
+        "massimale_annuo": 120607.0,
+        "_fonte": "INPS, circolare n. 26 del 30 gennaio 2025 (minimali e massimali 2025); aliquota aggiuntiva: art. 3-ter D.L. 384/1992",
+        "_stato": "secondaria",
+        "_nota": "Il massimale si applica ai soli iscritti per la prima volta dal 1/1/1996: fuori dal caso semplice, implementato ma dichiarato."
+      },
+      "irpef": {
+        "scaglioni": [
+          [
+            28000.0,
+            0.23
+          ],
+          [
+            50000.0,
+            0.35
+          ],
+          [
+            null,
+            0.43
+          ]
+        ],
+        "_fonte": "Art. 11 TUIR, assetto a tre aliquote vigente per l'anno d'imposta 2025 (D.Lgs. 216/2023)",
+        "_stato": "primaria",
+        "_nota": "Seconda aliquota al 35%: e' il valore corretto per il 2025 e quello che compare nel 730/2026."
+      },
+      "detrazioni_lavoro_dipendente": {
+        "fascia_1_limite": 15000.0,
+        "fascia_1_importo": 1955.0,
+        "fascia_1_minimo": 690.0,
+        "fascia_2_limite": 28000.0,
+        "fascia_2_base": 1910.0,
+        "fascia_2_quota": 1190.0,
+        "fascia_2_divisore": 13000.0,
+        "fascia_3_limite": 50000.0,
+        "fascia_3_base": 1910.0,
+        "fascia_3_divisore": 22000.0,
+        "_fonte": "Art. 13 comma 1 TUIR",
+        "_stato": "secondaria",
+        "_nota": "Fascia 2: 1.910 + 1.190 * (28.000 - R) / 13.000. Fascia 3: 1.910 * (50.000 - R) / 22.000. Rapportate ai giorni di lavoro nell'anno."
+      },
+      "ulteriore_detrazione_65": {
+        "reddito_minimo_escluso": 25000.0,
+        "reddito_massimo_incluso": 35000.0,
+        "importo": 65.0,
+        "_fonte": "Art. 13 comma 1.1 TUIR",
+        "_stato": "primaria",
+        "_nota": "Spetta se il reddito complessivo e' SUPERIORE a 25.000 e NON superiore a 35.000. Il comma 1-bis, spesso citato per errore, e' stato abrogato dal D.L. 3/2020."
+      },
+      "cuneo_somma_esente": {
+        "limite_reddito_complessivo": 20000.0,
+        "fasce": [
+          [
+            8500.0,
+            0.071
+          ],
+          [
+            15000.0,
+            0.053
+          ],
+          [
+            20000.0,
+            0.048
+          ]
+        ],
+        "_fonte": "L. 207/2024 art. 1 commi 4-5; circolare Agenzia delle Entrate n. 4/E del 16 maggio 2025",
+        "_stato": "secondaria",
+        "_nota": "La percentuale si applica al reddito da LAVORO DIPENDENTE, ma la soglia di accesso guarda il reddito COMPLESSIVO. La somma non concorre a formare il reddito: incide solo sul netto. Non e' a scaglioni: si sceglie una sola percentuale in base alla fascia."
+      },
+      "cuneo_ulteriore_detrazione": {
+        "reddito_minimo_escluso": 20000.0,
+        "reddito_soglia_piena": 32000.0,
+        "reddito_massimo": 40000.0,
+        "importo_pieno": 1000.0,
+        "_fonte": "L. 207/2024 art. 1 comma 6",
+        "_stato": "primaria",
+        "_nota": "Da 20.000,01 a 32.000: 1.000 euro fissi. Da 32.000,01 a 40.000: 1.000 * (40.000 - R) / 8.000. Oltre 40.000: nulla. Rapportata ai giorni."
+      },
+      "trattamento_integrativo": {
+        "soglia_importo_pieno": 15000.0,
+        "soglia_massima": 28000.0,
+        "importo": 1200.0,
+        "_fonte": "Art. 1 D.L. 3/2020 (istituisce il trattamento integrativo); art. 1 c. 3 L. 234/2021 (introduce la condizione di capienza, SENZA i 75 euro); art. 1 D.Lgs. 216/2023 (alza la detrazione art. 13 da 1.880 a 1.955 e introduce i 75 euro, per il solo 2024); art. 1 c. 3 L. 207/2024 (li rende strutturali dal 2025 e stabilizza 1.955). Confermato da Agenzia delle Entrate, circolare 4/E del 16 maggio 2025",
+        "_stato": "primaria",
+        "_nota": "I 75 euro NON sono un importo erogato: neutralizzano l'aumento della detrazione da 1.880 a 1.955 disposto dal D.Lgs. 216/2023, cosi' che la soglia di capienza resti quella di prima. Ai fini della capienza la detrazione vale 1.955 - 75 = 1.880. E' anche la prova interna che la fonte non puo' essere la L. 234/2021: e' del 2021, non poteva neutralizzare un aumento del 2023.",
+        "riduzione_detrazione_capienza": 75.0
+      }
+    },
+    "2026": {
+      "inps": {
+        "aliquota_dipendente": 0.0919,
+        "aliquota_aggiuntiva": 0.01,
+        "soglia_prima_fascia": 56224.0,
+        "massimale_annuo": 122295.0,
+        "_fonte": "INPS, minimali e massimali 2026; aliquota aggiuntiva: art. 3-ter D.L. 384/1992",
+        "_stato": "secondaria",
+        "_nota": "Aliquota FPLD complessiva 33%: 23,81% al datore, 9,19% al lavoratore."
+      },
+      "irpef": {
+        "scaglioni": [
+          [
+            28000.0,
+            0.23
+          ],
+          [
+            50000.0,
+            0.33
+          ],
+          [
+            null,
+            0.43
+          ]
+        ],
+        "_fonte": "L. 199/2025 (Legge di Bilancio 2026), che rende strutturale il taglio della seconda aliquota dal 35% al 33% dal 1 gennaio 2026",
+        "_stato": "primaria",
+        "_nota": "Attenzione: il 730/2026 applica ancora il 35% perche' riguarda i redditi 2025. Il 33% si vede in busta paga nel 2026."
+      },
+      "detrazioni_lavoro_dipendente": {
+        "fascia_1_limite": 15000.0,
+        "fascia_1_importo": 1955.0,
+        "fascia_1_minimo": 690.0,
+        "fascia_2_limite": 28000.0,
+        "fascia_2_base": 1910.0,
+        "fascia_2_quota": 1190.0,
+        "fascia_2_divisore": 13000.0,
+        "fascia_3_limite": 50000.0,
+        "fascia_3_base": 1910.0,
+        "fascia_3_divisore": 22000.0,
+        "_fonte": "Art. 13 comma 1 TUIR",
+        "_stato": "secondaria",
+        "_nota": "Invariate rispetto al 2025."
+      },
+      "ulteriore_detrazione_65": {
+        "reddito_minimo_escluso": 25000.0,
+        "reddito_massimo_incluso": 35000.0,
+        "importo": 65.0,
+        "_fonte": "Art. 13 comma 1.1 TUIR",
+        "_stato": "primaria"
+      },
+      "cuneo_somma_esente": {
+        "limite_reddito_complessivo": 20000.0,
+        "fasce": [
+          [
+            8500.0,
+            0.071
+          ],
+          [
+            15000.0,
+            0.053
+          ],
+          [
+            20000.0,
+            0.048
+          ]
+        ],
+        "_fonte": "L. 207/2024 art. 1 commi 4-5, confermata per il 2026",
+        "_stato": "secondaria"
+      },
+      "cuneo_ulteriore_detrazione": {
+        "reddito_minimo_escluso": 20000.0,
+        "reddito_soglia_piena": 32000.0,
+        "reddito_massimo": 40000.0,
+        "importo_pieno": 1000.0,
+        "_fonte": "L. 207/2024 art. 1 comma 6, confermata per il 2026",
+        "_stato": "secondaria"
+      },
+      "trattamento_integrativo": {
+        "soglia_importo_pieno": 15000.0,
+        "soglia_massima": 28000.0,
+        "importo": 1200.0,
+        "_fonte": "Art. 1 D.L. 3/2020 (istituisce il trattamento integrativo); art. 1 c. 3 L. 234/2021 (introduce la condizione di capienza, SENZA i 75 euro); art. 1 D.Lgs. 216/2023 (alza la detrazione art. 13 da 1.880 a 1.955 e introduce i 75 euro, per il solo 2024); art. 1 c. 3 L. 207/2024 (li rende strutturali dal 2025 e stabilizza 1.955). Confermato da Agenzia delle Entrate, circolare 4/E del 16 maggio 2025",
+        "_stato": "primaria",
+        "riduzione_detrazione_capienza": 75.0,
+        "_nota": "I 75 euro NON sono un importo erogato: neutralizzano l'aumento della detrazione da 1.880 a 1.955 disposto dal D.Lgs. 216/2023, cosi' che la soglia di capienza resti quella di prima. Ai fini della capienza la detrazione vale 1.955 - 75 = 1.880. E' anche la prova interna che la fonte non puo' essere la L. 234/2021: e' del 2021, non poteva neutralizzare un aumento del 2023."
+      },
+      "riduzione_detrazioni_redditi_alti": {
+        "soglia_reddito": 200000.0,
+        "importo_riduzione": 440.0,
+        "_fonte": "L. 199/2025 (Legge di Bilancio 2026)",
+        "_stato": "secondaria",
+        "_nota": "Fuori dal caso semplice e standard. Non implementata nel motore, dichiarata nelle ASSUNZIONI."
+      }
+    }
+  },
+  "territori": {
+    "MI": {
+      "comune": "Milano",
+      "regione": "Lombardia",
+      "predefinito": true,
+      "_nota": "Territorio dell'esempio del task. Preselezionato ma sempre dichiarato in interfaccia, mai assunto in silenzio.",
+      "anni": {
+        "2025": {
+          "regionale": {
+            "tipo": "scaglioni",
+            "scaglioni": [
+              [
+                15000.0,
+                0.0123
+              ],
+              [
+                28000.0,
+                0.0158
+              ],
+              [
+                50000.0,
+                0.0172
+              ],
+              [
+                null,
+                0.0173
+              ]
+            ],
+            "_fonte": "Regione Lombardia, addizionale regionale IRPEF; banca dati MEF (codice regione 10)",
+            "_stato": "secondaria"
+          },
+          "comunale": {
+            "tipo": "unica",
+            "aliquota": 0.008,
+            "soglia_esenzione": 23000.0,
+            "_fonte": "Agenzia delle Entrate, tabella addizionali comunali modulistica 2026 (anno d'imposta 2025), riga F205 MILANO MI",
+            "_stato": "primaria",
+            "_nota": "SOGLIA, non franchigia: superati i 23.000 di imponibile si paga lo 0,8% sull'intero importo. Genera un gradino di circa 184 euro."
+          }
+        },
+        "2026": {
+          "regionale": {
+            "tipo": "scaglioni",
+            "scaglioni": [
+              [
+                15000.0,
+                0.0123
+              ],
+              [
+                28000.0,
+                0.0158
+              ],
+              [
+                50000.0,
+                0.0172
+              ],
+              [
+                null,
+                0.0173
+              ]
+            ],
+            "_fonte": "Regione Lombardia; la L. 199/2025 consente di mantenere i quattro scaglioni preesistenti fino al 2028",
+            "_stato": "secondaria",
+            "_nota": "La Lombardia non si e' allineata alle tre aliquote statali."
+          },
+          "comunale": {
+            "tipo": "unica",
+            "aliquota": 0.008,
+            "soglia_esenzione": 23000.0,
+            "_fonte": "Comune di Milano, aliquota invariata rispetto al 2025",
+            "_stato": "secondaria",
+            "_nota": "La tabella ufficiale AdE che confermera' il 2026 (modulistica 2027) non e' ancora pubblicata. Esiste una proposta comunale di portare la soglia a 25.000 e l'aliquota massima allo 0,9%: NON in vigore."
+          }
+        }
+      }
+    },
+    "PA": {
+      "comune": "Palermo",
+      "regione": "Sicilia",
+      "predefinito": false,
+      "_nota": "Territorio di controllo, usato per il confronto con una Certificazione Unica reale. Ha forma diversa da Milano su entrambe le addizionali: e' la prova che il registro non puo' essere una semplice tabella territorio -> aliquota.",
+      "anni": {
+        "2025": {
+          "regionale": {
+            "tipo": "unica",
+            "aliquota": 0.0123,
+            "_fonte": "Regione Siciliana, portale tributi, addizionale regionale IRPEF",
+            "_stato": "secondaria",
+            "_nota": "Aliquota unica, nessuno scaglione: forma diversa dalla Lombardia."
+          },
+          "comunale": {
+            "tipo": "unica",
+            "aliquota": 0.01014,
+            "soglia_esenzione": null,
+            "_fonte": "Agenzia delle Entrate, tabella addizionali comunali modulistica 2026 (anno d'imposta 2025), riga G273 PALERMO PA",
+            "_stato": "primaria",
+            "_nota": "NESSUNA soglia di esenzione: si paga da subito. Aumentata dall'1,002% dell'anno d'imposta 2024 per effetto del piano di riequilibrio finanziario. E' l'aliquota da usare per il confronto con la CU."
+          }
+        },
+        "2026": {
+          "regionale": {
+            "tipo": "unica",
+            "aliquota": 0.0123,
+            "_fonte": "Regione Siciliana, portale tributi",
+            "_stato": "secondaria"
+          },
+          "comunale": {
+            "tipo": "unica",
+            "aliquota": 0.01404,
+            "soglia_esenzione": null,
+            "_fonte": "Deliberazione del Consiglio comunale di Palermo, misura correttiva imposta dal piano di riequilibrio finanziario concordato con lo Stato",
+            "_stato": "secondaria",
+            "_nota": "Aumento di 0,374 punti rispetto al 2025. Non ancora presente nelle tabelle ufficiali AdE."
+          }
+        }
+      }
+    }
+  },
+  "ccnl": {
+    "_nota": "Il CCNL NON influenza il calcolo fiscale: la RAL e' annua, quindi le mensilita' cambiano solo il divisore del netto mensile, mai il netto annuo. E' una tabella di presentazione.",
+    "contratti": [
+      {
+        "codice": "commercio",
+        "nome": "Terziario, Distribuzione e Servizi (Confcommercio)",
+        "mensilita": 14,
+        "predefinito": true,
+        "_fonte": "CCNL Terziario Distribuzione e Servizi: tredicesima a dicembre, quattordicesima a luglio",
+        "_stato": "secondaria",
+        "minimi": {
+          "_fonte": "CCNL Terziario, Distribuzione e Servizi (Confcommercio), rinnovo 22 marzo 2024. Tabella in vigore dal 1 novembre 2025; prossima tranche 1 novembre 2026, poi 1 febbraio 2027. Due fonti secondarie concordanti sui valori di novembre 2026 (scarto di un centesimo).",
+          "_stato": "secondaria",
+          "_nota": "Minimo tabellare mensile, paga base ed ex contingenza. NON comprende terzo elemento provinciale, scatti di anzianita', superminimi individuali: la retribuzione reale e' quindi di norma piu' alta. Valori per il tempo pieno.",
+          "in_vigore_da": "2025-11-01",
+          "prossima_tranche": "2026-11-01",
+          "livelli": {
+            "Quadro": 2183.09,
+            "1": 1966.54,
+            "2": 1701.04,
+            "3": 1453.94,
+            "4": 1257.46,
+            "5": 1136.07,
+            "6": 1019.94,
+            "7": 873.22
+          }
+        }
+      },
+      {
+        "codice": "metalmeccanici",
+        "nome": "Metalmeccanici industria",
+        "mensilita": 13,
+        "predefinito": false,
+        "_fonte": "CCNL Metalmeccanici industria",
+        "_stato": "da_verificare",
+        "minimi": {
+          "_fonte": "CCNL Metalmeccanici industria Federmeccanica-Assistal, rinnovo 2025-2028, terza tranche dal 1 giugno 2026.",
+          "_stato": "da_verificare",
+          "_nota": "TABELLA PARZIALE: mancano D2, B1, B2, A1. Il livello piu' basso (D1) e' pero' presente, quindi il controllo sul minimo assoluto e' affidabile; quello per singolo livello no, e infatti non viene offerto.",
+          "in_vigore_da": "2026-06-01",
+          "parziale": true,
+          "livelli": {
+            "D1": 1784.94,
+            "C1": 2022.12,
+            "C2": 2064.88,
+            "C3": 2211.43,
+            "B3": 2838.99
+          }
+        }
+      },
+      {
+        "codice": "studi_professionali",
+        "nome": "Studi professionali",
+        "mensilita": 14,
+        "predefinito": false,
+        "_fonte": "CCNL Studi professionali",
+        "_stato": "da_verificare",
+        "minimi": null
+      },
+      {
+        "codice": "edilizia",
+        "nome": "Edilizia industria",
+        "mensilita": 13,
+        "predefinito": false,
+        "_fonte": "CCNL Edilizia industria",
+        "_stato": "da_verificare",
+        "minimi": null
+      }
+    ],
+    "mensilita_ammesse": [
+      12,
+      13,
+      14
+    ]
+  }
+}

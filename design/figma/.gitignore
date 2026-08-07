@@ -1,0 +1,3 @@
+# I file di lavoro di Figma non vanno versionati: solo le esportazioni.
+*.fig.bak
+.DS_Store

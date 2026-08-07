@@ -1,0 +1,1590 @@
+/*
+  Stile del calcolatore.
+
+  Tre principi, tutti conseguenza dell'analisi di usabilità:
+
+  1. La gerarchia visiva segue quella del ragionamento: prima cosa è stato
+     calcolato, poi il risultato, poi il perché.
+  2. Il testo di aiuto non è "meno importante" del campo: è scritto con la
+     stessa cura, non in grigio chiaro a corpo otto.
+  3. Niente è comunicato dal solo colore. Le trattenute hanno un segno, non
+     soltanto una tinta, perché il colore non arriva a tutti.
+*/
+
+:root {
+  /* Token ripresi dall'identità visiva di Jet HR, misurati prima di usarli.
+     Il lime #dfeb57 è la loro firma, ma su bianco vale 1,3:1 di contrasto:
+     è un colore da FONDO, non da testo. Usarlo come inchiostro sarebbe
+     copiare la forma e perdere la funzione. */
+  --inchiostro: #11150a;         /* loro,  18,5:1 su bianco */
+  --inchiostro-tenue: #4e5549;   /* derivato,  7,7:1 — stessa famiglia verdata */
+  --carta: #ffffff;
+  --sfondo: #f4f7ee;             /* neutro chiaro della loro famiglia */
+  --bordo: #dce0da;              /* loro */
+  --bordo-forte: #b9c2b4;
+
+  --lime: #dfeb57;               /* loro accento: SOLO come fondo */
+  --su-lime: #11150a;            /* testo sul lime, 14,2:1 */
+  --accento: #44660a;            /* oliva derivato dal lime, 6,7:1 — per il testo */
+  --accento-tenue: #f6f9cf;      /* loro, per i riquadri di aiuto */
+
+  --allarme: #97331e;
+  --allarme-tenue: #fbeeea;
+  --attenzione-tenue: #f6f9cf;
+  --attenzione-bordo: #c3d13a;
+  --buono: #2a6f2a;
+  --raggio: 10px;
+
+  /* Scala tipografica: variabile, perché la leggibilità è un controllo
+     dell'utente e non una decisione nostra. */
+  --scala: 1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-size: calc(1rem * var(--scala));
+  background: var(--sfondo);
+  color: var(--inchiostro);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 1.55;
+}
+
+.pagina {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* --- intestazione ------------------------------------------------------- */
+
+.intestazione {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+h1 {
+  font-size: 1.9rem;
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.02em;
+}
+
+.sottotitolo {
+  margin: 0;
+  color: var(--inchiostro-tenue);
+  max-width: 32rem;
+}
+
+.modalita {
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--carta);
+  padding: 0.25rem;
+  margin: 0;
+  display: flex;
+  gap: 0.25rem;
+}
+
+.scelta {
+  border: 0;
+  background: transparent;
+  padding: 0.45rem 0.8rem;
+  border-radius: 7px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: var(--inchiostro-tenue);
+}
+
+.scelta.attiva {
+  background: var(--inchiostro);
+  color: var(--carta);
+}
+
+/* --- schede -------------------------------------------------------------- */
+
+.schede {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: -1px;
+  flex-wrap: wrap;
+}
+
+.scheda {
+  border: 1px solid var(--bordo);
+  border-bottom-color: transparent;
+  background: transparent;
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--raggio) var(--raggio) 0 0;
+  font: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  color: var(--inchiostro-tenue);
+}
+
+.scheda.attiva {
+  background: var(--carta);
+  color: var(--inchiostro);
+  border-bottom-color: var(--carta);
+}
+
+.scheda strong {
+  color: inherit;
+}
+
+/* --- modulo -------------------------------------------------------------- */
+
+.modulo {
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  border-radius: 0 var(--raggio) var(--raggio) var(--raggio);
+  padding: 1.5rem;
+}
+
+.campo + .campo,
+.campo + .periodo,
+.avanzate {
+  margin-top: 1.25rem;
+}
+
+.campo-intestazione {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.4rem;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Il "LORDA" nell'etichetta è la difesa principale contro l'errore più
+   frequente: non può essere una sfumatura. */
+.evidenza {
+  background: var(--attenzione-tenue);
+  border-bottom: 2px solid var(--attenzione-bordo);
+  padding: 0 0.25rem;
+  letter-spacing: 0.03em;
+}
+
+.apri-aiuto {
+  border: 0;
+  background: transparent;
+  color: var(--accento);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  white-space: nowrap;
+}
+
+.apri-aiuto.piccolo {
+  font-size: 0.78rem;
+  margin-left: 0.5rem;
+  font-weight: 400;
+}
+
+.campo-controllo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+input,
+select {
+  font: inherit;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  background: var(--carta);
+  color: inherit;
+  width: 100%;
+  max-width: 22rem;
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accento);
+  outline-offset: 2px;
+}
+
+.numero.grande {
+  font-size: 1.35rem;
+  font-variant-numeric: tabular-nums;
+  max-width: 12rem;
+}
+
+.suffisso {
+  color: var(--inchiostro-tenue);
+  font-size: 0.9rem;
+}
+
+.aiuto {
+  margin-top: 0.55rem;
+  padding: 0.7rem 0.85rem;
+  background: var(--accento-tenue);
+  border-radius: 8px;
+  font-size: 0.92rem;
+  max-width: 38rem;
+}
+
+.aiuto-equivoco {
+  margin: 0.5rem 0 0;
+  font-weight: 600;
+}
+
+.periodo {
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.periodo legend {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0 0.35rem;
+}
+
+.periodo label {
+  font-weight: 400;
+}
+
+.periodo input {
+  width: auto;
+}
+
+.avanzate {
+  border-top: 1px dashed var(--bordo);
+  padding-top: 1.25rem;
+}
+
+.calcola {
+  margin-top: 1.5rem;
+  background: var(--lime);
+  color: var(--su-lime);
+  /* Il lime su bianco vale 1,3:1. Il testo scuro sopra si legge benissimo
+     (14,2:1), ma il PERIMETRO del pulsante sparirebbe: un bordo scuro non è
+     decorazione, è ciò che rende il pulsante un oggetto con dei confini. */
+  border: 1px solid var(--inchiostro);
+  border-radius: 8px;
+  padding: 0.75rem 1.6rem;
+  font: inherit;
+  font-weight: 600;
+  font-size: 1.02rem;
+  cursor: pointer;
+}
+
+.calcola:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* --- avvisi -------------------------------------------------------------- */
+
+.avvisi:not(:empty) {
+  margin-top: 1.25rem;
+}
+
+.avviso,
+.errore {
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  margin: 0 0 0.6rem;
+  font-size: 0.95rem;
+}
+
+.avviso {
+  background: var(--attenzione-tenue);
+  border-left: 4px solid var(--attenzione-bordo);
+}
+
+.errore {
+  background: var(--allarme-tenue);
+  border-left: 4px solid var(--allarme);
+  color: var(--allarme);
+  font-weight: 600;
+}
+
+/* --- risultato ----------------------------------------------------------- */
+
+.risultato,
+.fonti,
+.esito-inverso {
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  padding: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+/* L'eco dell'input viene prima del numero: è lì che un errore di inserimento
+   si vede, nel momento in cui si legge la risposta. */
+.eco {
+  margin: 0 0 1.1rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--sfondo);
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.netto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-end;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--bordo);
+}
+
+.netto-etichetta {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--inchiostro-tenue);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.netto-valore {
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+.netto-valore-piccolo {
+  display: block;
+  font-size: 1.35rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.netto-nota {
+  font-size: 0.85rem;
+  color: var(--inchiostro-tenue);
+}
+
+.riepilogo-trattenute {
+  font-size: 0.95rem;
+  color: var(--inchiostro-tenue);
+}
+
+.nota-sorpresa {
+  background: var(--accento-tenue);
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-size: 0.93rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+  margin: 1.6rem 0 0.6rem;
+}
+
+/* --- tabelle ------------------------------------------------------------- */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.55rem 0.4rem;
+  border-bottom: 1px solid var(--bordo);
+  vertical-align: top;
+}
+
+thead th {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--inchiostro-tenue);
+}
+
+.numerica {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+tbody th {
+  font-weight: 400;
+}
+
+/* Le righe informative (lordo, imponibile, IRPEF lorda) non sono trattenute:
+   sono tappe del ragionamento, e vanno distinte senza sembrare importi da
+   sommare. */
+.riga-informativa th,
+.riga-informativa td {
+  color: var(--inchiostro-tenue);
+  background: #fafbfc;
+}
+
+.segno {
+  display: inline-block;
+  width: 1rem;
+  font-weight: 700;
+}
+
+.riga-aiuto td {
+  background: var(--accento-tenue);
+  font-size: 0.9rem;
+  padding: 0.7rem 0.9rem 0.9rem 1.9rem;
+}
+
+.riga-totale th,
+.riga-totale td {
+  font-weight: 700;
+  font-size: 1.05rem;
+  border-bottom: 0;
+  border-top: 2px solid var(--inchiostro);
+  padding-top: 0.7rem;
+}
+
+/* --- conferma ------------------------------------------------------------ */
+
+.conferma {
+  margin-top: 1.5rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid var(--attenzione-bordo);
+  background: var(--attenzione-tenue);
+  border-radius: 8px;
+}
+
+.conferma label {
+  font-weight: 400;
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.conferma input {
+  width: auto;
+  margin-top: 0.3rem;
+}
+
+.conferma-esito {
+  margin: 0.8rem 0 0;
+  color: var(--buono);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* --- fonti --------------------------------------------------------------- */
+
+.fonti-riepilogo {
+  font-size: 0.95rem;
+}
+
+.fonti-legenda {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.fonti-legenda dl {
+  margin: 0.6rem 0 0;
+}
+
+.fonti-legenda dt {
+  margin-top: 0.5rem;
+}
+
+.fonti-legenda dd {
+  margin: 0.2rem 0 0;
+  color: var(--inchiostro-tenue);
+}
+
+.tabella-fonti {
+  font-size: 0.86rem;
+}
+
+.tabella-fonti th[scope="row"] {
+  width: 30%;
+}
+
+.ambito {
+  display: block;
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--inchiostro-tenue);
+}
+
+.fonte-nota {
+  margin: 0.35rem 0 0;
+  color: var(--inchiostro-tenue);
+  font-size: 0.85rem;
+}
+
+/* Lo stato non è comunicato dal solo colore: c'è sempre la parola. */
+.pastiglia {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid;
+}
+
+.pastiglia.primaria {
+  background: #e7f4ed;
+  color: var(--buono);
+  border-color: #a9d6bf;
+}
+
+.pastiglia.secondaria {
+  background: var(--attenzione-tenue);
+  color: #7a5c07;
+  border-color: var(--attenzione-bordo);
+}
+
+.pastiglia.da_verificare {
+  background: var(--allarme-tenue);
+  color: var(--allarme);
+  border-color: #e5b0a4;
+}
+
+.data-verifica {
+  display: block;
+  font-size: 0.76rem;
+  color: var(--inchiostro-tenue);
+  margin-top: 0.25rem;
+}
+
+/* --- piede --------------------------------------------------------------- */
+
+.piede {
+  margin-top: 2rem;
+  color: var(--inchiostro-tenue);
+  font-size: 0.87rem;
+}
+
+.piede-nota {
+  padding: 0.7rem 0.9rem;
+  background: var(--carta);
+  border: 1px solid var(--bordo);
+  border-radius: 8px;
+}
+
+.attesa {
+  color: var(--inchiostro-tenue);
+}
+
+/* --- accessibilità ------------------------------------------------------- */
+
+/* Visibile agli screen reader, non allo schermo. Serve per le informazioni che
+   la grafica comunica in modo visivo (un segno, una posizione) e che altrimenti
+   andrebbero perse. */
+.solo-lettori {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================================
+   Colori delle serie
+   ==========================================================================
+   Palette categorica in ordine fisso, verificata con il validatore sulla
+   superficie di questa pagina: separazione per daltonismo (peggior coppia
+   adiacente ΔE 9,1) e distinguibilità a vista normale (peggiore ΔE 19,6)
+   entrambe sopra soglia. Tre colori restano sotto il contrasto minimo di 3:1
+   sul bianco: per questo la legenda porta sempre nome e importo, e sotto c'è
+   la tabella con tutte le cifre. Nessuna informazione sta nel solo colore.
+
+   Gli stessi otto colori, ripassi diversi per il fondo scuro: non un
+   ribaltamento automatico, ma valori scelti per quella superficie. */
+
+:root {
+  /* Palette imparentata con il lime del marchio: toni naturali invece di
+     primari, con l'oliva (#6f8f0a) come parente diretto del loro accento.
+
+     Costruita per validazione, non a occhio. Quattro tentativi precedenti
+     sono stati BOCCIATI: mettere oliva accanto a terracotta collassa per chi
+     ha daltonismo rosso-verde, ed è la coppia che una palette costruita
+     attorno al lime tende a produrre da sola. L'ordine finale tiene le due
+     tinte lontane.
+
+     Verificata sulla superficie bianca di questa pagina: separazione per
+     daltonismo ΔE 13,2 (soglia 8), distinguibilità a vista normale ΔE 25,7
+     (soglia 15), e tutti e cinque i toni sopra il contrasto 3:1 — cosa che la
+     palette generica precedente non otteneva. */
+  --serie-1: #0a9184; /* resta al dipendente   — teal    */
+  --serie-2: #d0552a; /* contributi INPS       — terracotta */
+  --serie-3: #3457c8; /* IRPEF netta           — blu     */
+  --serie-4: #6f8f0a; /* addizionale regionale — oliva, parente del lime */
+  --serie-5: #9c3d8f; /* addizionale comunale  — prugna  */
+  /* Le somme aggiunte non prendono una sesta tinta: prendono il colore del
+     NETTO più la trama. Non è una rinuncia — è corretto, perché quelle somme
+     finiscono davvero nel netto. Stesso colore, origine diversa. */
+  --serie-6: #0a9184;
+}
+
+/* --- ripartizione del lordo --------------------------------------------- */
+
+.ripartizione {
+  margin: 1.5rem 0 0;
+}
+
+.ripartizione figcaption {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--inchiostro-tenue);
+  margin-bottom: 0.6rem;
+}
+
+.barra {
+  display: flex;
+  gap: 2px; /* il distacco fra i segmenti è parte della leggibilità */
+  height: 2.35rem;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.segmento {
+  transition: filter 0.12s ease, opacity 0.12s ease;
+  min-width: 3px;
+}
+
+.segmento:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.segmento:last-child {
+  border-radius: 0 5px 5px 0;
+}
+
+/* Il segmento oltre il lordo (le somme che il datore aggiunge) è marcato da
+   una texture oltre che dal colore: sta "fuori" dal totale, e va visto. */
+.segmento.oltre {
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.45) 0 3px,
+    transparent 3px 7px
+  );
+}
+
+.barra:hover .segmento:not(.evidenziato) {
+  opacity: 0.45;
+}
+
+.legenda {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.legenda li {
+  display: grid;
+  grid-template-columns: 0.85rem 1fr auto 3.6rem;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.3rem 0.4rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.legenda li.evidenziato {
+  background: var(--sfondo);
+}
+
+.pastiglia-colore {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 3px;
+  align-self: center;
+}
+
+.legenda-valore,
+.legenda-quota {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.legenda-valore {
+  font-weight: 600;
+}
+
+.legenda-quota {
+  color: var(--inchiostro-tenue);
+  font-size: 0.85rem;
+}
+
+/* --- come ho letto il numero --------------------------------------------- */
+
+.come-ho-letto {
+  margin: 0.45rem 0 0;
+  font-size: 0.9rem;
+  color: var(--inchiostro-tenue);
+}
+
+.come-ho-letto strong {
+  color: var(--inchiostro);
+  font-variant-numeric: tabular-nums;
+}
+
+.come-ho-letto.non-capito {
+  color: var(--allarme);
+}
+
+/* --- rifiniture ----------------------------------------------------------- */
+
+.modulo,
+.risultato,
+.fonti,
+.esito-inverso {
+  box-shadow: 0 1px 2px rgba(11, 11, 11, 0.04);
+}
+
+.netto-principale .netto-valore {
+  line-height: 1.1;
+}
+
+@media (max-width: 34rem) {
+  .netto {
+    gap: 1.25rem;
+  }
+  .netto-valore {
+    font-size: 2rem;
+  }
+  .legenda li {
+    grid-template-columns: 0.85rem 1fr auto;
+  }
+  .legenda-quota {
+    display: none;
+  }
+}
+
+/* --- tema scuro ----------------------------------------------------------- */
+/* Scelto, non ribaltato: ogni valore è ripreso per la superficie scura. */
+
+/* --- tema scuro ----------------------------------------------------------- */
+/*
+   Jet HR non ha un tema scuro: questo è un'aggiunta nostra, e la prima versione
+   sbagliava. Tingere i fondi scuri con il loro oliva (#11150a) produceva grigi
+   con 3-5 punti di verde in eccesso: su superfici grandi una tinta verde dentro
+   uno scuro non legge come "scuro di marca", legge come cachi.
+
+   Qui i grigi sono NEUTRI. Il marchio resta nel lime, che sul fondo scuro ha
+   finalmente il contrasto che sul bianco gli manca — ed è l'unico elemento che
+   deve portare identità.
+
+   Il tema è applicato da `data-tema-effettivo`, calcolato in JavaScript: così
+   la preferenza del sistema operativo si può SCAVALCARE, e i valori scuri
+   esistono in un posto solo invece che duplicati fra media query e attributo.
+*/
+
+:root[data-tema-effettivo="scuro"] {
+  --inchiostro: #f2f2f0;
+  --inchiostro-tenue: #a9a9a5;
+  --carta: #1a1a1a;
+  --sfondo: #101010;
+  --bordo: #303030;
+  --bordo-forte: #585858;
+
+  --lime: #dfeb57;
+  --su-lime: #11150a;
+  --accento: #cbdb4a;
+  --accento-tenue: #242424;
+
+  --allarme: #f0938a;
+  --allarme-tenue: #2b1a18;
+  --attenzione-tenue: #2a2718;
+  --attenzione-bordo: #7f7a2c;
+  --buono: #7fc96b;
+
+  /* Gli stessi otto colori di serie, ripassi scelti per la superficie scura. */
+  --serie-1: #22a89a;
+  --serie-2: #e0703f;
+  --serie-3: #5b7ce0;
+  --serie-4: #7d9a18;
+  --serie-5: #bb5cae;
+  --serie-6: #22a89a;
+}
+
+:root[data-tema-effettivo="scuro"] .riga-informativa th,
+:root[data-tema-effettivo="scuro"] .riga-informativa td {
+  background: #151515;
+}
+
+:root[data-tema-effettivo="scuro"] .pastiglia.primaria {
+  background: #12251a; color: #7fc96b; border-color: #24512f;
+}
+:root[data-tema-effettivo="scuro"] .pastiglia.secondaria {
+  background: #2a2718; color: #ddd06a; border-color: #5b5423;
+}
+:root[data-tema-effettivo="scuro"] .pastiglia.da_verificare {
+  background: #2b1a18; color: #f0938a; border-color: #5c2f28;
+}
+
+:root[data-tema-effettivo="scuro"] .modulo,
+:root[data-tema-effettivo="scuro"] .risultato,
+:root[data-tema-effettivo="scuro"] .fonti,
+:root[data-tema-effettivo="scuro"] .esito-inverso {
+  box-shadow: none;
+}
+
+/* --- avviso di indipendenza ----------------------------------------------- */
+
+.avviso-indipendenza {
+  margin: 0 0 1rem;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--bordo-forte);
+  border-left: 5px solid var(--lime);
+  border-radius: 8px;
+  background: var(--carta);
+  font-size: 0.88rem;
+  color: var(--inchiostro-tenue);
+}
+
+.avviso-indipendenza strong {
+  color: var(--inchiostro);
+}
+
+.leggibilita-nota {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--inchiostro-tenue);
+}
+
+
+/* ==========================================================================
+   Gradienti
+   ==========================================================================
+   Stanno sulla CORNICE — intestazione, pulsante, blocco del netto — e mai sui
+   marchi di dato.
+
+   La ragione non è di gusto: un segmento di barra percorso da un gradiente
+   cambia colore lungo la sua lunghezza, e chi legge non ha modo di sapere se
+   quella variazione significhi qualcosa. Sul dato il riempimento resta piatto,
+   così un colore vale un'identità e basta.
+
+   Sulla cornice invece non c'è nessun significato da proteggere: lì il
+   gradiente fa solo il suo mestiere, cioè rendere la pagina piacevole da
+   guardare — che per uno strumento che nessuno è obbligato a usare non è un
+   dettaglio. */
+
+.pagina {
+  background:
+    radial-gradient(120% 60% at 85% -10%, rgba(223, 235, 87, 0.28), transparent 60%),
+    radial-gradient(90% 50% at 0% 0%, rgba(207, 214, 205, 0.35), transparent 55%);
+  background-attachment: fixed;
+}
+
+.calcola {
+  background: linear-gradient(160deg, #eaf37a 0%, var(--lime) 55%, #cbd845 100%);
+  transition: filter 0.15s ease, transform 0.06s ease;
+}
+
+.calcola:hover:not(:disabled) {
+  filter: brightness(1.05);
+}
+
+.calcola:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Il blocco del netto è la cosa che si guarda per prima: merita una superficie
+   sua, non lo stesso bianco di tutto il resto. */
+.netto {
+  background: linear-gradient(135deg, rgba(223, 235, 87, 0.16), rgba(223, 235, 87, 0.03) 70%);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 0.3rem;
+  border-bottom: 0;
+}
+
+.scheda.attiva {
+  background: linear-gradient(180deg, rgba(223, 235, 87, 0.22), var(--carta) 70%);
+}
+
+:root[data-tema-effettivo="scuro"] .pagina {
+  background:
+    radial-gradient(120% 60% at 85% -10%, rgba(223, 235, 87, 0.10), transparent 60%),
+    radial-gradient(90% 50% at 0% 0%, rgba(255, 255, 255, 0.04), transparent 55%);
+}
+
+:root[data-tema-effettivo="scuro"] .netto {
+  background: linear-gradient(135deg, rgba(223, 235, 87, 0.12), rgba(223, 235, 87, 0.02) 70%);
+}
+
+/* In alto contrasto i gradienti spariscono: sono decorazione, e la decorazione
+   è la prima cosa che deve cedere il passo alla leggibilità. */
+[data-contrasto="alto"] .pagina,
+[data-contrasto="alto"] .netto,
+[data-contrasto="alto"] .scheda.attiva {
+  background: var(--carta);
+}
+
+[data-contrasto="alto"] .calcola {
+  background: var(--lime);
+}
+
+/* ==========================================================================
+   Adattamento agli schermi stretti
+   ==========================================================================
+   Non è una rifinitura: un HR che sta valutando un candidato lo fa spesso dal
+   telefono, fra un colloquio e l'altro. Se la tabella delle trattenute esce
+   dallo schermo, lo strumento è inutile proprio nel momento in cui servirebbe.
+
+   Tre problemi, tre soluzioni diverse — perché "rendere responsive" non è una
+   cosa sola:
+     - quello che può restringersi, si restringe;
+     - quello che ha una larghezza minima (una tabella di numeri) scorre
+       dentro il suo contenitore, senza trascinarsi dietro la pagina;
+     - quello che ha troppe colonne cambia forma e diventa un elenco. */
+
+/* Nessun elemento può far scorrere la pagina in orizzontale: è il difetto che
+   rende un sito sgradevole prima ancora che scomodo. */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Le tabelle di numeri hanno una larghezza minima sotto la quale diventano
+   illeggibili: invece di comprimerle, le si lascia scorrere dentro il proprio
+   riquadro. */
+.voci,
+.tabella-fonti {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.voci tbody,
+.voci thead,
+.tabella-fonti tbody,
+.tabella-fonti thead {
+  display: table;
+  width: 100%;
+  min-width: 22rem;
+}
+
+@media (max-width: 46rem) {
+  .pagina {
+    padding: 1.25rem 0.9rem 3rem;
+  }
+
+  h1 {
+    font-size: 1.55rem;
+  }
+
+  .intestazione {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modalita {
+    align-self: flex-start;
+  }
+
+  /* Le schede a piena larghezza: due bersagli grandi invece di due etichette
+     che vanno a capo male. */
+  .schede {
+    gap: 0.35rem;
+  }
+
+  .scheda {
+    flex: 1 1 100%;
+    text-align: left;
+    border-radius: var(--raggio);
+    border-bottom-color: var(--bordo);
+  }
+
+  .scheda.attiva {
+    border-bottom-color: var(--bordo);
+  }
+
+  .modulo {
+    border-radius: var(--raggio);
+    padding: 1.1rem;
+  }
+
+  .numero.grande {
+    max-width: 100%;
+    font-size: 1.25rem;
+  }
+
+  input,
+  select {
+    max-width: 100%;
+  }
+
+  .netto-valore {
+    font-size: 1.9rem;
+  }
+
+  .risultato,
+  .fonti,
+  .esito-inverso {
+    padding: 1.1rem;
+  }
+
+  /* La tabella delle fonti ha tre colonne di testo lungo: su schermo stretto
+     smette di essere una tabella e diventa un elenco di schede. Comprimerla
+     avrebbe prodotto colonne di due parole a capo. */
+  .tabella-fonti,
+  .tabella-fonti tbody,
+  .tabella-fonti tr,
+  .tabella-fonti th,
+  .tabella-fonti td {
+    display: block;
+    width: auto;
+    min-width: 0;
+  }
+
+  .tabella-fonti thead {
+    display: none;
+  }
+
+  .tabella-fonti tr {
+    border: 1px solid var(--bordo);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .tabella-fonti th,
+  .tabella-fonti td {
+    border: 0;
+    padding: 0.15rem 0;
+  }
+
+  .tabella-fonti th[scope="row"] {
+    font-weight: 600;
+    width: auto;
+  }
+
+  .data-verifica {
+    display: inline;
+    margin-left: 0.5rem;
+  }
+}
+
+/* Schermi molto stretti: la barra si assottiglia ma resta leggibile, e i
+   bersagli tattili restano abbastanza grandi da non richiedere mira. */
+@media (max-width: 26rem) {
+  /* La tabella delle voci diventa un elenco.
+     -----------------------------------------
+     Ha due colonne, e una delle due sono gli IMPORTI: cioè il risultato per
+     cui esiste lo strumento. Con `min-width: 22rem` (352 px) dentro un
+     riquadro da 294, la tabella scorreva — correttamente, secondo la regola
+     generale — ma senza alcun segno visibile: su un telefono da 360 px gli
+     importi erano fuori schermo, e niente diceva che ci fossero.
+
+     È il difetto peggiore possibile per una tabella di numeri, perché non
+     sembra un difetto: sembra che l'applicazione mostri quello che ha.
+     Meglio due righe visibili che una riga sola per metà.
+
+     Segnalato da una revisione esterna. La verifica automatica non l'aveva
+     preso perché controllava lo scorrimento della PAGINA, e la pagina non
+     scorreva: `overflow-x: hidden` su body silenziava proprio il sintomo che
+     si stava cercando. */
+  .voci,
+  .voci thead,
+  .voci tbody,
+  .voci tr,
+  .voci th,
+  .voci td {
+    display: block;
+    width: auto;
+    min-width: 0;
+    overflow-x: visible;
+  }
+
+  /* L'intestazione «Voce | Importo» diventa ridondante quando ogni riga porta
+     la propria etichetta accanto al proprio numero. Resta ai lettori di
+     schermo, che leggono la tabella nella sua struttura originale. */
+  .voci thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .voci tbody tr {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--bordo-tenue, rgba(17, 21, 10, 0.12));
+  }
+
+  .voci tbody th,
+  .voci tbody td {
+    border: 0;
+    padding: 0.1rem 0;
+  }
+
+  /* L'importo va a capo, allineato a destra e in grassetto: incolonnato con
+     gli altri importi e distinguibile dall'etichetta che lo precede. */
+  .voci tbody td.numerica {
+    text-align: right;
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .voci .riga-totale {
+    border-bottom: 0;
+    border-top: 2px solid var(--inchiostro);
+    padding-top: 0.7rem;
+  }
+
+  .voci .riga-totale td.numerica {
+    font-size: 1.2rem;
+  }
+
+  .barra {
+    height: 1.9rem;
+  }
+
+  .gruppo-leggibilita button,
+  .scelta {
+    min-height: 2.6rem;
+    padding-inline: 0.9rem;
+  }
+
+  .calcola {
+    width: 100%;
+  }
+
+  .netto {
+    gap: 1rem;
+  }
+}
+
+/* Su schermo tattile i bersagli hanno una dimensione minima: il dito non ha la
+   precisione del puntatore, e un collegamento di testo alto dodici pixel è
+   inutilizzabile. */
+@media (pointer: coarse) {
+  .apri-aiuto {
+    padding: 0.35rem 0;
+    display: inline-block;
+    min-height: 1.9rem;
+  }
+
+  .legenda li {
+    padding-block: 0.5rem;
+  }
+}
+
+/* Il contenitore del risultato riceve il fuoco dopo il calcolo: il contorno
+   serve a chi naviga con la tastiera, che altrimenti non saprebbe dove è
+   finito. Non compare a chi usa il mouse. */
+.zona-risultato:focus {
+  outline: none;
+}
+
+.zona-risultato:focus-visible {
+  outline: 3px solid var(--accento);
+  outline-offset: 4px;
+  border-radius: var(--raggio);
+}
+
+/* Un po' d'aria sopra, così arrivando dall'alto il risultato non resta
+   incollato al bordo dello schermo. */
+.zona-risultato {
+  scroll-margin-top: 1rem;
+}
+
+/* ==========================================================================
+   Modalità di visione dei colori
+   ==========================================================================
+   Una tavolozza sola non può servire tutti. Il daltonismo rosso-verde
+   (protanopia e deuteranopia) confonde coppie diverse dalla tritanopia, e una
+   soluzione unica ne servirebbe bene uno solo: per questo qui ci sono tre
+   modalità invece di un interruttore.
+
+   Tutte e tre sono passate al validatore prima di essere scritte, e in tutte
+   le trame si accendono da sole — il colore non resta mai l'unico canale. */
+
+/* --- daltonismo rosso-verde --------------------------------------------- */
+/* Le tinte si separano sull'asse blu-giallo, che protanopia e deuteranopia
+   distinguono bene. Verificata: separazione per daltonismo ΔE 19,3 sulla
+   peggior coppia adiacente, contro una soglia di 8. Due toni restano sotto il
+   contrasto 3:1, e per questo la legenda porta sempre nome e importo. */
+[data-visione="rosso-verde"] {
+  --serie-1: #0072b2; /* blu       */
+  --serie-2: #d55e00; /* vermiglio */
+  --serie-3: #56b4e9; /* azzurro   */
+  --serie-4: #e69f00; /* ambra     */
+  --serie-5: #cc79a7; /* rosa      */
+  --serie-6: #0072b2;
+}
+
+:root[data-tema-effettivo="scuro"][data-visione="rosso-verde"] {
+  --serie-1: #4a9fe0;
+  --serie-2: #f07a2a;
+  --serie-3: #8fd0f5;
+  --serie-4: #f5b93a;
+  --serie-5: #e295c0;
+  --serie-6: #4a9fe0;
+}
+
+/* --- senza colore -------------------------------------------------------- */
+/* Rampa di grigi ordinata più trame: nessuna informazione passa dalla tinta.
+   Serve alla tritanopia, alla visione monocromatica e alla stampa in bianco e
+   nero — dove ogni tavolozza a colori, per quanto ben scelta, si appiattisce. */
+[data-visione="senza-colore"] {
+  --serie-1: #262626;
+  --serie-2: #454545;
+  --serie-3: #646464;
+  --serie-4: #838383;
+  --serie-5: #a2a2a2;
+  --serie-6: #262626;
+}
+
+:root[data-tema-effettivo="scuro"][data-visione="senza-colore"] {
+  --serie-1: #e8e8e8;
+  --serie-2: #c6c6c6;
+  --serie-3: #a4a4a4;
+  --serie-4: #828282;
+  --serie-5: #626262;
+  --serie-6: #e8e8e8;
+}
+
+/* Senza colore le trame devono staccarsi anche sui grigi chiari: si passa dal
+   nero trasparente a un tratto pieno più marcato. */
+[data-visione="senza-colore"] .segmento {
+  outline: 1px solid var(--carta);
+  outline-offset: -1px;
+}
+
+[data-visione="senza-colore"] .pastiglia-colore {
+  border: 1px solid var(--inchiostro);
+}
+
+/* ==========================================================================
+   Leggibilità: le leve, ricostruite
+   ==========================================================================
+   Questo blocco era stato cancellato per errore da una modifica automatica che
+   tagliava il file per indici invece che per contenuto. Nessun test poteva
+   accorgersene — il foglio di stile non ha test — ed è emerso solo provando le
+   modalità in un browser: le trame non comparivano.
+   Vedi ERRORI.md n. 15.
+
+   Le tre leve sono indipendenti perché servono a persone diverse: chi ha
+   bisogno di caratteri più grandi non ha necessariamente bisogno di più
+   contrasto, e viceversa. */
+
+/* --- dimensione del testo ------------------------------------------------ */
+
+:root[data-testo="grande"] {
+  --scala: 1.18;
+}
+
+:root[data-testo="molto-grande"] {
+  --scala: 1.4;
+}
+
+[data-testo="molto-grande"] .netto-valore {
+  font-size: 2rem;
+}
+
+[data-testo="molto-grande"] .numero.grande,
+[data-testo="grande"] .numero.grande {
+  max-width: 100%;
+}
+
+/* --- alto contrasto ------------------------------------------------------ */
+/* Specificità doppia perché deve vincere anche sul tema scuro: chi chiede
+   contrasto lo chiede in entrambi i temi. */
+
+:root[data-contrasto="alto"] {
+  --inchiostro: #11150a;
+  --inchiostro-tenue: #2b3126;
+  --carta: #ffffff;
+  --sfondo: #ffffff;
+  --bordo: #6d7568;
+  --bordo-forte: #11150a;
+  --accento: #2f4707;
+  --accento-tenue: #ffffff;
+  --attenzione-tenue: #ffffff;
+  --allarme-tenue: #ffffff;
+  --allarme: #8a2a14;
+}
+
+/* Sparite le tinte tenui, la gerarchia deve sopravvivere per bordi. */
+[data-contrasto="alto"] .aiuto,
+[data-contrasto="alto"] .avviso,
+[data-contrasto="alto"] .errore,
+[data-contrasto="alto"] .conferma,
+[data-contrasto="alto"] .eco,
+[data-contrasto="alto"] .nota-sorpresa,
+[data-contrasto="alto"] .riga-aiuto td,
+[data-contrasto="alto"] .avviso-indipendenza {
+  border: 2px solid var(--inchiostro);
+  border-radius: 6px;
+}
+
+[data-contrasto="alto"] .modulo,
+[data-contrasto="alto"] .risultato,
+[data-contrasto="alto"] .fonti,
+[data-contrasto="alto"] .esito-inverso,
+[data-contrasto="alto"] .leggibilita {
+  border-width: 2px;
+  border-color: var(--inchiostro);
+  box-shadow: none;
+}
+
+[data-contrasto="alto"] th,
+[data-contrasto="alto"] td {
+  border-bottom-color: var(--bordo-forte);
+}
+
+[data-contrasto="alto"] .riga-informativa th,
+[data-contrasto="alto"] .riga-informativa td {
+  background: transparent;
+  font-style: italic;
+}
+
+[data-contrasto="alto"] .apri-aiuto {
+  text-decoration-thickness: 2px;
+  font-weight: 600;
+}
+
+[data-contrasto="alto"] input,
+[data-contrasto="alto"] select,
+[data-contrasto="alto"] .calcola {
+  border: 2px solid var(--inchiostro);
+}
+
+[data-contrasto="alto"] input:focus-visible,
+[data-contrasto="alto"] select:focus-visible,
+[data-contrasto="alto"] button:focus-visible {
+  outline-width: 4px;
+}
+
+[data-contrasto="alto"] .evidenza {
+  background: var(--lime);
+  border: 2px solid var(--inchiostro);
+  font-weight: 700;
+}
+
+[data-contrasto="alto"] .pastiglia {
+  border-width: 2px;
+  color: var(--inchiostro);
+  background: transparent;
+}
+
+/* --- trame nel grafico --------------------------------------------------- */
+/* Il canale di riserva quando il colore non arriva. Ogni segmento prende una
+   trama diversa, così le parti restano distinguibili anche stampate in bianco
+   e nero. Si accendono da sole nelle modalità per il daltonismo. */
+
+[data-texture="si"] .segmento:nth-child(1),
+[data-texture="si"] .legenda li:nth-child(1) .pastiglia-colore {
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.5) 0 2px, transparent 2px 6px);
+}
+[data-texture="si"] .segmento:nth-child(2),
+[data-texture="si"] .legenda li:nth-child(2) .pastiglia-colore {
+  background-image: repeating-linear-gradient(135deg, rgba(0,0,0,.5) 0 2px, transparent 2px 6px);
+}
+[data-texture="si"] .segmento:nth-child(3),
+[data-texture="si"] .legenda li:nth-child(3) .pastiglia-colore {
+  background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.5) 0 2px, transparent 2px 7px);
+}
+[data-texture="si"] .segmento:nth-child(4),
+[data-texture="si"] .legenda li:nth-child(4) .pastiglia-colore {
+  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,.5) 0 2px, transparent 2px 7px);
+}
+[data-texture="si"] .segmento:nth-child(5),
+[data-texture="si"] .legenda li:nth-child(5) .pastiglia-colore {
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.5) 0 3px, transparent 3px 9px);
+}
+[data-texture="si"] .segmento:nth-child(6),
+[data-texture="si"] .legenda li:nth-child(6) .pastiglia-colore {
+  background-image: repeating-linear-gradient(135deg, rgba(0,0,0,.5) 0 3px, transparent 3px 9px);
+}
+
+/* --- il pannello dei controlli ------------------------------------------- */
+
+.leggibilita {
+  border: 1px solid var(--bordo);
+  border-radius: var(--raggio);
+  background: var(--carta);
+  padding: 0;
+  margin: 0 0 1rem;
+}
+
+.leggibilita > summary {
+  cursor: pointer;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.leggibilita > summary::-webkit-details-marker {
+  display: none;
+}
+
+.leggibilita > summary::before {
+  content: "◐";
+  font-size: 1.05em;
+}
+
+.leggibilita-corpo {
+  padding: 0 0.9rem 0.9rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.gruppo-leggibilita {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.gruppo-leggibilita legend {
+  font-size: 0.85rem;
+  color: var(--inchiostro-tenue);
+  padding: 0;
+  margin-bottom: 0.3rem;
+  width: 100%;
+}
+
+.gruppo-leggibilita button {
+  border: 1px solid var(--bordo-forte);
+  background: var(--carta);
+  color: inherit;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.gruppo-leggibilita button[aria-pressed="true"] {
+  background: var(--lime);
+  color: var(--su-lime);
+  border-color: var(--inchiostro);
+  font-weight: 600;
+}
+
+/* --- preferenze già espresse dal sistema --------------------------------- */
+
+@media (prefers-contrast: more) {
+  :root:not([data-contrasto="normale"]) {
+    --inchiostro-tenue: #2b3126;
+    --bordo: #6d7568;
+    --accento: #2f4707;
+  }
+}
+
+/* Contrasto elevato di sistema: il colore sparisce del tutto, quindi ciò che
+   vi si appoggiava deve avere già un'altra strada. */
+@media (forced-colors: active) {
+  .segmento {
+    forced-color-adjust: none;
+    border: 1px solid CanvasText;
+  }
+  .pastiglia-colore {
+    border: 1px solid CanvasText;
+  }
+  .calcola,
+  .gruppo-leggibilita button[aria-pressed="true"] {
+    border: 2px solid CanvasText;
+  }
+}
+
+.compilazione {
+  opacity: 0.7;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* --- anteprima dei colori nel pannello ----------------------------------- */
+/* Rende visibile subito l'effetto delle modalità di visione, che altrimenti si
+   manifesterebbe solo dopo un calcolo — cioè quando l'utente non sta più
+   guardando i controlli. */
+
+.anteprima-colori {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.campione {
+  width: 2.1rem;
+  height: 1.15rem;
+  border-radius: 4px;
+  border: 1px solid rgba(17, 21, 10, 0.25);
+}
+
+.campione-1 { background-color: var(--serie-1); }
+.campione-2 { background-color: var(--serie-2); }
+.campione-3 { background-color: var(--serie-3); }
+.campione-4 { background-color: var(--serie-4); }
+.campione-5 { background-color: var(--serie-5); }
+
+[data-texture="si"] .campione-1 {
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.5) 0 2px, transparent 2px 6px);
+}
+[data-texture="si"] .campione-2 {
+  background-image: repeating-linear-gradient(135deg, rgba(0,0,0,.5) 0 2px, transparent 2px 6px);
+}
+[data-texture="si"] .campione-3 {
+  background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.5) 0 2px, transparent 2px 7px);
+}
+[data-texture="si"] .campione-4 {
+  background-image: repeating-linear-gradient(0deg, rgba(0,0,0,.5) 0 2px, transparent 2px 7px);
+}
+[data-texture="si"] .campione-5 {
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.5) 0 3px, transparent 3px 9px);
+}
+
+.anteprima-nota {
+  font-size: 0.8rem;
+  color: var(--inchiostro-tenue);
+  margin-left: 0.3rem;
+}
+
+.anteprima-colori .campioni {
+  display: inline-flex;
+  gap: 0.3rem;
+}

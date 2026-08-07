@@ -1,0 +1,6 @@
+# Dipendenze dell'API. Il motore di calcolo (motore/) non ne ha nessuna:
+# gira con la sola libreria standard, e i test si lanciano senza installare
+# niente. E' voluto: la parte che deve restare verificabile non deve dipendere
+# da un ecosistema che invecchia.
+fastapi>=0.115
+uvicorn[standard]>=0.32

@@ -1,0 +1,21 @@
+# Pubblicazione su Render.
+#
+# Un solo servizio: l'API serve anche l'interfaccia compilata, quindi non serve
+# nient'altro. MySQL NON entra qui, ed e' voluto — il registro dei coefficienti
+# a runtime e' il JSON versionato, e il database e' uno strumento di verifica,
+# non una dipendenza di esercizio. Vedi README, sezione sul database.
+services:
+  - type: web
+    name: dalla-ral-al-netto
+    runtime: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      cd web && npm ci && npm run build
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/salute
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.13"
+      - key: NODE_VERSION
+        value: "22"
