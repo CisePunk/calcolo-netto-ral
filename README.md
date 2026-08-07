@@ -26,6 +26,10 @@ I test del motore girano senza installare niente:
 
 ```bash
 python3 test_motore.py     # 399 test, ~15 secondi, nessuna dipendenza
+
+# Se hai clonato il repository e intendi modificarlo, attiva l'hook che
+# blocca i commit quando i test non passano (una volta sola):
+git config core.hooksPath .githooks
 ```
 
 ---
