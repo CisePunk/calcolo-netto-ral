@@ -791,6 +791,184 @@ tutto?»*. Non sono la stessa domanda, e la differenza fra le due era nascosta i
 una riga di CSS scritta mesi prima con ottime intenzioni.
 
 ---
+
+#### 24. La norma citata per i 75 € era quella sbagliata
+
+**Cosa è successo.** Corretto l'errore 21, avevo attribuito l'inciso dei 75 €
+all'**art. 1 c. 3 della L. 234/2021**, e l'avevo scritto in sei punti:
+`coefficienti.json` per il 2025 e per il 2026, la docstring di
+`trattamento_integrativo`, il commento in `soglie_di_reddito`, questo registro e
+il diario.
+
+Il numero era giusto. La norma no. La catena vera è:
+
+| Norma | Cosa fa |
+|---|---|
+| D.L. 3/2020 art. 1 | istituisce il trattamento integrativo |
+| L. 234/2021 art. 1 c. 3 | introduce la condizione di capienza — **senza** i 75 € |
+| **D.Lgs. 216/2023 art. 1** | alza la detrazione da 1.880 a 1.955 e **aggiunge i 75 €**, per il solo 2024 |
+| **L. 207/2024 art. 1 c. 3** | li rende **strutturali** dal 2025 |
+
+**C'era un argomento interno, e non l'ho visto.** I 75 € esistono per
+neutralizzare l'aumento della detrazione da 1.880 a 1.955. Quell'aumento è del
+D.Lgs. 216/2023. **Una legge del 2021 non può neutralizzare un aumento del
+2023.** E la nota che avevo scritto io nel registro lo diceva a chiare lettere —
+*«ai fini della capienza la detrazione vale 1.955 − 75 = 1.880»* — accanto alla
+citazione di una legge anteriore all'aumento.
+
+La contraddizione era **dentro la stessa riga di JSON**. Non serviva una fonte
+per vederla: bastava rileggere quello che avevo appena scritto.
+
+**Perché è successo.** L'errore 21 era stato corretto **in fretta**, sull'onda di
+averlo appena trovato. Avevo verificato la cosa che sembrava difficile —
+l'esistenza e il valore dei 75 € — e dato per scontata quella che sembrava
+facile, cioè da dove venissero. La verifica si era fermata al primo risultato
+che confermava il numero.
+
+È lo stesso meccanismo dell'errore 1, dove sei coefficienti su sette erano «veri
+per un altro anno»: **un dato plausibile che viene dal posto sbagliato non si
+distingue da un dato giusto**, finché qualcuno non chiede *da dove viene*.
+
+**Cosa è cambiato.** Chiusa sul testo consolidato del D.L. 3/2020 su Normattiva
+— che riporta *«ultimo aggiornamento all'atto pubblicato il 31/12/2024»*, cioè
+la data della L. 207/2024 — e con una seconda verifica indipendente del
+D.Lgs. 216/2023. Corretti tutti e sei i punti, e nel codice c'è ora la **catena
+completa delle quattro norme** invece di una citazione sola, perché una
+citazione sola è quella che si sbaglia.
+
+---
+
+#### 25. Due soglie coincidenti, una spiegazione persa in silenzio
+
+**Cosa è successo.** `soglie_di_reddito()` restituiva un dizionario
+`{valore: motivo}`. Più norme diverse cadono però sullo stesso reddito, e in un
+dizionario **la seconda sovrascrive la prima**, senza dire niente.
+
+```
+motivi dichiarati nel codice:  8
+chiavi nel dizionario:         7    -> uno perso
+```
+
+A **15.000 €** finiscono insieme la fine della detrazione di fascia 1, la fine
+del trattamento integrativo pieno e il passaggio della somma esente dal 5,3% al
+4,8%. Il ciclo sulle fasce scriveva per ultimo, quindi la didascalia a 15.000
+diceva soltanto *«cambio di fascia della somma esente»*: mezza verità.
+
+**Perché nessun test l'ha visto.** Perché **l'aritmetica restava giusta.** Il
+confine del segmento è lo stesso valore comunque, quindi il calcolo inverso
+funzionava, i sette salti erano corretti, e ogni asserzione numerica passava. A
+perdersi era solo la spiegazione — che è precisamente ciò che alimenta il
+diagramma delle discontinuità e i documenti.
+
+**Colpisce la parte del progetto di cui vado più fiera:** non il numero, ma il
+*perché* accanto al numero. Un test che controlla solo numeri non lo poteva
+prendere.
+
+**Cosa è cambiato.** Le soglie si raccolgono in una **lista di coppie** e si
+raggruppano per valore alla fine: `{valore: [motivi]}`. Le coincidenze diventano
+visibili invece di essere dedotte in silenzio. Un test pretende ora otto motivi
+su sette soglie, e che a 15.000 ce ne siano due.
+
+**La lezione, che è quella degli errori 5, 7 e 21 vista da un'altra angolazione.**
+Lì il problema era una verifica che si fabbricava la risposta; qui è una
+**struttura dati che rende impossibile accorgersi di una perdita**. Un dizionario
+dice «una chiave, un valore»: se il dominio ammette che due cose cadano nello
+stesso punto, quella struttura sta già affermando qualcosa di falso sul mondo, e
+lo farà in silenzio per sempre.
+
+---
+
+### Passaggio: esecuzione degli strumenti
+
+#### 26. Un registro guasto apposta, lasciato sul disco e committato — due volte
+
+**Cosa è successo.** `controllo_sensibilita.py` funziona rompendo il registro
+**un coefficiente alla volta**, rilanciando i test e rimettendo tutto a posto
+alla fine. Mentre gira, il file dei coefficienti sul disco è deliberatamente
+sbagliato.
+
+L'esecuzione è stata uccisa da un timeout a metà. Il registro è rimasto con
+**cinque scaglioni regionali inventati** al posto dei quattro reali — che è
+esattamente l'errore 1, reintrodotto da uno strumento costruito per trovarlo.
+
+Poi ho lanciato i test, ho fatto il commit, e **ho letto l'esito dopo**:
+
+```
+- RAL 80.000: addizionale_regionale = 1.156,00  ->  ottenuto 1.155,4972
+- RAL 80.000: netto_annuo = 47.338,56           ->  ottenuto 47.339,0577
+```
+
+**I test avevano funzionato perfettamente.** Hanno preso il guasto in mezzo
+secondo, con il numero esatto e la voce esatta. Il difetto non era loro: era il
+commit fatto senza leggere cosa dicevano.
+
+**Perché è il tipo di errore peggiore.** Un registro fiscale guasto **non ha
+nessun aspetto particolare**: è JSON valido, con dentro numeri plausibili, in un
+file che nessuno rilegge riga per riga. Lo scarto era di **50 centesimi su
+47.000 €** — troppo piccolo per saltare all'occhio, abbastanza grande da essere
+sbagliato.
+
+**Perché `try/finally` non bastava.** Lo strumento ce l'aveva già. Ma `finally`
+**non viene eseguito quando il processo viene ucciso**: con un SIGKILL è
+impossibile, e con un SIGTERM non gestito Python termina senza eseguirlo. Una
+difesa che vive dentro il processo non protegge dalla morte del processo.
+
+Da qui tre difese sovrapposte, perché nessuna copre da sola tutti i modi di
+morire:
+
+| Difesa | Copre |
+|---|---|
+| Gestore per `SIGTERM` e `SIGINT` che alza un'eccezione | terminazione ordinata e Ctrl-C: `finally` torna a girare |
+| Un **salvataggio** accanto al registro, con nome noto | il rimedio è a portata di mano invece che in `/tmp` |
+| Un file **segnale** `.REGISTRO_IN_GUASTO` | il SIGKILL, che nessun codice può intercettare: al rilancio lo strumento se ne accorge e ripristina da solo |
+
+Verificato uccidendo il processo in entrambi i modi: con SIGTERM non resta
+niente sul disco; con SIGKILL restano segnale e salvataggio, e il rilancio
+successivo rimette a posto il registro prima di fare qualunque altra cosa.
+
+**Ed è successo di nuovo, due ore dopo.** Con le difese già installate. Questa
+volta il guasto era `reddito_minimo_escluso` dell'ulteriore detrazione, portato
+da 25.000 a 28.000 — e lo strumento l'aveva «ripristinato» fedelmente, perché la
+sua garanzia è *identico a come l'ho trovato*, **non** *corretto*. Se parte da un
+registro già guasto, lo restituisce guasto.
+
+Anche questa volta i test l'avevano preso. Anche questa volta il commit era già
+stato fatto.
+
+**Due volte su due, la regola «leggi l'esito prima di committare» ha fallito.**
+Una regola che dipende dall'attenzione di chi la applica, e che fallisce sempre,
+non è una regola: è un buon proposito.
+
+**Cosa è cambiato davvero.** Un hook `pre-commit` che **esegue i test e blocca
+il commit** se non passano, con il messaggio che spiega la causa più probabile e
+come rimediare. Provato guastando il registro apposta: il commit viene rifiutato.
+
+```
+COMMIT BLOCCATO: i test non passano.
+
+Se hai appena interrotto strumenti/controllo_sensibilita.py, il registro
+e' probabilmente rimasto guasto. Per rimediare:
+    python3 strumenti/controllo_sensibilita.py    # ripristina da solo
+    git diff dati/coefficienti.json               # e guarda cosa e' cambiato
+```
+
+La storia di Git è stata poi ricostruita, perché due commit portavano il registro
+guasto e **un registro fiscale sbagliato dentro un commit è una mina**: chi fa
+`checkout` di quel punto ottiene numeri plausibili e falsi. Verificato commit per
+commit che ora nessuno lo contenga.
+
+**La lezione, che è doppia.** La prima: uno strumento che manomette i dati per
+verificarli **è pericoloso quanto è utile**, e la sua correttezza non finisce
+quando il codice è giusto — finisce quando è giusto anche il comportamento nel
+caso in cui non arriva alla fine.
+
+La seconda vale oltre questo progetto: **quando una regola di disciplina
+fallisce due volte di fila, non va ripetuta più forte, va sostituita con un
+meccanismo.** La differenza fra «ricordati di leggere i test» e un hook che non
+te lo lascia fare è tutta lì.
+
+---
+
 ## Cosa insegna il quadro d'insieme
 
 Raggruppando i ventisei errori per **metodo che li ha trovati**:
