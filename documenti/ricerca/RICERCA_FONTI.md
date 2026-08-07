@@ -3,7 +3,7 @@
 Esito del Giorno 1. Ogni coefficiente che entrerà nel motore è elencato qui con
 il valore, la norma che lo fissa e — soprattutto — **quanto è solido**.
 
-I valori in forma utilizzabile stanno in [dati/coefficienti.json](dati/coefficienti.json),
+I valori in forma utilizzabile stanno in [dati/coefficienti.json](../../dati/coefficienti.json),
 che è la fonte di verità da cui leggono il motore e il seed del database. Questo
 documento spiega **da dove vengono**; quel file **li contiene**.
 
@@ -359,7 +359,7 @@ conferma, non ostacoli:
    **circolare AdE 4/E del 16 maggio 2025** per esteso
 3. 🟡 Confermare gli importi delle **detrazioni art. 13** sul testo dell'articolo
 4. 🟡 Verificare le **mensilità dei tre CCNL** diversi dal Commercio (marcati
-   `da_verificare` in [dati/coefficienti.json](dati/coefficienti.json))
+   `da_verificare` in [dati/coefficienti.json](../../dati/coefficienti.json))
 5. 🟡 A ridosso della consegna: ricontrollare che le comunali **2026** non siano
    cambiate, e se nel frattempo è uscita la tabella AdE modulistica 2027
 
@@ -396,3 +396,85 @@ conferma, non ostacoli:
 - [Elenco aliquote addizionale comunale, anno d'imposta 2025 (MEF)](https://www.finanze.gov.it/it/fiscalita/fiscalita-regionale-e-locale/Addizionale-comunale-allIRPEF/aliquote-applicabili/elenco-aliquote-2025/)
 - [Addizionale comunale IRPEF — banca dati MEF, Palermo](http://www.globallaboratory.it/pit/addcom/r19/p60/addizionale_comunale_palermo.htm)
 - [Aumento addizionale IRPEF Palermo 2026 (PalermoToday)](https://www.palermotoday.it/politica/comune-aumento-irpef-2026.html)
+
+---
+
+## 9. Minimi tabellari dei CCNL
+
+Non servono al calcolo del netto: servono a dire se **quella RAL si può
+offrire**. Il minimo contrattuale è inderogabile in peggio, e uno strumento che
+calcola serenamente il netto di una RAL illegittima aiuta qualcuno a sbagliare
+con precisione.
+
+### CCNL Terziario, Distribuzione e Servizi (Confcommercio)
+
+Rinnovo del **22 marzo 2024**. Tabella in vigore **dal 1° novembre 2025**;
+tranche successive il 1° novembre 2026 e il 1° febbraio 2027.
+
+| Livello | Minimo mensile | × 14 mensilità |
+|---|---:|---:|
+| Quadro | 2.183,09 € | 30.563,26 € |
+| 1 | 1.966,54 € | 27.531,56 € |
+| 2 | 1.701,04 € | 23.814,56 € |
+| 3 | 1.453,94 € | 20.355,16 € |
+| 4 | 1.257,46 € | 17.604,44 € |
+| 5 | 1.136,07 € | 15.904,98 € |
+| 6 | 1.019,94 € | 14.279,16 € |
+| **7** | **873,22 €** | **12.225,08 €** ← il pavimento |
+
+Stato: 🟡 **Secondaria.** Due fonti indipendenti concordano sui valori della
+tranche di novembre 2026 con uno scarto di **un centesimo** (2.243,85 contro
+2.243,86 per il Quadro), il che è una conferma incrociata utile ma non è il
+testo contrattuale.
+
+### CCNL Metalmeccanici industria (Federmeccanica-Assistal)
+
+Rinnovo 2025-2028, terza tranche dal **1° giugno 2026**. Tredici mensilità.
+
+| Livello | Minimo mensile | × 13 mensilità |
+|---|---:|---:|
+| **D1** | **1.784,94 €** | **23.204,22 €** ← il pavimento |
+| C1 | 2.022,12 € | 26.287,56 € |
+| C2 | 2.064,88 € | 26.843,44 € |
+| C3 | 2.211,43 € | 28.748,59 € |
+| B3 | 2.838,99 € | 36.906,87 € |
+
+Stato: 🔴 **Da verificare, e la tabella è dichiaratamente parziale**: mancano
+D2, B1, B2, A1. Il livello **più basso è però presente**, quindi il controllo
+sul pavimento è affidabile mentre quello per singolo livello non lo sarebbe —
+e infatti lo strumento non lo offre.
+
+### Studi professionali ed edilizia
+
+**Nessun minimo nel registro.** Lo strumento lo dichiara invece di tacere:
+`applicabile: false`, con il motivo. Il silenzio, a un utente, somiglia troppo
+a un via libera.
+
+### Il confronto che rende evidente perché servono
+
+| CCNL | Mensilità | Pavimento annuo |
+|---|---|---:|
+| Commercio | 14 | 12.225,08 € |
+| Metalmeccanici | 13 | 23.204,22 € |
+
+**Quasi undicimila euro di differenza.** Una RAL di 20.000 € è perfettamente
+legittima nel commercio e sotto il minimo nei metalmeccanici: senza il
+contratto, la domanda «questa RAL va bene?» non ha risposta. È anche il motivo
+per cui il confronto usa **le mensilità del contratto** e non dodici per tutti:
+usare 12 ovunque sbaglierebbe di quasi il 17% sul commercio, in silenzio.
+
+### Cosa questi numeri NON dicono
+
+Il minimo tabellare è **paga base ed ex contingenza**. Non comprende terzo
+elemento provinciale, scatti di anzianità e superminimi individuali: la
+retribuzione reale di un livello è quasi sempre più alta del suo minimo.
+
+Il confronto dice quindi **«non è al di sotto»**, non «è corretta». E vale per
+il **tempo pieno**: un part-time ha minimi proporzionati alle ore e una RAL
+legittimamente più bassa. Questo prototipo non modella l'orario, e l'avviso lo
+scrive invece di far finta di saperlo.
+
+**Vanno riverificati a ogni tranche.** Novembre 2026 per il commercio è la
+prossima, ed è fra tre mesi: è annotata nel registro accanto ai valori, così
+che chi riapre il file sappia quando smettono di essere veri.
+

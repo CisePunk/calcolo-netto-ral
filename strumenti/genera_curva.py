@@ -141,5 +141,5 @@ for i, sp in enumerate(salti):
 o.append(f'<text x="{ex}" y="{ey+30+6*19+16:.0f}" font-size="11" fill="#898781">Cerchio vuoto: prima della soglia. Cerchio pieno: subito dopo.</text>')
 
 o.append("</svg>")
-(RADICE / "design/diagrammi/curva-netto-discontinuita.svg").write_text("\n".join(o), encoding="utf-8")
-print(f"  scritto: design/diagrammi/curva-netto-discontinuita.svg   ({len(segmenti)} segmenti, {len(salti)} salti)")
+(RADICE / "documenti/ux/design/diagrammi/curva-netto-discontinuita.svg").write_text("\n".join(o), encoding="utf-8")
+print(f"  scritto: documenti/ux/design/diagrammi/curva-netto-discontinuita.svg   ({len(segmenti)} segmenti, {len(salti)} salti)")

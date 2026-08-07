@@ -583,7 +583,13 @@ def avvisi_minimo_ccnl(verifica: dict, mensilita: int) -> list[str]:
     """
     if not verifica.get("applicabile") or not verifica.get("sotto_il_minimo"):
         return []
+    # Il prefisso permette all'interfaccia di distinguere questo avviso dagli
+    # altri senza doverne leggere il testo. NON blocca il calcolo: il risultato
+    # viene mostrato lo stesso, perche' sapere quanto resterebbe in tasca e'
+    # utile anche quando l'offerta va rifatta — e perche' uno strumento che si
+    # rifiuta di rispondere insegna solo ad aggirarlo.
     return [
+        "[minimo-ccnl] "
         f"{formatta_euro(verifica['minimo_assoluto_annuo'])} è il minimo contrattuale "
         f"più basso di questo CCNL (livello {verifica['livello_piu_basso']}, "
         f"{mensilita} mensilità): la RAL inserita sta sotto. Il minimo tabellare non è "

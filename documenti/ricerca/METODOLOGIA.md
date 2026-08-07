@@ -164,13 +164,13 @@ anno.
 > Le due regole sono **opposte** e convivono. Una regola uniforme — che era la
 > nostra prima scelta perché sembrava più elegante — produce zero dove il
 > sostituto d'imposta la riconosce, ragguagliata ai giorni. Vedi
-> [ERRORI.md](ERRORI.md) n. 8.
+> [ERRORI.md](../verifiche/ERRORI.md) n. 8.
 
 ---
 
 ## 3. Come si mantiene vero
 
-I coefficienti stanno in [dati/coefficienti.json](dati/coefficienti.json), con
+I coefficienti stanno in [dati/coefficienti.json](../../dati/coefficienti.json), con
 la fonte e la data accanto a ognuno. Aggiornare l'anno significa aggiungere un
 blocco a quel file e rigenerare il seed del database: il codice non si tocca.
 
@@ -213,7 +213,7 @@ le seconde.
 Dopo ogni aggiornamento:
 
 ```bash
-python3 test_motore.py                       # 375 test
+python3 test_motore.py                       # 399 test
 python3 strumenti/controllo_sensibilita.py   # i test si accorgono dei guasti?
 python3 strumenti/genera_seed.py             # rigenera il seed dal registro
 ```

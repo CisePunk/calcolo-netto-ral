@@ -19,4 +19,4 @@ python3 strumenti/genera_presentazione.py
 ```
 
 Il perché di tutto questo — e cosa succede se ci si affida al solo link — sta
-in [COSTRUZIONE_FIGMA.md](COSTRUZIONE_FIGMA.md), sezione 7.
+in [COSTRUZIONE_FIGMA.md](../COSTRUZIONE_FIGMA.md), sezione 7.

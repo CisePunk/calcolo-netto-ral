@@ -88,7 +88,7 @@ in Figma restano modificabili elemento per elemento, e i richiami sono oggetti
 separati dal disegno. Vanno nella pagina **04 · Architettura e flussi**, o in
 una pagina propria se si preferisce dare loro spazio.
 
-Sono generate da [`strumenti/genera_schermate_annotate.py`](../strumenti/genera_schermate_annotate.py):
+Sono generate da [`strumenti/genera_schermate_annotate.py`](../../../strumenti/genera_schermate_annotate.py):
 se l'interfaccia cambia, si rigenerano invece di essere ridisegnate a mano.
 
 ---

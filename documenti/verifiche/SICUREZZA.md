@@ -307,8 +307,8 @@ lo conferma; per contraddirlo bisogna eseguirlo in un modo che non era previsto.
 ## Dopo le correzioni
 
 ```
-375 test superati
-15/15 mutazioni rilevate
+399 test superati
+17/17 mutazioni rilevate
 ```
 
 Le correzioni hanno toccato la validazione dell'ingresso, che è coperta da test.

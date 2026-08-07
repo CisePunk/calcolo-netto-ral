@@ -36,7 +36,7 @@ ricevute:
 **Nessuna agevolazione contributiva.** Under 35, donne con figli minori,
 apprendisti, regime impatriati: tutte fuori. È rilevante perché sono la leva
 economicamente più pesante per un'azienda che assume, e per questo la loro
-normativa è comunque tracciata in [METODOLOGIA.md](METODOLOGIA.md) §4 — mappata,
+normativa è comunque tracciata in [METODOLOGIA.md](../ricerca/METODOLOGIA.md) §4 — mappata,
 non implementata.
 
 **Tempo indeterminato.** Il tempo determinato cambia il minimo della detrazione
@@ -89,7 +89,7 @@ che il dipendente riceve ogni mese. Includerlo gonfierebbe il netto di circa il
 **Il costo per l'azienda non è calcolato.** Il task chiede il netto del
 dipendente e le sue trattenute. Il costo aziendale — contributi a carico del
 datore, INAIL, TFR accantonato — è una domanda diversa, ed è la prima estensione
-elencata nel [README](README.md).
+elencata nel [README](../../README.md).
 
 ---
 
@@ -140,7 +140,7 @@ scelta ma quello che fa il sostituto d'imposta:
 La distinzione è stata ricavata confrontando il motore con una Certificazione
 Unica reale, che conferma **entrambe** le letture — riconosce la detrazione e non
 eroga la somma esente. Una regola uniforme, in un senso o nell'altro, sbaglia una
-delle due voci. Vedi [ERRORI.md](ERRORI.md) n. 8.
+delle due voci. Vedi [ERRORI.md](../verifiche/ERRORI.md) n. 8.
 
 **Il minimo di 690 € della detrazione di fascia 1 è rapportato ai giorni**, come
 fa il sostituto d'imposta. Il minimo intero si recupera in sede di dichiarazione
@@ -182,7 +182,7 @@ non il 33%.
 > consolidata dell'Agenzia delle Entrate: esce con la modulistica 2027. Nel
 > frattempo poggiano su delibere e fonti secondarie, e il prototipo **lo
 > dichiara** invece di far finta di una certezza uniforme. Vedi
-> [METODOLOGIA.md](METODOLOGIA.md) §3.
+> [METODOLOGIA.md](../ricerca/METODOLOGIA.md) §3.
 
 ---
 

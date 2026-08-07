@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Costruisce design/PRESENTAZIONE.md dai riquadri esportati da Figma.
+Costruisce documenti/ux/design/PRESENTAZIONE.md dai riquadri esportati da Figma.
 
 ## Perché esiste
 
@@ -22,7 +22,7 @@ comando invece di mezz'ora di copia-incolla.
 
 1. In Figma: seleziona tutti i riquadri di una pagina, pannello di esportazione,
    **PNG a 2×**, esporta.
-2. Metti i file in `design/figma/riquadri/`. I nomi arrivano già giusti da
+2. Metti i file in `documenti/ux/design/figma/riquadri/`. I nomi arrivano già giusti da
    Figma, nella forma `NN.M — titolo breve.png`.
 3. `python3 strumenti/genera_presentazione.py`
 
@@ -35,8 +35,8 @@ from pathlib import Path
 from urllib.parse import quote
 
 RADICE = Path(__file__).resolve().parent.parent
-RIQUADRI = RADICE / "design" / "figma" / "riquadri"
-USCITA = RADICE / "design" / "PRESENTAZIONE.md"
+RIQUADRI = RADICE / "documenti" / "ux" / "design" / "figma" / "riquadri"
+USCITA = RADICE / "documenti" / "ux" / "design" / "PRESENTAZIONE.md"
 
 # Le pagine del racconto, nell'ordine in cui vanno guardate. Vengono da
 # COSTRUZIONE_FIGMA.md: se lì cambiano, cambiano anche qui — sono due file, ma
@@ -84,7 +84,7 @@ def genera(trovati: list) -> str:
         "del lavoro.",
         "",
         "Chi vuole vedere i livelli, i componenti e come è costruito il file trova il",
-        "link nel [README](../README.md). Chi vuole solo guardare, guarda qui.",
+        "link nel [README](../../../README.md). Chi vuole solo guardare, guarda qui.",
         "",
         "Il come e il perché di ogni scelta stanno in [GUIDA_FIGMA.md](GUIDA_FIGMA.md)",
         "(i contenuti) e [COSTRUZIONE_FIGMA.md](COSTRUZIONE_FIGMA.md) (il montaggio).",
@@ -99,7 +99,7 @@ def genera(trovati: list) -> str:
     if not trovati:
         righe += [
             "*Nessun riquadro ancora esportato.* Esporta i riquadri da Figma in PNG a",
-            "2× dentro `design/figma/riquadri/` e rilancia lo script.",
+            "2× dentro `documenti/ux/design/figma/riquadri/` e rilancia lo script.",
             "",
         ]
         return "\n".join(righe)
@@ -115,7 +115,7 @@ def genera(trovati: list) -> str:
         # collegamento si rompe allo spazio e in pagina resta il testo
         # alternativo — cioe' l'immagine non si vede, senza nessun errore.
         # Trovato eseguendo lo script, non leggendolo.
-        percorso = quote(file.relative_to(RADICE / "design").as_posix())
+        percorso = quote(file.relative_to(RADICE / "documenti" / "ux" / "design").as_posix())
         righe += [
             f"### {pagina}.{numero} — {titolo}",
             "",

@@ -25,7 +25,7 @@ cd web && npm install && npm run build && cd ..
 I test del motore girano senza installare niente:
 
 ```bash
-python3 test_motore.py     # 375 test, ~15 secondi, nessuna dipendenza
+python3 test_motore.py     # 399 test, ~15 secondi, nessuna dipendenza
 ```
 
 ---
@@ -89,7 +89,7 @@ vista — anche in modalità semplificata.
 
 *(Non è un vantaggio competitivo: altri calcolatori il comune lo chiedono già.
 È il minimo per essere corretti. Vedi
-[ANALISI_COMPETITIVA.md](ANALISI_COMPETITIVA.md).)*
+[ANALISI_COMPETITIVA.md](documenti/ux/ANALISI_COMPETITIVA.md).)*
 
 ### 3. Perché codice e non una pagina generata
 
@@ -141,7 +141,7 @@ mai l'unico canale.
 ## Dove è diverso dagli altri strumenti
 
 Quattro calcolatori pubblici sono stati ispezionati **nel codice sorgente**, non
-a impressione ([ANALISI_COMPETITIVA.md](ANALISI_COMPETITIVA.md)). L'analisi ha
+a impressione ([ANALISI_COMPETITIVA.md](documenti/ux/ANALISI_COMPETITIVA.md)). L'analisi ha
 smontato tre dei quattro elementi che credevamo distintivi: il comune, le
 citazioni normative e il calcolo inverso ce li hanno già.
 
@@ -152,7 +152,7 @@ Ne restano quattro, e su questi **quattro strumenti su quattro sono a zero**:
 | **Dichiara quanto è sicuro di ogni dato** | fonte primaria, secondaria o da verificare, accanto a ogni coefficiente. Le aliquote comunali 2026 non hanno ancora una tabella ufficiale consolidata: chi le usa oggi sta usando delibere, e dirlo cambia il modo in cui un HR usa il numero |
 | **Avvisa dove il dominio inganna** | superata la soglia comunale, cento euro di lordo in più ne costano 184 di netto; sotto una certa soglia il netto supera il lordo. Tutti calcolano correttamente questi effetti; nessuno li nomina |
 | **È usabile da chi vede poco** | zero `aria-describedby` sui quattro strumenti esaminati. Qui l'aiuto è agganciato ai campi, e ci sono tre leve di leggibilità |
-| **Si lascia verificare** | 375 test che girano senza installare niente, e strumenti che rieseguono le verifiche — compreso quello che guasta i coefficienti apposta per controllare che i test se ne accorgano |
+| **Si lascia verificare** | 399 test che girano senza installare niente, e strumenti che rieseguono le verifiche — compreso quello che guasta i coefficienti apposta per controllare che i test se ne accorgano |
 
 Su **ampiezza di casi** Jet HR è avanti, e sull'anagrafica dei comuni lo sono
 gli altri. Il posizionamento è più stretto di quello di partenza, ed è l'unico
@@ -168,7 +168,7 @@ Le decisioni di scope, di stack e di priorità sono mie, così come le verifiche
 Vale la pena essere precisi su cosa questo significa, perché è il punto in cui
 un lavoro assistito si distingue da un lavoro delegato: **nessun numero fiscale
 è stato accettato perché proposto**. Ognuno è stato cercato sulla fonte, e
-[ERRORI.md](ERRORI.md) elenca i **ventitré casi in cui la verifica ha smentito
+[ERRORI.md](documenti/verifiche/ERRORI.md) elenca i **ventisei casi in cui la verifica ha smentito
 quello che era stato prodotto** — compresa una regola sui periodi di lavoro
 parziali che sembrava più elegante ed era sbagliata, scoperta confrontando il
 motore con una Certificazione Unica reale.
@@ -192,7 +192,7 @@ tutti nel repository invece di essere sostituiti dal più comodo.
 | **Validazione della palette** | ogni colore passato al controllo di separazione per daltonismo e contrasto | quattro palette candidate bocciate prima di trovarne una valida |
 | **Prova nel browser a cinque larghezze** | 360, 390, 768, 1280 e 1600 pixel, con calcolo eseguito e ispezione del traboccamento orizzontale | importi formattati in due modi diversi nella stessa tabella |
 | **Uso dell'interfaccia** | semplicemente usandola | i formati numerici italiani, e il tema scuro imposto |
-| **Controllo di sicurezza** | richieste ostili costruite a mano contro l'API a codice finito ([SICUREZZA.md](SICUREZZA.md)) | il server serviva qualunque file del progetto, compresa la cartella dei dati privati |
+| **Controllo di sicurezza** | richieste ostili costruite a mano contro l'API a codice finito ([SICUREZZA.md](documenti/verifiche/SICUREZZA.md)) | il server serviva qualunque file del progetto, compresa la cartella dei dati privati |
 | **Revisione esterna** | il progetto dato in lettura a due revisori indipendenti, a lavoro considerato finito | **i 75 € di capienza del trattamento integrativo, mancanti dal registro** — più tre difetti di interfaccia |
 
 L'ultima riga è quella che conta di più. **Le prime dieci righe di codice usate
@@ -232,7 +232,7 @@ Due semplificazioni **misurate**, non stimate:
   annuale; il mensile non coincide al centesimo con una busta reale.
 
 L'elenco completo, con la motivazione di ognuna, è in
-[ASSUNZIONI.md](ASSUNZIONI.md).
+[ASSUNZIONI.md](documenti/prodotto/ASSUNZIONI.md).
 
 ---
 
@@ -258,23 +258,17 @@ In ordine di valore sbloccato, non di difficoltà:
 ## La documentazione
 
 Il codice è commentato in italiano, con le ragioni delle scelte accanto alle
-scelte. Oltre a questo, dodici documenti — nessuno obbligatorio per capire il
-prototipo, tutti utili per capire come è nato:
+scelte. Tutto il resto — ricerca, decisioni, verifiche, progettazione, diario —
+sta in **[documenti/](documenti/)**, organizzato per area e con un percorso di
+lettura in cima.
 
-| Documento | Cosa contiene |
+| Se hai | Leggi |
 |---|---|
-| [METODOLOGIA.md](METODOLOGIA.md) | La catena di calcolo, la tabella **norma → codice**, e il calendario di quando le fonti escono |
-| [RICERCA_FONTI.md](RICERCA_FONTI.md) | Ogni coefficiente con la norma e lo stato di verifica, per il 2026 e il 2025 |
-| [ANALISI_COMPETITIVA.md](ANALISI_COMPETITIVA.md) | Quattro strumenti ispezionati nel sorgente, diretti e indiretti |
-| [ARCHITETTURA_INFORMAZIONE.md](ARCHITETTURA_INFORMAZIONE.md) | Mappa degli stati, gerarchia dei contenuti, wireframe e decisioni di impaginazione |
-| [DECISIONI_DI_PRODOTTO.md](DECISIONI_DI_PRODOTTO.md) | Cosa è stato deciso, su quale evidenza, e i nove casi in cui la decisione ha corretto la proposta tecnica |
-| [ASSUNZIONI.md](ASSUNZIONI.md) | Ogni semplificazione, motivata e — dove misurabile — quantificata |
-| [CASI_DI_PROVA.md](CASI_DI_PROVA.md) | I quattro casi calcolati a mano, passo per passo, e il confronto con una Certificazione Unica reale |
-| [ERRORI.md](ERRORI.md) | I ventitré errori commessi, per passaggio e per metodo che li ha scoperti |
-| [SICUREZZA.md](SICUREZZA.md) | Il controllo di sicurezza: cosa è stato provato, cosa ha ceduto, e i rischi che restano dichiarati |
-| [ANALISI_USABILITA.md](ANALISI_USABILITA.md) | Dove si rompe un calcolatore fiscale per chi non è del mestiere |
-| [DIARIO_DI_BORDO.md](DIARIO_DI_BORDO.md) | Il percorso in ordine cronologico, scritto man mano |
-| [PIANO.md](PIANO.md) | Il piano di lavoro e le decisioni prese |
+| **5 minuti** | [ASSUNZIONI.md](documenti/prodotto/ASSUNZIONI.md) — cosa lo strumento non fa, e perché |
+| **20 minuti** | più [ERRORI.md](documenti/verifiche/ERRORI.md) — i ventisei errori, per metodo che li ha scoperti |
+| **voglia di verificare** | [CASI_DI_PROVA.md](documenti/verifiche/CASI_DI_PROVA.md) — quattro RAL con il conto accanto, rifacibili a mano |
+| **tempo** | [il dossier completo](documenti/) — fonti, prodotto, verifiche, UX, diario |
+
 
 ---
 
@@ -290,7 +284,7 @@ database/     schema MySQL e seed generato dal registro
 api/          FastAPI: traduce HTTP in chiamate al motore, non calcola nulla
 web/          React: nessun dato fiscale, tutto arriva dall'API
 strumenti/    verifiche riproducibili (vedi sotto)
-test_motore.py  375 test, zero dipendenze
+test_motore.py  399 test, zero dipendenze
 ```
 
 Tre strumenti di verifica, tutti rieseguibili:

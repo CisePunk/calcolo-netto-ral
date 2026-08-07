@@ -17,3 +17,8 @@ __MACOSX/
 # lo raddoppia, perche' una sola difesa su dati di questo tipo e' poca.
 dati_privati/cu.json
 dati_privati/*.pdf
+
+# Lasciati da un controllo di sensibilita' interrotto: servono al ripristino,
+# non al repository.
+dati/.coefficienti.originale.json
+dati/.REGISTRO_IN_GUASTO

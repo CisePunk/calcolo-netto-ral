@@ -1588,3 +1588,39 @@ body {
   display: inline-flex;
   gap: 0.3rem;
 }
+
+
+/* --- avviso sul minimo contrattuale --------------------------------------
+
+   Piu' marcato degli altri avvisi perche' dice una cosa diversa: non «forse
+   hai sbagliato a digitare» ma «questa offerta non si puo' fare». Resta un
+   avviso, non un errore: il risultato sotto continua a vedersi.
+
+   Il colore non e' l'unico segnale — c'e' anche la parola in grassetto e il
+   bordo spesso a sinistra — perche' un avviso affidato al solo colore non
+   esiste per chi non lo distingue. */
+.avviso-minimo {
+  border-left: 4px solid var(--allarme, #a8341f);
+  background: var(--allarme-fondo, rgba(168, 52, 31, 0.07));
+  padding: 0.7rem 0.9rem;
+  border-radius: 0 6px 6px 0;
+}
+
+.avviso-minimo strong {
+  color: var(--allarme, #a8341f);
+}
+
+@media (prefers-contrast: more) {
+  .avviso-minimo {
+    border: 2px solid var(--allarme, #a8341f);
+    border-left-width: 6px;
+    background: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .avviso-minimo {
+    border: 2px solid CanvasText;
+    border-left-width: 6px;
+  }
+}

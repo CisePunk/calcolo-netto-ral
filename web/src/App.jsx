@@ -389,11 +389,28 @@ export default function App() {
             {errore}
           </p>
         )}
-        {risultato?.avvisi?.map((avviso, i) => (
-          <p key={i} className="avviso">
-            {avviso}
-          </p>
-        ))}
+        {/* L'avviso sul minimo contrattuale ha un peso diverso dagli altri:
+            non dice «attenzione, forse hai sbagliato a digitare», dice che
+            quell'offerta non si può fare. Ha quindi un aspetto suo e il ruolo
+            `alert`, che i lettori di schermo annunciano subito.
+
+            Non blocca il risultato, e la scelta è deliberata: il calcolo
+            resta visibile perché sapere quanto resterebbe in tasca serve
+            anche quando l'offerta va rifatta — e uno strumento che si
+            rifiuta di rispondere insegna solo ad aggirarlo. */}
+        {risultato?.avvisi?.map((avviso, i) => {
+          const suMinimo = avviso.startsWith("[minimo-ccnl] ");
+          return (
+            <p
+              key={i}
+              className={suMinimo ? "avviso avviso-minimo" : "avviso"}
+              role={suMinimo ? "alert" : undefined}
+            >
+              {suMinimo && <strong>Sotto il minimo contrattuale. </strong>}
+              {avviso.replace("[minimo-ccnl] ", "")}
+            </p>
+          );
+        })}
         {inverso?.avvisi?.map((avviso, i) => (
           <p key={i} className="avviso">
             {avviso}

@@ -32,7 +32,7 @@ dove indicato — il caso fissato dal task.
 ## La catena, una volta sola
 
 Gli stessi otto passi per tutti i casi. Il dettaglio delle norme sta in
-[METODOLOGIA.md](METODOLOGIA.md).
+[METODOLOGIA.md](../ricerca/METODOLOGIA.md).
 
 ```
   RAL
@@ -182,7 +182,7 @@ qualcun altro. Una Certificazione Unica è emessa da un sostituto d'imposta: se 
 numeri coincidono, il motore ha retto contro un calcolo vero, non contro
 un'altra approssimazione.
 
-Lo fa [strumenti/confronta_cu.py](strumenti/confronta_cu.py). I dati restano
+Lo fa [strumenti/confronta_cu.py](../../strumenti/confronta_cu.py). I dati restano
 sulla macchina di chi lo lancia: si leggono da `dati_privati/cu.json`, che il
 `.gitignore` di quella cartella tiene fuori dal repository. **Chi legge il
 repository vede il metodo, mai gli importi di qualcun altro.**
@@ -249,7 +249,7 @@ previsti dal contratto che il prototipo non tratta.
 
 Su una RAL di 35.000 € varrebbe circa **93 € l'anno**. Non è un errore: è una
 semplificazione — e adesso ne conosciamo la dimensione invece di ipotizzarla.
-Sta in [ASSUNZIONI.md](ASSUNZIONI.md), quantificata.
+Sta in [ASSUNZIONI.md](../prodotto/ASSUNZIONI.md), quantificata.
 
 ### Perché qui non ci sono gli importi
 
@@ -284,8 +284,8 @@ proteggeva la cartella da Git ma **non dal server web**: vedi
 ## Come si rifà tutto
 
 ```bash
-python3 test_motore.py                      # 375 test, zero dipendenze
-python3 strumenti/controllo_sensibilita.py  # 15 guasti deliberati, 15 rilevati
+python3 test_motore.py                      # 399 test, zero dipendenze
+python3 strumenti/controllo_sensibilita.py  # 17 guasti deliberati, 17 rilevati
 python3 strumenti/confronta_cu.py           # richiede una propria CU in dati_privati/
 ```
 

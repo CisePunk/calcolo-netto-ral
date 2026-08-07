@@ -9,7 +9,7 @@ tipo di verifica trova quel tipo di errore.** Perché la risposta, alla fine, è
 che ogni metodo di verifica ha trovato errori che nessun altro metodo avrebbe
 trovato — e la conseguenza pratica è che non se ne può usare uno solo.
 
-Il [diario di bordo](DIARIO_DI_BORDO.md) racconta la stessa storia in ordine
+Il [diario di bordo](../diario/DIARIO_DI_BORDO.md) racconta la stessa storia in ordine
 cronologico, mescolata alle scoperte sul dominio. Qui restano soltanto **gli
 errori nostri**.
 
@@ -21,7 +21,7 @@ significa **sapere dove ha ceduto, come ce ne siamo accorti, e cosa è cambiato
 nel modo di lavorare di conseguenza**.
 
 Un repository che mostra solo il risultato finale chiede di essere creduto sulla
-parola. Le stesse ventitré voci qui elencate sono la prova che il controllo
+parola. Le stesse ventisei voci qui elencate sono la prova che il controllo
 c'è stato davvero: ognuna ha una data, un metodo che l'ha scoperta e una
 correzione verificabile. Nessuna è stata trovata a posteriori per riempire un
 documento — il registro è cresciuto insieme al codice, ed è per questo che
@@ -62,8 +62,11 @@ noi invece che da chi legge.
 | 21 | **Trattamento integrativo: mancavano i 75 € della capienza** | ricerca sulle fonti | **revisione esterna** |
 | 22 | La frase di conferma spezzata in colonne da un `display: flex` | stesura del foglio di stile | **revisione esterna** |
 | 23 | Gli importi tagliati sul telefono, senza che nulla lo segnalasse | tabella responsive | **revisione esterna** |
+| 24 | **La norma citata per i 75 € era quella sbagliata** | correzione dell'errore 21 | **revisione esterna** |
+| 25 | Due soglie coincidenti, una spiegazione persa in silenzio | struttura dati delle soglie | **revisione esterna** |
+| 26 | **Un registro guasto apposta, lasciato sul disco e committato** | esecuzione degli strumenti | **i test, letti troppo tardi** |
 
-Ventitré errori. **Nessuno è stato trovato rileggendo il codice.**
+Ventisei errori. **Nessuno è stato trovato rileggendo il codice.**
 
 ---
 
@@ -790,7 +793,7 @@ una riga di CSS scritta mesi prima con ottime intenzioni.
 ---
 ## Cosa insegna il quadro d'insieme
 
-Raggruppando i ventitré errori per **metodo che li ha trovati**:
+Raggruppando i ventisei errori per **metodo che li ha trovati**:
 
 | Metodo di verifica | Errori trovati |
 |---|---|
@@ -807,14 +810,15 @@ Raggruppando i ventitré errori per **metodo che li ha trovati**:
 | **Prova nel browser a più larghezze** | 14, 15 |
 | **Richieste ostili costruite apposta** | 17, 18 |
 | **Rilettura della configurazione come la legge chi la esegue** | 19 |
-| **Revisione esterna a lavoro finito** | 20, 21, 22, 23 |
+| **Revisione esterna a lavoro finito** | 20, 21, 22, 23, 24, 25 |
+| **I test, letti troppo tardi** | 26 |
 
 **Nessun metodo ha trovato gli errori di un altro.** I test non hanno visto la
 regola sui periodi parziali; il documento reale non avrebbe mai mostrato il buco
 dei NULL nel database; nessuna quantità di test avrebbe rivelato che
 `35.000` valeva 35, perché chi li scriveva sapeva già come si digita un numero.
 
-E soprattutto: **nessuno dei ventitré è stato trovato rileggendo il codice.**
+E soprattutto: **nessuno dei ventisei è stato trovato rileggendo il codice.**
 
 Le tre verifiche più produttive sono anche le tre che si tende a saltare perché
 sembrano superflue quando tutto è verde:

@@ -363,7 +363,7 @@ Quindi entrambe le cose, senza che la seconda dipenda dalla prima:
 | **PNG di ogni riquadro**, 2× | `design/figma/riquadri/` | GitHub li mostra **in pagina**, senza account e senza scaricare niente. È la copia che sopravvive al link. |
 | **PDF** di tutta la presentazione | `design/figma/presentazione.pdf` | Per chi la vuole leggere di seguito o stampare. GitHub lo apre nel browser. |
 | **`.fig`** (*File → Salva copia locale*) | `design/figma/progetto.fig` | Archivio: permette di riaprire il file se l'originale si perde. Non si legge da GitHub. |
-| **Link Figma** in sola lettura | in cima al [README](../README.md) | Per chi vuole vedere i **livelli** — cioè come è costruito, che è il punto. |
+| **Link Figma** in sola lettura | in cima al [README](../../../README.md) | Per chi vuole vedere i **livelli** — cioè come è costruito, che è il punto. |
 
 Poi, una volta sola:
 

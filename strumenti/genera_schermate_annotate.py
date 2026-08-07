@@ -15,7 +15,7 @@ richiamo e diventa un paragrafo con una freccia attaccata.
 import pathlib
 
 RADICE = pathlib.Path(__file__).resolve().parent.parent
-USCITA = RADICE / "design" / "diagrammi"
+USCITA = RADICE / "documenti" / "ux" / "design" / "diagrammi"
 
 INK, TENUE, MUTO = "#11150a", "#4e5549", "#8b9184"
 LIME, SU_LIME = "#dfeb57", "#11150a"

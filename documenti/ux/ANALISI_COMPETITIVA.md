@@ -165,7 +165,7 @@ regione `aria-live`.)*
 Tutti calcolano altrove e restituiscono un risultato. Nessuno permette di
 rispondere alla domanda *«come ci sei arrivato, e come faccio a controllarlo?»*
 
-*(Nel prototipo: motore leggibile, 375 test che girano senza installare nulla,
+*(Nel prototipo: motore leggibile, 399 test che girano senza installare nulla,
 e strumenti che rieseguono le verifiche — compreso quello che guasta i
 coefficienti apposta per controllare che i test se ne accorgano.)*
 

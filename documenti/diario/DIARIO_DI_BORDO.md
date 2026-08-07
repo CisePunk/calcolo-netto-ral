@@ -368,7 +368,7 @@ sarebbe stato sbagliato per **il 64% dei comuni italiani** — quelli senza sogl
 di esenzione — e incapace di rappresentare il 15% che usa gli scaglioni.
 
 **Riproducibile, non raccontato.** L'analisi sta in
-[strumenti/analisi_addizionali.py](strumenti/analisi_addizionali.py): si rilancia
+[strumenti/analisi_addizionali.py](../../strumenti/analisi_addizionali.py): si rilancia
 sulla tabella ufficiale e restituisce le stesse cifre. Una verifica che si può
 solo leggere è un'affermazione; una che si può rieseguire è una prova.
 
@@ -667,7 +667,7 @@ regionali superiori non venivano mai attraversati.
    (esercita il +1% contributivo, il terzo scaglione IRPEF e l'ultimo scaglione
    regionale).
 3. Il controllo di sensibilità è diventato uno strumento del progetto:
-   [strumenti/controllo_sensibilita.py](strumenti/controllo_sensibilita.py).
+   [strumenti/controllo_sensibilita.py](../../strumenti/controllo_sensibilita.py).
 
 Ora i quattordici guasti su quattordici vengono rilevati, e la suite è passata
 da 208 a **256 test**.
@@ -917,7 +917,7 @@ quello servono le fonti), ma prova che il travaso dei dati dal registro al
 database non ha perso né deformato niente.
 
 **Il seed non si scrive a mano.** Lo genera
-[strumenti/genera_seed.py](strumenti/genera_seed.py) da `dati/coefficienti.json`.
+[strumenti/genera_seed.py](../../strumenti/genera_seed.py) da `dati/coefficienti.json`.
 Se fosse scritto a mano esisterebbero due copie degli stessi numeri, e prima o
 poi divergerebbero: si aggiorna il JSON, ci si dimentica del SQL, e
 l'applicazione serve un'aliquota vecchia. Generandolo, la divergenza è
@@ -1317,9 +1317,9 @@ facendo tre cose diverse fra loro:
 
 Il resoconto completo — comprese le verifiche che **non** hanno trovato niente,
 che vanno elencate perché altrimenti il documento racconta metà del lavoro, e i
-sei rischi che restano dichiarati aperti — sta in [SICUREZZA.md](SICUREZZA.md).
+sei rischi che restano dichiarati aperti — sta in [SICUREZZA.md](../verifiche/SICUREZZA.md).
 
-Dopo le correzioni: 375 test superati, 15 guasti deliberati su 15 rilevati,
+Dopo le correzioni: 399 test superati, 17 guasti deliberati su 17 rilevati,
 zero violazioni della politica dei contenuti nel browser.
 
 ---
@@ -1389,7 +1389,7 @@ Costruire da soli e verificare da soli ha un limite che non si supera
 aggiungendo test, perché i test li scrive la stessa testa. Si supera facendola
 guardare a qualcun altro.
 
-**Dopo le correzioni:** 375 test superati, 15 guasti deliberati su 15 rilevati,
+**Dopo le correzioni:** 399 test superati, 17 guasti deliberati su 17 rilevati,
 il confronto con la CU ancora esatto al centesimo sul trattamento
 integrativo, scarto zero — e la tabella degli importi leggibile a 360, 390, 768
 e 1280 px.
@@ -1417,4 +1417,4 @@ risultato sembrava ragionevole. Mancava solo che fosse vero.
 
 **Stato delle fonti a fine giornata:** 7 voci su fonte primaria, 17 su fonte
 secondaria, 3 da verificare. Dichiarate una per una in
-[dati/coefficienti.json](dati/coefficienti.json), non arrotondate a "verificato".
+[dati/coefficienti.json](../../dati/coefficienti.json), non arrotondate a "verificato".

@@ -26,6 +26,7 @@ Il registro viene sempre ripristinato, anche in caso di interruzione.
 """
 
 import json
+import signal
 import pathlib
 import shutil
 import subprocess
@@ -113,11 +114,64 @@ def esegui_suite():
     return "NESSUN TEST FALLITO", False
 
 
+# Mentre lo strumento gira, il registro sul disco e' DELIBERATAMENTE SBAGLIATO.
+# Se il processo muore prima del ripristino, quel file resta guasto — e un
+# registro fiscale guasto non ha nessun aspetto particolare: e' JSON valido con
+# dentro numeri plausibili.
+#
+# E' successo davvero: il processo e' stato ucciso da un timeout, il registro e'
+# rimasto con cinque scaglioni regionali inventati, ed e' finito in un commit.
+# I test lo hanno preso subito (due fallimenti su RAL 80.000), ma il commit era
+# gia' stato fatto senza leggerne l'esito. Vedi ERRORI.md, voce 26.
+#
+# `try/finally` non basta: non gira quando arriva un SIGKILL, e con un SIGTERM
+# non gestito Python termina senza eseguirlo. Da qui tre difese sovrapposte.
+SALVATAGGIO = REGISTRO.parent / ".coefficienti.originale.json"
+SEGNALE = REGISTRO.parent / ".REGISTRO_IN_GUASTO"
+
+
+def _ripristina_da_salvataggio() -> bool:
+    """Rimette a posto il registro da un'esecuzione interrotta. True se serviva."""
+    if not SEGNALE.exists():
+        return False
+    if not SALVATAGGIO.exists():
+        raise SystemExit(
+            f"Il registro e' segnato come guasto ({SEGNALE.name}) ma il salvataggio "
+            f"non c'e'. Recuperalo da git prima di continuare:\n"
+            f"    git checkout -- {REGISTRO}"
+        )
+    shutil.copy(SALVATAGGIO, REGISTRO)
+    SEGNALE.unlink(missing_ok=True)
+    SALVATAGGIO.unlink(missing_ok=True)
+    print("Un'esecuzione precedente era stata interrotta a meta': "
+          "registro ripristinato dal salvataggio.\n")
+    return True
+
+
+def _termina(signum, _frame):
+    """Trasforma un segnale in un'eccezione, cosi' che `finally` venga eseguito."""
+    raise KeyboardInterrupt(f"segnale {signum}")
+
+
 def main():
+    # Prima di tutto: se l'esecuzione precedente e' morta, si rimedia adesso.
+    _ripristina_da_salvataggio()
+
     originale = json.loads(REGISTRO.read_text(encoding="utf-8"))
     with tempfile.NamedTemporaryFile("w", suffix=".json", delete=False) as f:
         copia = pathlib.Path(f.name)
     shutil.copy(REGISTRO, copia)
+    # Il salvataggio sta accanto al registro, con un nome noto: se il processo
+    # muore, il rimedio e' a portata di mano invece che in /tmp.
+    shutil.copy(REGISTRO, SALVATAGGIO)
+    SEGNALE.write_text(
+        "Il registro accanto a questo file e' DELIBERATAMENTE GUASTO: "
+        "controllo_sensibilita.py e' in corso, o e' morto prima di finire.\n"
+        "Per rimediare: rilancia lo strumento, oppure `git checkout -- dati/coefficienti.json`.\n",
+        encoding="utf-8")
+
+    for segnale in (signal.SIGTERM, signal.SIGINT):
+        signal.signal(segnale, _termina)
 
     print(f"Controllo di sensibilita': {len(GUASTI)} guasti, un test alla volta.\n")
     scoperti = 0
@@ -136,6 +190,8 @@ def main():
         copia.unlink(missing_ok=True)
         ripristinato = json.loads(REGISTRO.read_text(encoding="utf-8"))
         assert ripristinato == originale, "IL REGISTRO NON E' STATO RIPRISTINATO"
+        SEGNALE.unlink(missing_ok=True)
+        SALVATAGGIO.unlink(missing_ok=True)
         print("\nRegistro ripristinato e verificato identico all'originale.")
 
     print(f"\nGuasti rilevati dai test: {scoperti} su {len(GUASTI)}.")

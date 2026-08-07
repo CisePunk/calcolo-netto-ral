@@ -3,7 +3,7 @@
 Piano di lavoro per il task Jet HR. Nome di lavoro: **product-builder**. Il nome
 del prodotto lo decidiamo dopo.
 
-> **Revisione 2** — dopo la ricerca sulle fonti (vedi [RICERCA_FONTI.md](RICERCA_FONTI.md))
+> **Revisione 2** — dopo la ricerca sulle fonti (vedi [RICERCA_FONTI.md](../ricerca/RICERCA_FONTI.md))
 > e le decisioni su stack, anno d'imposta e livelli d'esperienza.
 
 ---
@@ -61,7 +61,7 @@ RAL (lordo annuo)
 ```
 
 I valori esatti di ogni voce, con fonte e stato di verifica, stanno in
-[RICERCA_FONTI.md](RICERCA_FONTI.md). Qui interessa la **sequenza**;
+[RICERCA_FONTI.md](../ricerca/RICERCA_FONTI.md). Qui interessa la **sequenza**;
 lì i **numeri**. Separarli è il punto di tutta l'architettura.
 
 **Le due voci che è facile sbagliare** — e che nella prima stesura erano sbagliate:
@@ -305,7 +305,7 @@ numero **corretto per la città sbagliata**, e non c'è nulla, nel risultato, ch
 possa insospettire.
 
 Non è un dettaglio di configurazione, perché i territori **non si comportano allo
-stesso modo** (vedi [RICERCA_FONTI.md](RICERCA_FONTI.md) §9):
+stesso modo** (vedi [RICERCA_FONTI.md](../ricerca/RICERCA_FONTI.md) §9):
 
 |  | Milano / Lombardia | Palermo / Sicilia |
 |---|---|---|
@@ -425,21 +425,21 @@ con un calcolatore pubblico, come controllo di sanità.
 
 - **README** — cos'è, come si usa, come si lancia, il link live.
 - **METODOLOGIA** — la catena del §2 scritta per un lettore, con le fonti. Nasce
-  da [RICERCA_FONTI.md](RICERCA_FONTI.md), che è già il grosso del lavoro.
+  da [RICERCA_FONTI.md](../ricerca/RICERCA_FONTI.md), che è già il grosso del lavoro.
 - **ASSUNZIONI** — l'elenco del §3, ognuna motivata in una frase.
 - **CASI DI PROVA** — il confronto con la CU (anonimizzato) e le RAL standard.
-- **[DIARIO_DI_BORDO.md](DIARIO_DI_BORDO.md)** — cosa è andato storto, come ce ne
+- **[DIARIO_DI_BORDO.md](../diario/DIARIO_DI_BORDO.md)** — cosa è andato storto, come ce ne
   siamo accorti, cosa è cambiato. Si scrive **man mano**, non alla fine: è il
   documento che rende verificabile la ricerca invece di limitarsi a dichiararla.
   Un coefficiente giusto e uno indovinato sono indistinguibili se guardi solo il
   risultato; diventano distinguibili solo mostrando il percorso.
-- **[ERRORI.md](ERRORI.md)** — gli errori **nostri**, ordinati per il passaggio
+- **[ERRORI.md](../verifiche/ERRORI.md)** — gli errori **nostri**, ordinati per il passaggio
   in cui sono nati e per il metodo che li ha scoperti. Il task chiede un
   prototipo *"di cui sei in controllo"*: essere in controllo non vuol dire non
   aver sbagliato, vuol dire sapere dove ha ceduto e come ce ne siamo accorti.
   È anche il materiale già pronto per la discussione in interview, con le
   domande scomode poste per prime da noi.
-- **[ANALISI_USABILITA.md](ANALISI_USABILITA.md)** — dove si rompe un
+- **[ANALISI_USABILITA.md](../ux/ANALISI_USABILITA.md)** — dove si rompe un
   calcolatore fiscale per chi non è del mestiere, studiato su uno strumento
   reale e pubblico, con le scelte che ne discendono.
 
@@ -484,7 +484,7 @@ ci va codice già verificato, non un cantiere.
 
 ## 9. Stato dei lavori
 
-- [x] Ricerca fonti 2026 → [RICERCA_FONTI.md](RICERCA_FONTI.md)
+- [x] Ricerca fonti 2026 → [RICERCA_FONTI.md](../ricerca/RICERCA_FONTI.md)
 - [x] Chiuse le 3 questioni fiscali bloccanti (cumulo, formula 32k–40k, fascia 65 €)
 - [x] Ricerca aliquote Sicilia/Palermo → due forme diverse di addizionale
 - [ ] Recuperare il set completo dei coefficienti **2025** (IRPEF al 35%) per la validazione
@@ -505,7 +505,7 @@ calcolo giusto, non un modo di renderlo giusto.
 ## 10. Questioni aperte
 
 **Fiscali** — ✅ **tutte chiuse.** Cumulo, formula 32k–40k e fascia dei 65 € sono
-risolte con riferimento normativo in [RICERCA_FONTI.md](RICERCA_FONTI.md).
+risolte con riferimento normativo in [RICERCA_FONTI.md](../ricerca/RICERCA_FONTI.md).
 Restano solo verifiche di conferma, non ostacoli.
 
 **Di prodotto** — ✅ **tutte decise:**
@@ -526,5 +526,5 @@ Restano solo verifiche di conferma, non ostacoli.
 **Il piano è chiuso. Si può scrivere il codice.**
 
 Restano solo verifiche di conferma sulle fonti (elencate in
-[RICERCA_FONTI.md](RICERCA_FONTI.md)) e il recupero del set 2025, che
+[RICERCA_FONTI.md](../ricerca/RICERCA_FONTI.md)) e il recupero del set 2025, che
 non bloccano l'inizio del lavoro sul motore.

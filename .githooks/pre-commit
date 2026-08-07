@@ -1,0 +1,38 @@
+#!/bin/sh
+# Blocca il commit se i test non passano.
+#
+# Perche' esiste
+# --------------
+# Due volte, in questo progetto, e' stato fatto un commit con il registro dei
+# coefficienti guasto: `controllo_sensibilita.py` rompe i dati apposta e li
+# rimette a posto alla fine, ma se muore prima il file guasto resta sul disco.
+# Un registro fiscale sbagliato e' JSON valido con dentro numeri plausibili:
+# non si vede.
+#
+# I test lo avevano preso entrambe le volte, con la voce e il numero esatti.
+# Il difetto non erano i test: era il commit fatto senza leggerne l'esito.
+# Vedi documenti/verifiche/ERRORI.md, voce 26.
+#
+# Una regola che dipende dalla mia attenzione ha gia' fallito due volte su due.
+# Questa non ne dipende.
+#
+# Attivazione (una volta sola, dopo il clone):
+#     git config core.hooksPath .githooks
+#
+# Per saltarlo consapevolmente:  git commit --no-verify
+
+esito=$(python3 test_motore.py 2>&1)
+if [ $? -ne 0 ]; then
+    echo "$esito" | tail -20
+    echo
+    echo "COMMIT BLOCCATO: i test non passano."
+    echo
+    echo "Se hai appena interrotto strumenti/controllo_sensibilita.py, il registro"
+    echo "e' probabilmente rimasto guasto. Per rimediare:"
+    echo "    python3 strumenti/controllo_sensibilita.py    # ripristina da solo"
+    echo "    git diff dati/coefficienti.json               # e guarda cosa e' cambiato"
+    exit 1
+fi
+
+echo "$esito" | tail -1
+exit 0
