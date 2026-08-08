@@ -1,0 +1,13 @@
+# Quello che non deve entrare nell'immagine: pesa e non serve a eseguire.
+.git
+.venv
+web/node_modules
+web/dist
+documenti
+strumenti
+database
+dati_privati
+test_motore.py
+docker-compose.yml
+*.md
+.githooks
