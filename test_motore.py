@@ -46,7 +46,27 @@ def verifica(descrizione, condizione, dettaglio=""):
 
 
 def quasi_uguale(a, b, tolleranza=TOLLERANZA):
+    # Se uno dei due non e' un numero, il confronto e' FALSO, non un'eccezione.
+    # Serve perche' un test deve poter fallire in modo leggibile anche quando il
+    # registro e' guasto: prima, togliendo la tabella dei minimi, la suite si
+    # schiantava con un TypeError invece di mostrare quali controlli cedevano —
+    # e un crash si ferma al primo problema, nascondendo tutti gli altri.
+    if not isinstance(a, (int, float)) or not isinstance(b, (int, float)):
+        return False
     return abs(a - b) <= tolleranza
+
+
+def cifra(valore) -> str:
+    """Formatta un numero per un messaggio d'errore, senza esplodere sui None.
+
+    Serve nei DETTAGLI dei test: sono stringhe f valutate SEMPRE, anche quando
+    l'asserzione passerebbe. Se il registro e' guasto e il valore manca, un
+    `:,.2f` su None solleva TypeError e porta giu' l'intera suite — cioe' il
+    messaggio che doveva spiegare il fallimento diventa la causa di un crash.
+    """
+    if isinstance(valore, (int, float)):
+        return f"{valore:,.2f}"
+    return f"{valore!r} (non e' un numero)"
 
 
 def titolo(testo):
@@ -909,14 +929,28 @@ MINIMO_COMMERCIO_ANNUO = 12_225.08
 sotto = calcola(MINIMO_COMMERCIO_ANNUO - 100, anno=2026, territorio_codice="MI")
 sopra = calcola(MINIMO_COMMERCIO_ANNUO + 100, anno=2026, territorio_codice="MI")
 
+# Questo controllo viene PRIMA di tutti gli altri, e non e' una formalita'.
+#
+# Prima non c'era: i test leggevano direttamente minimo_ccnl.get("minimo_assoluto_annuo"),
+# e togliendo la tabella dei minimi dal registro la suite non falliva — si
+# SCHIANTAVA con un KeyError alla riga 913. Il controllo di sensibilita' lo
+# contava comunque come "rilevato", perche' guarda il codice di uscita, ma un
+# crash e' un segnale piu' debole di un test rosso: si ferma al primo problema,
+# non dice quali comportamenti si sono rotti, e puo' nasconderne altri dietro.
+#
+# Con questa riga il guasto produce fallimenti puliti e leggibili.
+verifica("il registro dichiara i minimi del commercio",
+         sotto.minimo_ccnl.get("applicabile") is True,
+         f"minimo_ccnl = {sotto.minimo_ccnl}")
+
 verifica("il minimo piu' basso del commercio e' 12.225,08 (livello 7 x 14)",
-         quasi_uguale(sotto.minimo_ccnl["minimo_assoluto_annuo"], MINIMO_COMMERCIO_ANNUO),
-         f"ottenuto {sotto.minimo_ccnl['minimo_assoluto_annuo']:,.2f}")
-verifica("sotto il minimo: segnalato", sotto.minimo_ccnl["sotto_il_minimo"])
+         quasi_uguale(sotto.minimo_ccnl.get("minimo_assoluto_annuo"), MINIMO_COMMERCIO_ANNUO),
+         f"ottenuto {cifra(sotto.minimo_ccnl.get("minimo_assoluto_annuo"))}")
+verifica("sotto il minimo: segnalato", sotto.minimo_ccnl.get("sotto_il_minimo"))
 verifica("sotto il minimo: c'e' un avviso che lo dice",
          any("minimo contrattuale" in a for a in sotto.avvisi),
          f"avvisi: {sotto.avvisi}")
-verifica("sopra il minimo: nessuna segnalazione", not sopra.minimo_ccnl["sotto_il_minimo"])
+verifica("sopra il minimo: nessuna segnalazione", not sopra.minimo_ccnl.get("sotto_il_minimo"))
 verifica("sopra il minimo: nessun avviso sul contratto",
          not any("minimo contrattuale" in a for a in sopra.avvisi))
 
@@ -928,15 +962,15 @@ LIVELLI_ATTESI = {
     12_500: ["7"],                                           # solo il livello piu' basso
 }
 for ral, attesi in LIVELLI_ATTESI.items():
-    ottenuti = calcola(float(ral), anno=2026, territorio_codice="MI").minimo_ccnl["livelli_compatibili"]
+    ottenuti = calcola(float(ral), anno=2026, territorio_codice="MI").minimo_ccnl.get("livelli_compatibili") or []
     verifica(f"RAL {ral:,}: livelli compatibili {', '.join(attesi)}",
              ottenuti == attesi, f"ottenuti {ottenuti}")
 
 # Il caso del task deve stare sopra ogni livello, Quadro compreso: se cosi' non
 # fosse, l'esempio scelto sarebbe un'offerta non proponibile.
 verifica("il caso del task (35.000) copre anche il livello Quadro",
-         "Quadro" in calcola(35_000, anno=2026,
-                             territorio_codice="MI").minimo_ccnl["livelli_compatibili"])
+         "Quadro" in (calcola(35_000, anno=2026,
+                              territorio_codice="MI").minimo_ccnl.get("livelli_compatibili") or []))
 
 # --- Il confronto usa le mensilita' del contratto -------------------------
 #
@@ -945,17 +979,17 @@ verifica("il caso del task (35.000) copre anche il livello Quadro",
 # silenzioso di quasi il 17%.
 metal = calcola(30_000, anno=2026, territorio_codice="MI", ccnl="metalmeccanici")
 verifica("metalmeccanici: minimo annuo = D1 (1.784,94) x 13 mensilita'",
-         quasi_uguale(metal.minimo_ccnl["minimo_assoluto_annuo"], 1784.94 * 13),
-         f"ottenuto {metal.minimo_ccnl['minimo_assoluto_annuo']:,.2f}")
+         quasi_uguale(metal.minimo_ccnl.get("minimo_assoluto_annuo"), 1784.94 * 13),
+         f"ottenuto {cifra(metal.minimo_ccnl.get("minimo_assoluto_annuo"))}")
 verifica("metalmeccanici: la tabella e' dichiarata parziale",
-         metal.minimo_ccnl["parziale"])
+         metal.minimo_ccnl.get("parziale"))
 
 # Una RAL legittima nel commercio puo' essere sotto il minimo dei
 # metalmeccanici: i due contratti hanno pavimenti molto diversi.
 r_com = calcola(20_000, anno=2026, territorio_codice="MI", ccnl="commercio")
 r_met = calcola(20_000, anno=2026, territorio_codice="MI", ccnl="metalmeccanici")
 verifica("RAL 20.000: legittima nel commercio, sotto il minimo nei metalmeccanici",
-         not r_com.minimo_ccnl["sotto_il_minimo"] and r_met.minimo_ccnl["sotto_il_minimo"])
+         not r_com.minimo_ccnl.get("sotto_il_minimo") and r_met.minimo_ccnl.get("sotto_il_minimo"))
 
 # --- Quando il registro non sa, lo dice -----------------------------------
 for codice in ("studi_professionali", "edilizia"):
