@@ -21,7 +21,7 @@ significa **sapere dove ha ceduto, come ce ne siamo accorti, e cosa è cambiato
 nel modo di lavorare di conseguenza**.
 
 Un repository che mostra solo il risultato finale chiede di essere creduto sulla
-parola. Le stesse ventisei voci qui elencate sono la prova che il controllo
+parola. Le stesse ventisette voci qui elencate sono la prova che il controllo
 c'è stato davvero: ognuna ha una data, un metodo che l'ha scoperta e una
 correzione verificabile. Nessuna è stata trovata a posteriori per riempire un
 documento — il registro è cresciuto insieme al codice, ed è per questo che
@@ -969,9 +969,74 @@ te lo lascia fare è tutta lì.
 
 ---
 
+### Passaggio: eco del calcolo inverso
+
+#### 27. `Number("3.000")` = 3, e questa è la terza porta
+
+**Cosa è successo.** Chiedendo un netto di **3.000 € al mese**, l'interfaccia
+rispondeva:
+
+> Per garantire **3,00 € al mese** serve una RAL di **69.418 €**.
+
+**Il calcolo era giusto.** Per 3.000 € netti al mese servono davvero circa
+69.418 € di RAL. Sbagliata era solo la frase che lo raccontava — ed è il modo
+peggiore di sbagliare, perché sembra un errore di calcolo e non lo è. Chi legge
+non pensa «il testo è formattato male»: pensa che lo strumento non sappia fare i
+conti.
+
+**La causa.** Una riga di JSX:
+
+```jsx
+{euro(nettoMensile ? Number(netto) : inverso.netto_richiesto)}
+```
+
+Il valore che arriva dal server è **annuo** — 42.000, cioè 3.000 × 14. In
+modalità mensile serviva il mensile, e invece di chiederlo l'interfaccia se lo è
+riletto da sola dal campo di testo. `Number("3.000")` in JavaScript vale **3**.
+
+**È la terza volta.**
+
+| | Dove | Cosa |
+|---|---|---|
+| 12 | motore, calcolo diretto | `float("35.000")` = 35 |
+| 20 | motore, calcolo inverso | `float("2.000")` = 2 |
+| **27** | **interfaccia, eco dell'inverso** | **`Number("3.000")` = 3** |
+
+Ogni volta la correzione era stata applicata dove il sintomo era comparso.
+Ogni volta è rimasta una porta aperta altrove. E qui la beffa è doppia: il file
+`web/src/numeri.js` contiene già la funzione giusta, e nel suo commento c'è
+scritto testualmente *«`Number("35.000")` in JavaScript vale 35»*. La trappola
+era documentata, la soluzione era a un `import` di distanza, e nessuna delle due
+è stata usata.
+
+**Cosa è cambiato — e non è un quarto parser.**
+
+Aggiungere un'altra chiamata a un altro normalizzatore avrebbe risolto questo
+caso e lasciato aperta la quarta porta. La correzione tocca invece il principio:
+
+> **L'eco mostra quello che il server ha capito, mai quello che il browser crede
+> di aver letto.**
+
+Il risultato del calcolo inverso porta adesso con sé le **mensilità usate**, e
+l'API restituisce il netto mensile **già diviso**. L'interfaccia non ha più
+nessun motivo di rileggere il campo: non può disallinearsi dal calcolo nemmeno
+volendo, perché non fa più il conto.
+
+Verificato su quattro formati — `3000`, `3.000`, `3.000,00`, `€ 3 000` — e con
+due contratti diversi, per accertare che il divisore venga dal CCNL e non da un
+numero fisso: 14 mensilità danno 42.000 annui, 13 ne danno 39.000. Tredici test
+nuovi.
+
+**La lezione.** Un difetto che ricompare tre volte in tre punti diversi non è una
+distrazione: è un pezzo di architettura mancante. La domanda giusta non era
+«dove altro leggo un numero?», ma «perché due parti diverse del programma
+leggono lo stesso numero?». Finché la risposta era «perché a ognuna serve», la
+quarta porta sarebbe arrivata.
+
+---
 ## Cosa insegna il quadro d'insieme
 
-Raggruppando i ventisei errori per **metodo che li ha trovati**:
+Raggruppando i ventisette errori per **metodo che li ha trovati**:
 
 | Metodo di verifica | Errori trovati |
 |---|---|
@@ -984,7 +1049,7 @@ Raggruppando i ventisei errori per **metodo che li ha trovati**:
 | **Una domanda dell'autrice** | 7 |
 | **Un documento emesso da altri** | 8, 9 |
 | Rilettura sospettosa | 10 |
-| **Uso dell'interfaccia** | 12, 13, 16 |
+| **Uso dell'interfaccia** | 12, 13, 16, 27 |
 | **Prova nel browser a più larghezze** | 14, 15 |
 | **Richieste ostili costruite apposta** | 17, 18 |
 | **Rilettura della configurazione come la legge chi la esegue** | 19 |
@@ -996,7 +1061,7 @@ regola sui periodi parziali; il documento reale non avrebbe mai mostrato il buco
 dei NULL nel database; nessuna quantità di test avrebbe rivelato che
 `35.000` valeva 35, perché chi li scriveva sapeva già come si digita un numero.
 
-E soprattutto: **nessuno dei ventisei è stato trovato rileggendo il codice.**
+E soprattutto: **nessuno dei ventisette è stato trovato rileggendo il codice.**
 
 Le tre verifiche più produttive sono anche le tre che si tende a saltare perché
 sembrano superflue quando tutto è verde:

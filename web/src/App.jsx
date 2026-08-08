@@ -430,7 +430,19 @@ export default function App() {
             <p className="eco">
               Per garantire{" "}
               <strong>
-                {euro(nettoMensile ? Number(netto) : inverso.netto_richiesto)}
+                {/* Il valore viene dal SERVER, non da una rilettura del campo.
+                    Prima qui c'era `Number(netto)`, cioè il testo digitato
+                    riletto dal browser: `Number("3.000")` in JavaScript vale 3,
+                    e l'eco diceva «per garantire 3,00 € al mese» accanto a una
+                    RAL da 69.418 € calcolata correttamente su 3.000 al mese.
+                    Il calcolo era giusto e la frase che lo raccontava no — che è
+                    il modo peggiore di sbagliare, perché sembra un errore di
+                    calcolo e non lo è.
+                    La regola: l'eco mostra quello che il server ha capito, mai
+                    quello che il browser crede di aver letto. */}
+                {euro(nettoMensile
+                  ? inverso.netto_richiesto_mensile
+                  : inverso.netto_richiesto)}
                 {nettoMensile ? " al mese" : " all'anno"}
               </strong>{" "}
               serve una RAL di <strong>{euro(inverso.ral, 0)}</strong>.

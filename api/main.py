@@ -259,7 +259,11 @@ def inverso(richiesta: RichiestaInversa):
         raise HTTPException(status_code=400, detail=str(errore))
 
     risposta = {
+        # Annuo, sempre. E accanto il mensile gia' diviso: cosi' l'interfaccia
+        # non ha nessun motivo di ricalcolarlo, ne' di rileggere l'input.
         "netto_richiesto": round(esito.netto_richiesto, 2),
+        "netto_richiesto_mensile": round(esito.netto_richiesto / esito.mensilita, 2),
+        "mensilita": esito.mensilita,
         "raggiungibile": esito.raggiungibile,
         "ral": round(esito.ral, 2) if esito.ral is not None else None,
         "alternative": [round(a, 2) for a in esito.alternative],

@@ -174,9 +174,14 @@ def punti_di_salto(anno, territorio_codice: str, giorni: int = GIORNI_ANNO) -> t
 
 @dataclass(frozen=True)
 class RisultatoInverso:
-    netto_richiesto: float
+    netto_richiesto: float          # SEMPRE annuo, anche se e' stato chiesto al mese
     raggiungibile: bool
     ral: float | None                  # la RAL piu' bassa che ottiene il netto
+    # Le mensilita' effettivamente usate. Servono a chi legge la risposta per
+    # tornare al mensile senza rifare il conto ne' rileggere l'input: e' il
+    # punto in cui l'interfaccia aveva sbagliato, mostrando 3,00 al posto di
+    # 3.000 accanto a una RAL calcolata invece giusta.
+    mensilita: int = 12
     alternative: list = field(default_factory=list)   # le altre soluzioni
     netto_raggiungibile_sotto: float | None = None
     netto_raggiungibile_sopra: float | None = None
@@ -281,6 +286,7 @@ def ral_per_netto(netto_desiderato, mensile: bool = False, anno=None,
             )
         return RisultatoInverso(
             netto_richiesto=obiettivo,
+            mensilita=mensilita,
             raggiungibile=True,
             ral=soluzioni[0],
             alternative=soluzioni[1:],
@@ -296,6 +302,7 @@ def ral_per_netto(netto_desiderato, mensile: bool = False, anno=None,
                    f"{formatta_euro(sotto, 2)} e {formatta_euro(sopra, 2)}.")
     return RisultatoInverso(
         netto_richiesto=obiettivo,
+        mensilita=mensilita,
         raggiungibile=False,
         ral=None,
         netto_raggiungibile_sotto=sotto,

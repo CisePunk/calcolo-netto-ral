@@ -19,7 +19,7 @@ prima che ve ne accorgiate voi.
 
 ## Se ne hai venti
 
-Aggiungi **[verifiche/ERRORI.md](verifiche/ERRORI.md)** — i ventisei errori
+Aggiungi **[verifiche/ERRORI.md](verifiche/ERRORI.md)** — i ventisette errori
 commessi, ordinati per **passaggio in cui sono nati** e per **metodo che li ha
 scoperti**. Nessuno è stato trovato rileggendo il codice, ed è la conclusione
 più utile di tutto il dossier.
@@ -37,7 +37,7 @@ Più il confronto con una Certificazione Unica reale, che ha smentito il motore.
 **[Jet-HR-Product-Builder.pdf](presentazione/Jet-HR-Product-Builder.pdf)** — undici pagine.
 È il percorso raccontato per intero: il caso, le fonti che hanno corretto sei gruppi di
 coefficienti su sette, la lettura di tutte le tabelle comunali italiane, i sette gradini in
-cui il netto non cresce col lordo, e i ventisei errori con il metodo che ha trovato ciascuno.
+cui il netto non cresce col lordo, e i ventisette errori con il metodo che ha trovato ciascuno.
 
 Chi ha poco tempo può leggere solo quella.
 
@@ -65,7 +65,7 @@ Chi ha poco tempo può leggere solo quella.
 | | |
 |---|---|
 | [CASI_DI_PROVA.md](verifiche/CASI_DI_PROVA.md) | I quattro casi calcolati a mano + il confronto con una CU reale |
-| [ERRORI.md](verifiche/ERRORI.md) | I ventisei errori, per passaggio e per metodo che li ha scoperti |
+| [ERRORI.md](verifiche/ERRORI.md) | I ventisette errori, per passaggio e per metodo che li ha scoperti |
 | [SICUREZZA.md](verifiche/SICUREZZA.md) | Il controllo di sicurezza: cosa è stato provato, cosa ha ceduto, i rischi che restano |
 
 ### [ux/](ux/) — come è fatta l'interfaccia, e perché così

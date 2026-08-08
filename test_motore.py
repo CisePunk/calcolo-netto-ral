@@ -908,6 +908,36 @@ verifica("e il cambio di fascia della somma esente",
          any("somma esente" in m for m in soglie_mi[15000.0]))
 verifica("ogni soglia ha almeno un motivo",
          all(len(m) >= 1 for m in soglie_mi.values()))
+# --- 13e. L'eco del netto non si rilegge dall'input ------------------------
+#
+# L'interfaccia mostrava «per garantire 3,00 € al mese» accanto a una RAL da
+# 69.418 € calcolata correttamente su 3.000 al mese: il calcolo era giusto e la
+# frase che lo raccontava no. La causa era `Number(netto)` nel browser —
+# `Number("3.000")` in JavaScript vale 3, esattamente come `float("35.000")` in
+# Python vale 35 (errore 12) e come faceva l'inverso lato server (errore 20).
+#
+# Terza volta, terza porta. La correzione qui non e' un altro parser: il motore
+# porta con se' le mensilita' usate, cosi' chi legge la risposta puo' tornare al
+# mensile senza rileggere niente.
+
+for forma in ("3000", "3.000", "3.000,00", "€ 3 000"):
+    r = inverso.ral_per_netto(forma, mensile=True, anno=2026, territorio_codice="PA")
+    verifica(f"inverso mensile: «{forma}» -> netto annuo 42.000",
+             quasi_uguale(r.netto_richiesto, 42_000.0),
+             f"ottenuto {r.netto_richiesto:,.2f}")
+    verifica(f"«{forma}»: il risultato porta le mensilita' usate",
+             r.mensilita == 14, f"mensilita = {r.mensilita}")
+    verifica(f"«{forma}»: annuo / mensilita' torna al mensile chiesto",
+             quasi_uguale(r.netto_richiesto / r.mensilita, 3_000.0),
+             f"ottenuto {r.netto_richiesto / r.mensilita:,.2f}")
+
+# Con mensilita' diverse il mensile cambia, l'annuo no: e' la prova che il
+# divisore viene dal contratto e non da un valore fisso.
+r13 = inverso.ral_per_netto("3.000", mensile=True, anno=2026,
+                            territorio_codice="PA", ccnl="metalmeccanici")
+verifica("metalmeccanici: 13 mensilita', quindi 39.000 annui",
+         r13.mensilita == 13 and quasi_uguale(r13.netto_richiesto, 39_000.0),
+         f"mensilita {r13.mensilita}, annuo {r13.netto_richiesto:,.2f}")
 
 # ===========================================================================
 # 14. Il minimo contrattuale
