@@ -137,7 +137,14 @@ function VoceRiga({ voce, esperto }) {
           {voce.etichetta}
           {voce.segno === -1 && <span className="solo-lettori"> (trattenuta)</span>}
           {voce.segno === 1 && <span className="solo-lettori"> (somma aggiunta)</span>}
-          {aiuto && (
+          {/* Il «cos'è?» accanto a ogni voce vale per chi non sa cosa sia
+              l'imponibile fiscale. Per chi lo sa e' rumore: una parola in piu'
+              per riga, moltiplicata per undici righe.
+              Il parametro `esperto` arrivava qui da tempo e non veniva usato:
+              qualcuno aveva avuto l'intenzione di distinguere le due modalita'
+              e non era andato fino in fondo. Se le due modalita' mostrano le
+              stesse cose con i riquadri chiusi, non sono due modalita'. */}
+          {aiuto && !esperto && (
             <button
               type="button"
               className="apri-aiuto piccolo"

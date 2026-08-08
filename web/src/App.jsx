@@ -206,8 +206,8 @@ export default function App() {
           <Campo
             etichetta="RAL — Retribuzione Annua"
             etichettaEvidenziata="LORDA"
-            aiuto={aiutoCampi.ral}
-            aiutoAperto={!esperto}
+            aiuto={esperto ? null : aiutoCampi.ral}
+            aiutoAperto
             suffisso="€ all'anno"
             sotto={<ComeHoLetto testo={ral} periodo="lordi all'anno" />}
           >
@@ -228,8 +228,8 @@ export default function App() {
           <>
             <Campo
               etichetta="Netto da garantire"
-              aiuto={aiutoCampi.netto}
-              aiutoAperto={!esperto}
+              aiuto={esperto ? null : aiutoCampi.netto}
+            aiutoAperto
               suffisso={nettoMensile ? "€ al mese" : "€ all'anno"}
               sotto={
                 <ComeHoLetto
@@ -278,8 +278,8 @@ export default function App() {
             segnale, quindi non può essere un default silenzioso. */}
         <Campo
           etichetta="Comune di residenza"
-          aiuto={aiutoCampi.territorio}
-          aiutoAperto={!esperto}
+          aiuto={esperto ? null : aiutoCampi.territorio}
+            aiutoAperto
         >
           {({ id, describedBy }) => (
             <select
@@ -474,7 +474,9 @@ export default function App() {
             Versione del {__COMPILAZIONE__} UTC.
           </span>
         </p>
-        {territorioScelto && !esperto && (
+        {/* Anche questa è sapere di dominio: chi è del mestiere conosce
+              la variabilità delle addizionali locali. */}
+          {territorioScelto && !esperto && (
           <p className="piede-nota">
             Stai calcolando per <strong>{territorioScelto.comune}</strong>. Le
             addizionali locali cambiano da un comune all'altro: a parità di
