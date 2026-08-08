@@ -32,6 +32,17 @@ Più il confronto con una Certificazione Unica reale, che ha smentito il motore.
 
 ---
 
+## La presentazione
+
+**[Jet-HR-Product-Builder.pdf](presentazione/Jet-HR-Product-Builder.pdf)** — undici pagine.
+È il percorso raccontato per intero: il caso, le fonti che hanno corretto sei gruppi di
+coefficienti su sette, la lettura di tutte le tabelle comunali italiane, i sette gradini in
+cui il netto non cresce col lordo, e i ventisei errori con il metodo che ha trovato ciascuno.
+
+Chi ha poco tempo può leggere solo quella.
+
+---
+
 ## Tutto, per area
 
 ### [ricerca/](ricerca/) — da dove vengono i numeri
