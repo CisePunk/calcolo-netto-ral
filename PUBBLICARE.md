@@ -99,17 +99,27 @@ bash strumenti/verifica_pubblicazione.sh https://calcolo-netto-ral.onrender.com
 Deve dire **«Il link si può mandare»**. Se qualche riga è rossa, il deploy non è
 passato o è passato a metà.
 
-**Il controllo più veloce** per sapere se il codice nuovo è arrivato: confronta
-il nome del bundle.
+**Il controllo più veloce** per sapere se il codice nuovo è arrivato: chiedi
+all'API una cosa che prima non c'era.
 
 ```bash
-curl -s https://calcolo-netto-ral.onrender.com/ | grep -oE 'assets/index-[A-Za-z0-9_-]+\.js'
-ls web/dist/assets/*.js
+curl -s -X POST https://calcolo-netto-ral.onrender.com/api/inverso \
+  -H 'content-type: application/json' \
+  -d '{"netto":"3.000","mensile":true}' | grep -o netto_richiesto_mensile
 ```
 
-Se i due nomi sono diversi, **online c'è ancora la versione vecchia**. È
-successo: il push era andato e il deploy no, e il sito continuava a rispondere
-regolarmente con il codice di prima.
+Se stampa il nome del campo, online c'è la versione nuova. Sostituisci quel
+campo con qualcosa introdotto dall'ultima modifica.
+
+> **Non confrontare i nomi dei bundle.** Render compila il frontend dentro
+> l'immagine, con la sua versione di Node: lo stesso sorgente può produrre un
+> hash diverso da quello che ottieni tu con `npm run build`. Questa guida lo
+> suggeriva, e dava falsi allarmi — il deploy era passato e il confronto diceva
+> di no.
+
+Se il deploy non parte da solo pur avendo Auto-Deploy «On Commit»:
+**Manual Deploy → Deploy latest commit**. È successo, e non abbiamo capito
+perché; il rimedio funziona comunque.
 
 ---
 
