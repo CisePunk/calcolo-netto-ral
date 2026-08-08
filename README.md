@@ -1,5 +1,12 @@
 # Dalla RAL al netto
 
+### → **[calcolo-netto-ral.onrender.com](https://calcolo-netto-ral.onrender.com)**
+
+Digita una RAL e premi «Calcola». Nessuna installazione.
+
+*Gira su un piano gratuito: se nessuno lo apre da un quarto d'ora, la prima
+richiesta lo riaccende e può richiedere una ventina di secondi.*
+
 Calcolatore della retribuzione netta di un dipendente a partire dalla RAL, con
 il dettaglio di ogni trattenuta e la fonte normativa di ogni coefficiente.
 
