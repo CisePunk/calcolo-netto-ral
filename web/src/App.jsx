@@ -229,7 +229,7 @@ export default function App() {
             <Campo
               etichetta="Netto da garantire"
               aiuto={esperto ? null : aiutoCampi.netto}
-            aiutoAperto
+              aiutoAperto
               suffisso={nettoMensile ? "€ al mese" : "€ all'anno"}
               sotto={
                 <ComeHoLetto
@@ -279,7 +279,7 @@ export default function App() {
         <Campo
           etichetta="Comune di residenza"
           aiuto={esperto ? null : aiutoCampi.territorio}
-            aiutoAperto
+          aiutoAperto
         >
           {({ id, describedBy }) => (
             <select

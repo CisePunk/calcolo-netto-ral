@@ -21,7 +21,7 @@ significa **sapere dove ha ceduto, come ce ne siamo accorti, e cosa è cambiato
 nel modo di lavorare di conseguenza**.
 
 Un repository che mostra solo il risultato finale chiede di essere creduto sulla
-parola. Le stesse ventisette voci qui elencate sono la prova che il controllo
+parola. Le stesse ventotto voci qui elencate sono la prova che il controllo
 c'è stato davvero: ognuna ha una data, un metodo che l'ha scoperta e una
 correzione verificabile. Nessuna è stata trovata a posteriori per riempire un
 documento — il registro è cresciuto insieme al codice, ed è per questo che
@@ -64,9 +64,11 @@ noi invece che da chi legge.
 | 23 | Gli importi tagliati sul telefono, senza che nulla lo segnalasse | tabella responsive | **revisione esterna** |
 | 24 | **La norma citata per i 75 € era quella sbagliata** | correzione dell'errore 21 | **revisione esterna** |
 | 25 | Due soglie coincidenti, una spiegazione persa in silenzio | struttura dati delle soglie | **revisione esterna** |
-| 26 | **Un registro guasto apposta, lasciato sul disco e committato** | esecuzione degli strumenti | **i test, letti troppo tardi** |
+| 26 | **Un registro guasto apposta, lasciato sul disco e committato — due volte** | esecuzione degli strumenti | **i test, letti troppo tardi** |
+| 27 | **`Number("3.000")` = 3: la terza porta dello stesso difetto** | eco del calcolo inverso | **uso dell'interfaccia** |
+| 28 | Due modalità che mostravano le stesse cose, con i riquadri chiusi | progettazione delle modalità | **una domanda dell'autrice** |
 
-Ventisei errori. **Nessuno è stato trovato rileggendo il codice.**
+Ventotto errori. **Nessuno è stato trovato rileggendo il codice.**
 
 ---
 
@@ -1038,9 +1040,90 @@ leggono lo stesso numero?». Finché la risposta era «perché a ognuna serve»,
 quarta porta sarebbe arrivata.
 
 ---
+### Passaggio: progettazione delle modalità
+
+#### 28. Due modalità che erano la stessa cosa
+
+**Cosa è successo.** L'interfaccia si apre con una scelta: *«Alle prime armi»* o
+*«Esperto»*. La domanda che l'ha smontata è arrivata a consegna già fatta:
+
+> *Tutte le informazioni che abbiamo messo sono disponibili solo nella versione
+> per inesperti o anche in quella per esperti? L'esperto lo sa cosa sono quei
+> valori.*
+
+Sono andata a guardare invece di rispondere a memoria. Il `cos'è?` accanto a
+ogni voce del risultato compariva **identico** nelle due modalità. I riquadri
+*«Che cos'è la RAL»* pure: all'esperto arrivavano chiusi, con un pulsante per
+aprirli.
+
+E c'era una traccia di come fosse successo:
+
+```jsx
+function VoceRiga({ voce, esperto }) {
+```
+
+**`esperto` veniva passato e non veniva mai usato.** Una sola occorrenza in
+tutta la funzione, quella della firma. Avevo avuto l'intenzione di distinguere
+le due modalità, avevo passato il parametro, e non ero andata fino in fondo.
+L'intenzione era rimasta visibile soltanto lì.
+
+**Perché è un difetto e non una scelta discutibile.** Due modalità che si
+distinguono per lo stato di apertura di un riquadro non sono due modalità. Chi
+sceglie «Esperto» sta dicendo una cosa precisa: *non spiegarmi la materia*. Se
+la spiegazione resta lì ripiegata, l'unica cosa che ha guadagnato è un pulsante
+in più da ignorare undici volte.
+
+**La linea, che non è «meno aiuto all'esperto».** Rileggendo i testi è emerso
+che non sono tutti della stessa specie:
+
+| Aiuto | Che cosa spiega | All'esperto |
+|---|---|---|
+| «Che cos'è la RAL» | la **materia** | è rumore: la conosce |
+| «Perché serve il comune» | la **materia** | è rumore |
+| «Lascia 365 se il rapporto copre tutto l'anno» | **cosa fa questo controllo** | serve: non può saperlo |
+| «Il netto annuo resta identico con 12, 13 o 14 mensilità» | **come si comporta questo strumento** | serve |
+
+I secondi non spiegano il dominio: spiegano **la mia implementazione**. Un
+esperto di buste paga non ha modo di sapere cosa faccia il mio campo «giorni»
+finché non glielo dico io.
+
+**Cosa è cambiato.** Sparisce dalla modalità esperto l'aiuto di dominio — RAL,
+netto, comune, e il `cos'è?` di ogni voce. Restano i testi che descrivono i
+parametri, che del resto esistono solo lì.
+
+**Un difetto introdotto dalla correzione, preso misurando.** La prima stesura
+toglieva `aiutoAperto` da tutti e tre i campi, non solo per l'esperto: la
+modalità base si è ritrovata con **zero riquadri aperti**, cioè privata proprio
+di ciò che la definisce. Non l'ho visto rileggendo il codice. L'ho visto
+contando gli elementi nelle due pagine affiancate:
+
+```
+base      aiuti aperti 0   <- dovevano essere 2
+esperto   aiuti aperti 0
+```
+
+Due modalità di nuovo identiche, per la ragione opposta. Corretto e rimisurato:
+
+```
+base      aiuti aperti 2 · «cos'è?» 12 · conferma sì · fonti no
+esperto   aiuti aperti 0 · «cos'è?»  4 · conferma no · fonti e parametri sì
+```
+
+I quattro `cos'è?` che restano all'esperto sono quelli dei parametri avanzati,
+che in modalità base non esistono.
+
+**La lezione.** Un parametro passato e mai usato è un'intenzione che si è
+fermata a metà: resta lì a dire che qualcuno aveva visto il problema senza
+risolverlo. Vale la pena cercarli, sono segnalibri lasciati da sé stessi.
+
+E la seconda: una modifica che tocca due rami va **misurata su tutti e due**.
+Guardavo l'esperto, e intanto rompevo l'altro.
+
+---
+
 ## Cosa insegna il quadro d'insieme
 
-Raggruppando i ventisette errori per **metodo che li ha trovati**:
+Raggruppando i ventotto errori per **metodo che li ha trovati**:
 
 | Metodo di verifica | Errori trovati |
 |---|---|
@@ -1050,7 +1133,7 @@ Raggruppando i ventisette errori per **metodo che li ha trovati**:
 | Ragionamento sulle soglie | 4 |
 | **Guasto deliberato dei dati** | 5 (tre buchi nei test) |
 | **Caricamento su un database vero** | 6 |
-| **Una domanda dell'autrice** | 7 |
+| **Una domanda dell'autrice** | 7, 28 |
 | **Un documento emesso da altri** | 8, 9 |
 | Rilettura sospettosa | 10 |
 | **Uso dell'interfaccia** | 12, 13, 16, 27 |
@@ -1065,7 +1148,7 @@ regola sui periodi parziali; il documento reale non avrebbe mai mostrato il buco
 dei NULL nel database; nessuna quantità di test avrebbe rivelato che
 `35.000` valeva 35, perché chi li scriveva sapeva già come si digita un numero.
 
-E soprattutto: **nessuno dei ventisette è stato trovato rileggendo il codice.**
+E soprattutto: **nessuno dei ventotto è stato trovato rileggendo il codice.**
 
 Le tre verifiche più produttive sono anche le tre che si tende a saltare perché
 sembrano superflue quando tutto è verde:
