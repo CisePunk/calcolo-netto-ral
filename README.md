@@ -284,6 +284,7 @@ lettura in cima.
 |---|---|
 | **5 minuti** | [ASSUNZIONI.md](documenti/prodotto/ASSUNZIONI.md) — cosa lo strumento non fa, e perché |
 | **20 minuti** | più [ERRORI.md](documenti/verifiche/ERRORI.md) — i ventisette errori, per metodo che li ha scoperti |
+| **una storia sola** | [IL-BUG-CHE-TORNA.md](documenti/verifiche/IL-BUG-CHE-TORNA.md) — lo stesso difetto tre volte, e cosa è servito per chiuderlo |
 | **voglia di verificare** | [CASI_DI_PROVA.md](documenti/verifiche/CASI_DI_PROVA.md) — quattro RAL con il conto accanto, rifacibili a mano |
 | **tempo** | [il dossier completo](documenti/) — fonti, prodotto, verifiche, UX, diario |
 

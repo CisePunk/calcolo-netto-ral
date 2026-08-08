@@ -973,6 +973,10 @@ te lo lascia fare è tutta lì.
 
 #### 27. `Number("3.000")` = 3, e questa è la terza porta
 
+> Le voci 12, 20 e 27 sono lo stesso difetto in tre punti diversi. Lette di
+> seguito dicono una cosa che separate non dicono, e stanno insieme in
+> **[IL-BUG-CHE-TORNA.md](IL-BUG-CHE-TORNA.md)**.
+
 **Cosa è successo.** Chiedendo un netto di **3.000 € al mese**, l'interfaccia
 rispondeva:
 
