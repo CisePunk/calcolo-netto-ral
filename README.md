@@ -39,6 +39,13 @@ python3 test_motore.py     # 399 test, ~15 secondi, nessuna dipendenza
 git config core.hooksPath .githooks
 ```
 
+Il giro completo per pubblicare una modifica — provare, costruire l'immagine,
+far partire il deploy, verificare che sia davvero online — sta in
+**[PUBBLICARE.md](PUBBLICARE.md)**.
+
+```bash
+```
+
 ---
 
 ## Cosa fa, in trenta secondi
