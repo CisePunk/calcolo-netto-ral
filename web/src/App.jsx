@@ -300,7 +300,7 @@ export default function App() {
 
         {esperto && (
           <div className="avanzate">
-            <Campo etichetta="Anno d'imposta" aiuto={aiutoCampi.anno}>
+            <Campo etichetta="Anno d'imposta">
               {({ id, describedBy }) => (
                 <select
                   id={id}
@@ -318,7 +318,7 @@ export default function App() {
               )}
             </Campo>
 
-            <Campo etichetta="CCNL" aiuto={aiutoCampi.ccnl}>
+            <Campo etichetta="CCNL">
               {({ id, describedBy }) => (
                 <select
                   id={id}
@@ -338,7 +338,7 @@ export default function App() {
               )}
             </Campo>
 
-            <Campo etichetta="Mensilità" aiuto={aiutoCampi.mensilita}>
+            <Campo etichetta="Mensilità">
               {({ id, describedBy }) => (
                 <select
                   id={id}
@@ -357,7 +357,6 @@ export default function App() {
 
             <Campo
               etichetta="Giorni di detrazione"
-              aiuto={aiutoCampi.giorni}
               suffisso="su 365"
             >
               {({ id, describedBy }) => (
@@ -373,6 +372,24 @@ export default function App() {
                 />
               )}
             </Campo>
+
+            {/* Anche qui un punto solo invece di quattro pulsanti. Ma questi
+                testi restano, e non e' una contraddizione: non spiegano la
+                materia, spiegano cosa fa QUESTO campo. Che «giorni» riduce
+                detrazioni e bonus in proporzione, che le mensilita' non
+                cambiano il netto annuo — sono cose che nessun esperto puo'
+                sapere finche' non gliele dico io. */}
+            <details className="approfondimento">
+              <summary>Cosa fanno questi campi?</summary>
+              <dl className="glossario">
+                {["anno", "ccnl", "mensilita", "giorni"].map((k) => (
+                  <div key={k}>
+                    <dt>{aiutoCampi[k].titolo}</dt>
+                    <dd>{aiutoCampi[k].testo}</dd>
+                  </div>
+                ))}
+              </dl>
+            </details>
           </div>
         )}
 

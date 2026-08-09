@@ -86,6 +86,35 @@ export default function Risultato({ dati, esperto }) {
         </tbody>
       </table>
 
+      {/* Un punto solo in cui aprire le spiegazioni, invece di dodici pulsanti
+          sparsi fra le righe.
+
+          In modalità base l'aiuto sta accanto a ogni voce, ed è lì che deve
+          stare: chi non sa cosa sia l'imponibile fiscale lo scopre mentre lo
+          guarda, senza cercarlo. Per chi quelle voci le conosce, dodici
+          «cos'è?» sono rumore anche da chiusi — occupano una parola per riga e
+          invitano a un gesto che non farà mai.
+
+          La stessa informazione resta raggiungibile, in un posto solo, chiusa
+          per definizione. Chi ha un dubbio su una voce sa dove guardare; chi
+          non ce l'ha non vede niente. */}
+      {esperto && (
+        <details className="approfondimento">
+          <summary>Vuoi saperne di più?</summary>
+          <dl className="glossario">
+            {dati.voci
+              .map((voce) => [voce.etichetta, aiutoPerVoce(voce.etichetta)])
+              .filter(([, aiuto]) => aiuto)
+              .map(([etichetta, aiuto]) => (
+                <div key={etichetta}>
+                  <dt>{etichetta}</dt>
+                  <dd>{aiuto}</dd>
+                </div>
+              ))}
+          </dl>
+        </details>
+      )}
+
       {/* 5. La conferma: il momento in cui il numero smette di essere
              informativo e sta per diventare un impegno. */}
       {!esperto && (
