@@ -32,7 +32,7 @@ cd web && npm install && npm run build && cd ..
 I test del motore girano senza installare niente:
 
 ```bash
-python3 test_motore.py     # 399 test, ~15 secondi, nessuna dipendenza
+python3 test_motore.py     # 413 test, ~15 secondi, nessuna dipendenza
 
 # Se hai clonato il repository e intendi modificarlo, attiva l'hook che
 # blocca i commit quando i test non passano (una volta sola):
@@ -170,7 +170,7 @@ Ne restano quattro, e su questi **quattro strumenti su quattro sono a zero**:
 | **Dichiara quanto è sicuro di ogni dato** | fonte primaria, secondaria o da verificare, accanto a ogni coefficiente. Le aliquote comunali 2026 non hanno ancora una tabella ufficiale consolidata: chi le usa oggi sta usando delibere, e dirlo cambia il modo in cui un HR usa il numero |
 | **Avvisa dove il dominio inganna** | superata la soglia comunale, cento euro di lordo in più ne costano 184 di netto; sotto una certa soglia il netto supera il lordo. Tutti calcolano correttamente questi effetti; nessuno li nomina |
 | **È usabile da chi vede poco** | zero `aria-describedby` sui quattro strumenti esaminati. Qui l'aiuto è agganciato ai campi, e ci sono tre leve di leggibilità |
-| **Si lascia verificare** | 399 test che girano senza installare niente, e strumenti che rieseguono le verifiche — compreso quello che guasta i coefficienti apposta per controllare che i test se ne accorgano |
+| **Si lascia verificare** | 413 test che girano senza installare niente, e strumenti che rieseguono le verifiche — compreso quello che guasta i coefficienti apposta per controllare che i test se ne accorgano |
 
 Su **ampiezza di casi** Jet HR è avanti, e sull'anagrafica dei comuni lo sono
 gli altri. Il posizionamento è più stretto di quello di partenza, ed è l'unico
@@ -307,7 +307,7 @@ database/     schema MySQL e seed generato dal registro
 api/          FastAPI: traduce HTTP in chiamate al motore, non calcola nulla
 web/          React: nessun dato fiscale, tutto arriva dall'API
 strumenti/    verifiche riproducibili (vedi sotto)
-test_motore.py  399 test, zero dipendenze
+test_motore.py  413 test, zero dipendenze
 ```
 
 Tre strumenti di verifica, tutti rieseguibili:

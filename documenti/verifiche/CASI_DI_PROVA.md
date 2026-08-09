@@ -284,7 +284,7 @@ proteggeva la cartella da Git ma **non dal server web**: vedi
 ## Come si rifà tutto
 
 ```bash
-python3 test_motore.py                      # 399 test, zero dipendenze
+python3 test_motore.py                      # 413 test, zero dipendenze
 python3 strumenti/controllo_sensibilita.py  # 17 guasti deliberati, 17 rilevati
 python3 strumenti/confronta_cu.py           # richiede una propria CU in dati_privati/
 ```

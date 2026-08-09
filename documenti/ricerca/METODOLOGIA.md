@@ -213,7 +213,7 @@ le seconde.
 Dopo ogni aggiornamento:
 
 ```bash
-python3 test_motore.py                       # 399 test
+python3 test_motore.py                       # 413 test
 python3 strumenti/controllo_sensibilita.py   # i test si accorgono dei guasti?
 python3 strumenti/genera_seed.py             # rigenera il seed dal registro
 ```
