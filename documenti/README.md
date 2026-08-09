@@ -68,6 +68,7 @@ Chi ha poco tempo può leggere solo quella.
 | [ERRORI.md](verifiche/ERRORI.md) | I ventotto errori, per passaggio e per metodo che li ha scoperti |
 | [IL-BUG-CHE-TORNA.md](verifiche/IL-BUG-CHE-TORNA.md) | Lo stesso difetto tre volte, in tre punti diversi. La storia per intero |
 | [SICUREZZA.md](verifiche/SICUREZZA.md) | Il controllo di sicurezza: cosa è stato provato, cosa ha ceduto, i rischi che restano |
+| [LOG-VERIFICHE.md](verifiche/LOG-VERIFICHE.md) | Registro tecnico secco: comando eseguito → esito, senza commento |
 
 ### [ux/](ux/) — come è fatta l'interfaccia, e perché così
 
