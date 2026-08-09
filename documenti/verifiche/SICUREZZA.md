@@ -39,6 +39,8 @@ questo progetto contiene un documento fiscale reale.**
 | 12 | Dati personali nel repository | ✅ esclusi per costruzione |
 | 13 | Chiavi API nella storia di Git (180 oggetti, 11 modelli) | ✅ nessuna — vedi l'aggiornamento in coda |
 | 14 | Esposizione dei segreti CI (CVE-2026-54316 / 12537) | ✅ non applicabile: 0 workflow, 0 segreti, issue chiuse |
+| 15 | CVE dello stack a runtime (Vite, Starlette) | ✅ versioni patchate — vedi aggiornamento del 9 agosto |
+| 16 | Verifica sul sito pubblicato (intestazioni, percorsi, HTTPS) | ✅ 13 controlli dall'esterno |
 
 **Tre difetti reali, due omissioni, una debolezza minore.** Nessuno era visibile
 leggendo il codice con l'occhio di chi l'ha scritto: sono venuti fuori tutti
@@ -404,4 +406,59 @@ La regola da portarsi dietro è quella indicata dagli stessi avvisi:
 **qualunque workflow attivabile da un utente esterno va trattato come codice
 ostile**, e non deve mai vedere i segreti nello stesso passaggio in cui tocca
 input non fidato.
+
+---
+
+## Aggiornamento del 9 agosto 2026 — verifica sul sito pubblicato
+
+Il controllo qui sopra era stato fatto in locale, a codice fermo. Da quando
+l'applicazione è online su Render, «funziona in locale» non basta più: le
+intestazioni potrebbero non sopravvivere al proxy, e le versioni delle
+dipendenze invecchiano da sole. Questa verifica è stata fatta **contro il sito
+vivo**, e ripetuta con
+[`strumenti/verifica_pubblicazione.sh`](../../strumenti/verifica_pubblicazione.sh)
+— che si può rilanciare quando si vuole.
+
+### Le CVE dello stack, versione per versione
+
+Cercate le vulnerabilità note del 2026 sui pacchetti effettivamente installati e
+confrontate con la versione che le corregge:
+
+| Pacchetto | Installata | CVE | Esito |
+|---|---|---|---|
+| Vite | 8.2.1 | CVE-2026-39363 / 39364 (lettura file dal dev server, `.env`) | ✅ patchata (fix 8.0.5) |
+| Starlette | 1.4.1 | CVE-2026-48710 «BadHost» (auth bypass su header Host) | ✅ patchata (fix 1.0.1) |
+| Starlette | 1.4.1 | CVE-2025-62727 (ReDoS) | ✅ patchata |
+| dipendenze npm | — | `npm audit` | ✅ 0 vulnerabilità |
+
+Vite è uno strumento di **build**: in produzione il dev server non gira, il
+frontend è compilato e servito da FastAPI. La CVE — la stessa famiglia
+dell'attacco `/@fs/` visto su un altro server — non si applicherebbe comunque a
+runtime. Verificato sul vivo: `/@fs/../.env` sul sito pubblicato cade sul
+ripiego della single-page, nessun dev server esposto.
+
+### I controlli sul sito vivo
+
+| Controllo | Esito |
+|---|---|
+| CSP, X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy | ✅ tutte presenti nella risposta del server |
+| HTTPS con certificato valido | ✅ |
+| Attraversamento percorsi (`/../api/main.py`, `/../dati_privati/…`, `/etc/passwd`) | ✅ HTTP 400, nessun file trapelato |
+| Fuga di file del progetto (contenuto, non stato) | ✅ nessuna: cinque percorsi ostili, tutti respinti |
+| Calcolo corretto dopo la compilazione | ✅ 35.000 → 26.032,22 |
+
+### Una trappola nella verifica stessa
+
+Due volte, controllando, i miei stessi script hanno quasi gridato al lupo: una
+volta segnando `⚠️` su risposte `200` che erano il ripiego della single-page,
+una volta su `400` che erano rifiuti corretti del server. In entrambi i casi
+guardavano lo **stato** invece del **contenuto**. Corretti per cercare i byte
+veri dei file (`root:…`, `import`, `_fonte`): non trapela niente. È la stessa
+lezione dell'errore 27 — conta cosa fa, non cosa sembra.
+
+### Cosa resta fuori da questo perimetro
+
+Le difese di **rete** — firewall, blocco degli scanner — non riguardano questo
+servizio: gira su Render, con un solo processo, nessuna porta amministrativa
+esposta e nessun dato persistente. La superficie è già minima per costruzione.
 
