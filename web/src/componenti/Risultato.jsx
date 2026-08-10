@@ -11,8 +11,6 @@ import Ripartizione from "./Ripartizione";
  * visibile, nel momento in cui si guarda la risposta invece che settimane dopo.
  */
 export default function Risultato({ dati, esperto }) {
-  const [confermato, setConfermato] = useState(false);
-
   const nettoSuperaLordo = dati.netto_annuo > dati.retribuzione_effettiva;
   const annoPieno = dati.giorni === 365;
 
@@ -115,37 +113,21 @@ export default function Risultato({ dati, esperto }) {
         </details>
       )}
 
-      {/* 5. La conferma: il momento in cui il numero smette di essere
-             informativo e sta per diventare un impegno. */}
+      {/* 5. Il ripasso di cosa si sta usando come base.
+             Era una checkbox da spuntare («Confermo che … è la RAL lorda»).
+             In un flusso di creazione offerta un gesto di conferma ha senso —
+             lì stai impegnando quel numero. In un calcolatore standalone no:
+             la spunta somiglia a un passo autorizzativo che non autorizza
+             nulla, attrito senza contpropartita. La stessa prevenzione
+             dell'errore (confondere lordo e mensile — la saga del `35.000`,
+             vedi IL-BUG-CHE-TORNA.md) la dà un riepilogo statico forte, che
+             ripete cosa si sta usando come base. L'attenzione attiva c'è già
+             nell'eco in cima al risultato; questa la chiude, senza gesto. */}
       {!esperto && (
-        <div className="conferma">
-          <label>
-            <input
-              type="checkbox"
-              checked={confermato}
-              onChange={(e) => setConfermato(e.target.checked)}
-            />
-            {/* Il testo va in UN SOLO span. Senza, il `display: flex`
-                dell'etichetta trasforma ogni frammento — i due <strong> e i
-                tre pezzi di testo fra loro — in altrettanti elementi flex, e
-                il `gap` li separa come fossero colonne: la frase si spezza e
-                la virgola resta staccata dalla parola che segue.
-                Proprio la riga che serve a non confondere lordo e mensile.
-                Trovato guardando la pagina, non il codice. */}
-            <span>
-              Confermo che <strong>{euro(dati.ral, 0)}</strong> è la
-              retribuzione annua <strong>lorda</strong>, non lo stipendio
-              mensile né il netto.
-            </span>
-          </label>
-          {confermato && (
-            <p className="conferma-esito">
-              Bene. Puoi usare {euro(dati.ral, 0)} come RAL nell'offerta: il
-              dipendente riceverà {euro(dati.netto_mensile)} al mese su{" "}
-              {dati.mensilita} mensilità.
-            </p>
-          )}
-        </div>
+        <p className="promemoria-lordo" role="note">
+          Stai usando <strong>{euro(dati.ral, 0)}</strong> come retribuzione
+          annua <strong>lorda</strong> — non lo stipendio mensile né il netto.
+        </p>
       )}
     </section>
   );

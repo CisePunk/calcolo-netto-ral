@@ -2,7 +2,7 @@
  * I testi della guida in linea.
  *
  * Stanno in un file a parte, e non sparsi nei componenti, per una ragione
- * precisa: sono il contenuto principale della modalità "alle prime armi", non
+ * precisa: sono il contenuto principale della modalità "guidata", non
  * una decorazione dell'interfaccia. Riunirli permette di rileggerli tutti
  * insieme e accorgersi se una spiegazione contraddice un'altra.
  *

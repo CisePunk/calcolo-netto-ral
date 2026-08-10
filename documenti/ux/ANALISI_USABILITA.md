@@ -244,19 +244,32 @@ affidamento, e che se ne accorge dopo.
 | Reversibilità | totale | il numero si corregge, la fiducia no |
 
 **Il principio che ne deriva:** un avviso basta finché il risultato è
-informativo. **Nel momento in cui una cifra sta per diventare vincolante, un
-avviso non basta: serve una conferma esplicita.** Non un messaggio da leggere —
-un passaggio da compiere.
+informativo. **Nel momento in cui una cifra sta per diventare vincolante,
+l'avviso deve trasformarsi in un ripasso forte di cosa si sta usando come base** —
+scritto dove il numero sta per essere usato, non all'inizio del modulo.
 
-Concretamente, prima che un valore lasci lo strumento:
+Concretamente, sotto il risultato:
 
-> **Stai per usare questa cifra.**
-> RAL **35.000 € lordi annui** — Milano, anno d'imposta 2026, 14 mensilità.
-> Il dipendente riceverà **26.032,22 € netti l'anno**, cioè **1.859,44 € al mese**.
->
-> *Confermo che l'importo inserito è il **lordo annuo**.*   ☐
+> Stai usando **35.000 €** come retribuzione annua **lorda** — non lo stipendio
+> mensile né il netto.
 
-Il riepilogo è scritto **a parole, non in sigle**: chi conferma deve poter
+La forma di questo ripasso dipende dal contesto, ed è una distinzione che vale la
+pena fare esplicita:
+
+- **Dentro un flusso di creazione offerta** (dove quel numero *sta* per impegnare
+  qualcuno) una **conferma da compiere** — una casella da spuntare — è
+  giustificata: il gesto corrisponde a un atto reale.
+- **In un calcolatore standalone** no. Una casella «Confermo che…» somiglia a un
+  passo autorizzativo che non autorizza nulla: attrito senza contropartita. La
+  stessa prevenzione dell'errore la dà un **riepilogo statico forte**, che ripete
+  a parole cosa si sta usando come base. L'attenzione attiva, del resto, c'è già
+  nell'**eco in cima al risultato**; questo ripasso la chiude, senza gesto.
+
+Una prima versione del prototipo usava la casella da spuntare; è stata sostituita
+dal riepilogo statico proprio perché lo strumento è, appunto, standalone. La
+storia della scelta è in [IL-BUG-CHE-TORNA.md](../verifiche/IL-BUG-CHE-TORNA.md).
+
+Il ripasso è scritto **a parole, non in sigle**: chi legge deve poter
 riconoscere l'errore leggendo, non decifrando. Ed è la ragione per cui questo
 prototipo espone anche la direzione **netto → lordo** (§1): chi ragiona in netto
 non deve convertire a mente, e la conversione a mente è dove nasce l'errore.

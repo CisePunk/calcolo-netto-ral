@@ -755,6 +755,14 @@ che i test non vedono (errori 14 e 15). Questo ci è passato davanti.
 la casella e la frase. Verificato a 360 e 390 px: due elementi, nessun
 traboccamento.
 
+**Aggiornamento.** La casella di conferma è stata in seguito **sostituita da un
+riepilogo statico** («Stai usando 35.000 € come retribuzione annua lorda…»): in
+uno strumento standalone la spunta somigliava a un passo autorizzativo che non
+autorizzava nulla. L'elemento di questa voce non esiste più; la voce resta come
+registro di cosa è accaduto. Il ragionamento è in
+[IL-BUG-CHE-TORNA.md](IL-BUG-CHE-TORNA.md) e in
+[ANALISI_USABILITA.md](../ux/ANALISI_USABILITA.md).
+
 ---
 
 #### 23. Gli importi tagliati sul telefono, in silenzio

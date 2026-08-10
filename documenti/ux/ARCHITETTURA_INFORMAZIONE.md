@@ -68,7 +68,7 @@ formano le domande di chi la usa.
 | 10 | Il netto | *«quanto prende?»* | dopo il calcolo |
 | 11 | Ripartizione | *«quanto se ne va?»* | dopo il calcolo |
 | 12 | Tabella voce per voce | *«perché?»* | dopo il calcolo |
-| 13 | Conferma | *«posso fidarmi a usarlo?»* | solo neofita |
+| 13 | Ripasso del lordo | *«sto usando la cifra giusta?»* | solo neofita |
 | 14 | Fonti e stato | *«da dove viene questo numero?»* | solo esperto |
 
 **Il punto 3 sta in alto per una ragione precisa.** Chi ha bisogno di
@@ -167,10 +167,10 @@ colloquio e l'altro.
 │  └──────────────────────┴───────────┘│
 │                                      │
 │  ╭──────────────────────────────────╮│  13
-│  │ ☐ Confermo che 35.000 € è la     ││   il momento in cui
-│  │   retribuzione annua LORDA,      ││   il numero smette di
-│  │   non lo stipendio mensile.      ││   essere informativo
-│  ╰──────────────────────────────────╯│
+│  │ Stai usando 35.000 € come        ││   ripasso statico di
+│  │ retribuzione annua LORDA, non    ││   cosa si sta usando
+│  │ lo stipendio mensile né il netto.││   come base (niente
+│  ╰──────────────────────────────────╯│   casella da spuntare)
 └──────────────────────────────────────┘
 ```
 
@@ -217,9 +217,9 @@ Le differenze, non l'intera schermata.
 └──────────────────────────────────────┘
 ```
 
-La conferma (13) **non compare** in modalità esperto: chi conosce il dominio non
-ha bisogno di dichiarare di aver capito la differenza fra lordo e netto, e
-chiederglielo ogni volta sarebbe un attrito senza contropartita.
+Il ripasso (13) **non compare** in modalità esperto: chi conosce il dominio non
+ha bisogno che gli si ripeta la differenza fra lordo e netto, e mostrarglielo
+ogni volta sarebbe un attrito senza contropartita.
 
 ---
 
@@ -243,7 +243,7 @@ ATTUALE (colonna unica)              PROPOSTA (due colonne, ≥ 64rem)
 │                       │            │             │                 │
 │      [Calcola]        │            │  [Calcola]  │   tabella       │
 ├───────────────────────┤            │             │                 │
-│   ↓ scorri ↓          │            │             │   conferma      │
+│   ↓ scorri ↓          │            │             │   ripasso       │
 ├───────────────────────┤            │             │                 │
 │      risultato        │            │             │   fonti         │
 └───────────────────────┘            └─────────────┴─────────────────┘
@@ -301,7 +301,7 @@ esaminato li nomina — tutti li calcolano correttamente, e tutti tacciono.
         │          │                          │         │
    netto + voci    │                    RAL + dettaglio │
         │          │                          │         │
-   conferma        │                    se ambiguo:     │
+   ripasso         │                    se ambiguo:     │
    («è il lordo»)  │                    mostra tutte    │
         │          │                          │         │
         ▼          ▼                          ▼         ▼
@@ -322,7 +322,7 @@ esaminato li nomina — tutti li calcolano correttamente, e tutti tacciono.
 | Aiuti **chiusi** per l'esperto | sempre aperti | per lui sono rumore, e il rumore fa saltare le righe |
 | Eco dell'input **prima** del numero | solo il numero | è l'unico punto in cui un errore d'inserimento diventa visibile |
 | Fonti **solo** in modalità esperto | sempre visibili | per il neofita sono un muro; per l'esperto sono la ragione per fidarsi |
-| Conferma **solo** per il neofita | sempre | all'esperto sarebbe attrito senza contropartita |
+| Ripasso del lordo **solo** per il neofita | sempre | all'esperto sarebbe attrito senza contropartita |
 | Tabella che **scorre** su telefono | tabella compressa | comprimere una colonna di numeri la rende illeggibile |
 | Fonti che diventano **schede** su telefono | tabella che scorre | tre colonne di testo lungo non si leggono scorrendo |
 

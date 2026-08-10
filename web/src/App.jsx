@@ -149,15 +149,21 @@ export default function App() {
           </p>
         </div>
 
+        {/* Le due modalità mostrano le STESSE voci con lo stesso dettaglio:
+            cambia solo quanto aiuto è già aperto. Per questo l'etichetta dice
+            "Guidata / Avanzata" (descrive la guida, che è la differenza reale)
+            e non "Essenziale / Completa" (direbbe il falso: che la prima omette
+            qualcosa) né "Alle prime armi / Esperto" (etichetta la persona, non
+            l'interfaccia). */}
         <fieldset className="modalita">
-          <legend className="solo-lettori">Livello di esperienza</legend>
+          <legend className="solo-lettori">Livello di dettaglio</legend>
           <button
             type="button"
             className={!esperto ? "scelta attiva" : "scelta"}
             aria-pressed={!esperto}
             onClick={() => setEsperto(false)}
           >
-            Alle prime armi
+            Guidata
           </button>
           <button
             type="button"
@@ -165,7 +171,7 @@ export default function App() {
             aria-pressed={esperto}
             onClick={() => setEsperto(true)}
           >
-            Esperto
+            Avanzata
           </button>
         </fieldset>
       </header>

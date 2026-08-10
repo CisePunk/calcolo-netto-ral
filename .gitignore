@@ -22,3 +22,4 @@ dati_privati/*.pdf
 # non al repository.
 dati/.coefficienti.originale.json
 dati/.REGISTRO_IN_GUASTO
+.claude/

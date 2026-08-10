@@ -462,32 +462,17 @@ tbody th {
 
 /* --- conferma ------------------------------------------------------------ */
 
-.conferma {
+/* Riepilogo statico di cosa si sta usando come base (lordo, non mensile).
+   Ha preso il posto di una checkbox di conferma: stessa prevenzione
+   dell'errore, senza il gesto che in uno strumento standalone sembrava un
+   passo autorizzativo. */
+.promemoria-lordo {
   margin-top: 1.5rem;
   padding: 1rem 1.15rem;
   border: 1px solid var(--attenzione-bordo);
   background: var(--attenzione-tenue);
   border-radius: 8px;
-}
-
-.conferma label {
-  font-weight: 400;
-  display: flex;
-  gap: 0.6rem;
-  align-items: flex-start;
-  cursor: pointer;
-}
-
-.conferma input {
-  width: auto;
-  margin-top: 0.3rem;
-}
-
-.conferma-esito {
-  margin: 0.8rem 0 0;
-  color: var(--buono);
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1.02rem;
 }
 
 /* --- fonti --------------------------------------------------------------- */
@@ -1353,7 +1338,7 @@ body {
 [data-contrasto="alto"] .aiuto,
 [data-contrasto="alto"] .avviso,
 [data-contrasto="alto"] .errore,
-[data-contrasto="alto"] .conferma,
+[data-contrasto="alto"] .promemoria-lordo,
 [data-contrasto="alto"] .eco,
 [data-contrasto="alto"] .nota-sorpresa,
 [data-contrasto="alto"] .riga-aiuto td,

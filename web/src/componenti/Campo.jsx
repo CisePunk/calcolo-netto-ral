@@ -8,7 +8,7 @@ import { useId, useState } from "react";
  * reader lo sente insieme all'etichetta, invece di trovare un campo nudo e
  * un'icona che non sa di poter aprire.
  *
- * In modalità "alle prime armi" la spiegazione è già aperta: chi non conosce il
+ * In modalità "guidata" la spiegazione è già aperta: chi non conosce il
  * dominio non sa di avere una domanda, quindi non va messo nella condizione di
  * doverla fare.
  */
